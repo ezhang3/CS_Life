@@ -1,3 +1,5 @@
 # CornellCSLife
 
-# Made by:
+# Made by: Allison, En Yu, Iris, Janice
+
+# Features:
