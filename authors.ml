@@ -1,0 +1,8 @@
+(* write the hours you've worked next to your name *)
+let allison = 1
+let enyu = 0
+let iris = 0
+let janice = 0
+
+let hours_worked = 
+  allison + enyu + iris + janice
