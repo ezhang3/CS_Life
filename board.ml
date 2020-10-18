@@ -1,11 +1,11 @@
-module type board = sig
-  (** Represents the game board which consists of tiles *)
-  type 'a t
+(** board type is implemented as an adjacency matrix *)
+type 'a t = 'a list list
 
-  (** [create x] is a board of [x] tiles*)
-  val create : int -> 'a t
+(** *)
+let create x = failwith "notfound"
 
-  (** [to_tile x] is the tile at location x*)
-  val to_tile : int -> 'a
+(** *)
+let to_tile x = failwith "notfound"
 
-end
+(** TODO: helper for generation tiles and path randomly *)
+let randPaths = failwith "notfound"
