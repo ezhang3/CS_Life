@@ -2,7 +2,7 @@ type player_name = string
 
 type player = {
   name: player_name; 
-  points: int; 
+  mutable points: int; 
   mutable study_partners: player list
 }
 
@@ -12,5 +12,5 @@ let get_name p =
 let get_points p = 
   p.points
 
-let get_partners p = 
+let get_partners p =
   p.study_partners
