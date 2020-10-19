@@ -5,4 +5,4 @@ type 'a t
 val create : int -> 'a t
 
 (** [next_tile tile] is the list of adjacent tiles to [tile]*)
-val next_tile : 'a -> 'a list
+val next_tile : 'a -> ('a -> 'a -> bool)-> 'a list
