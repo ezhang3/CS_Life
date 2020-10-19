@@ -3,7 +3,6 @@
    Stores the id, color, and events associated with it
 *)
 
-(** *)
 type tile
 
 type color 
