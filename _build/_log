@@ -7,22 +7,18 @@ ocamlfind ocamlc -c -o event.cmi event.mli # cached
 ocamlfind ocamldep -modules event.ml > event.ml.depends # cached
 # Target: event.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:event.cmo, file:event.ml, implem, ocaml, quiet }
 ocamlfind ocamlc -c -o event.cmo event.ml # cached
-# Target: player.mli.depends, tags: { extension:mli, file:player.mli, ocaml, ocamldep, quiet }
-ocamlfind ocamldep -modules player.mli > player.mli.depends # cached
-# Target: player.cmi, tags: { byte, compile, extension:mli, file:player.mli, interf, ocaml, quiet }
-ocamlfind ocamlc -c -o player.cmi player.mli # cached
-# Target: player.ml.depends, tags: { extension:ml, file:player.ml, ocaml, ocamldep, quiet }
-ocamlfind ocamldep -modules player.ml > player.ml.depends # cached
-# Target: player.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:player.cmo, file:player.ml, implem, ocaml, quiet }
-ocamlfind ocamlc -c -o player.cmo player.ml # cached
 # Target: playerstate.mli.depends, tags: { extension:mli, file:playerstate.mli, ocaml, ocamldep, quiet }
-ocamlfind ocamldep -modules playerstate.mli > playerstate.mli.depends # cached
+ocamlfind ocamldep -modules playerstate.mli > playerstate.mli.depends
+# Target: tile.mli.depends, tags: { extension:mli, file:tile.mli, ocaml, ocamldep, quiet }
+ocamlfind ocamldep -modules tile.mli > tile.mli.depends # cached
+# Target: tile.cmi, tags: { byte, compile, extension:mli, file:tile.mli, interf, ocaml, quiet }
+ocamlfind ocamlc -c -o tile.cmi tile.mli # cached
 # Target: playerstate.cmi, tags: { byte, compile, extension:mli, file:playerstate.mli, interf, ocaml, quiet }
-ocamlfind ocamlc -c -o playerstate.cmi playerstate.mli # cached
+ocamlfind ocamlc -c -o playerstate.cmi playerstate.mli
 # Target: playerstate.ml.depends, tags: { extension:ml, file:playerstate.ml, ocaml, ocamldep, quiet }
 ocamlfind ocamldep -modules playerstate.ml > playerstate.ml.depends # cached
 # Target: playerstate.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:playerstate.cmo, file:playerstate.ml, implem, ocaml, quiet }
-ocamlfind ocamlc -c -o playerstate.cmo playerstate.ml # cached
+ocamlfind ocamlc -c -o playerstate.cmo playerstate.ml
 # Target: board.mli.depends, tags: { extension:mli, file:board.mli, ocaml, ocamldep, quiet }
 ocamlfind ocamldep -modules board.mli > board.mli.depends # cached
 # Target: board.cmi, tags: { byte, compile, extension:mli, file:board.mli, interf, ocaml, quiet }
@@ -30,21 +26,15 @@ ocamlfind ocamlc -c -o board.cmi board.mli # cached
 # Target: board.ml.depends, tags: { extension:ml, file:board.ml, ocaml, ocamldep, quiet }
 ocamlfind ocamldep -modules board.ml > board.ml.depends # cached
 # Target: board.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:board.cmo, file:board.ml, implem, ocaml, quiet }
-ocamlfind ocamlc -c -o board.cmo board.ml # cached
-# Target: authors.mli.depends, tags: { extension:mli, file:authors.mli, ocaml, ocamldep, quiet }
-ocamlfind ocamldep -modules authors.mli > authors.mli.depends # cached
-# Target: authors.cmi, tags: { byte, compile, extension:mli, file:authors.mli, interf, ocaml, quiet }
-ocamlfind ocamlc -c -o authors.cmi authors.mli # cached
-# Target: authors.ml.depends, tags: { extension:ml, file:authors.ml, ocaml, ocamldep, quiet }
-ocamlfind ocamldep -modules authors.ml > authors.ml.depends # cached
-# Target: authors.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:authors.cmo, file:authors.ml, implem, ocaml, quiet }
-ocamlfind ocamlc -c -o authors.cmo authors.ml # cached
-# Target: tile.mli.depends, tags: { extension:mli, file:tile.mli, ocaml, ocamldep, quiet }
-ocamlfind ocamldep -modules tile.mli > tile.mli.depends
-# Target: tile.cmi, tags: { byte, compile, extension:mli, file:tile.mli, interf, ocaml, quiet }
-ocamlfind ocamlc -c -o tile.cmi tile.mli
-# Target: tile.ml.depends, tags: { extension:ml, file:tile.ml, ocaml, ocamldep, quiet }
-ocamlfind ocamldep -modules tile.ml > tile.ml.depends
-# Target: tile.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:tile.cmo, file:tile.ml, implem, ocaml, quiet }
-ocamlfind ocamlc -c -o tile.cmo tile.ml
-# Compilation successful.
+ocamlfind ocamlc -c -o board.cmo board.ml
++ ocamlfind ocamlc -c -o board.cmo board.ml
+File "board.ml", line 1:
+Error: The implementation board.ml does not match the interface board.cmi:
+       Values do not match:
+         val next_tile : 'a -> 'b -> 'c -> 'd
+       is not included in
+         val next_tile : 'a -> ('a -> 'a -> bool) -> 'a list
+       File "board.mli", line 8, characters 0-50: Expected declaration
+       File "board.ml", line 10, characters 4-13: Actual declaration
+Command exited with code 2.
+# Compilation unsuccessful.

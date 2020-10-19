@@ -26,3 +26,7 @@ val get_description : event -> string
 (** [get_effects e] is the list of effects that event [e] will cause a person. 
     Lists how much the points of each component will change. *)
 val get_effects : event -> effect
+
+(** [get_effect_points eff] is the total number of points accumulated by 
+    effect eff*)
+val get_effect_points : effect -> int

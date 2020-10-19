@@ -20,3 +20,11 @@ let get_description e =
 
 let get_effects e = 
   e.effects
+
+let rec add_points lst acc = 
+  match lst with
+  | [] -> acc
+  | (_, pts) :: t -> acc + pts |> add_points t 
+
+let get_effect_points = function
+  | Points lst -> add_points lst 0
