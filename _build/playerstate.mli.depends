@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 playerstate.mli: Event Tile
+=======
+playerstate.mli: Player
+>>>>>>> f4c3fb1a070fbdb670ca87f40ee16de6a86893ef

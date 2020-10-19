@@ -14,7 +14,8 @@ type event_name
     name *)
 type event_id
 type effect
-(** [name e] is the name of event [e] *)
+
+(** [name e] is the name of the event with event [e] *)
 val get_name : event -> event_name
 
 (** [get_id e] is the id of event [e] *)

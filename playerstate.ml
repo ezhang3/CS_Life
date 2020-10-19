@@ -2,15 +2,26 @@ type player_name = string
 type points = int
 type salary = int
 type project_name = string
-type project = project_name * salary
+type project = (project_name * salary) option
 type study_partners = int
-type state = {
+type st = {
   name : player_name;
   mutable points : points;
   mutable study_partners : study_partners;
   mutable project : project;
   mutable current_tile : Tile.tile;
-  mutable visited_tiles : Tile.tile list
+  mutable visited_tiles : Tile.tile list;
+  mutable items : string list; (** not sure *)
+}
+
+let init_state name start = {
+  name = name;
+  points = 0;
+  study_partners = 0;
+  project = None;
+  current_tile = start;
+  visited_tiles = [start];
+  items = []
 }
 
 let get_name st = 
@@ -40,7 +51,8 @@ let get_project st =
 
 let get_salary st = 
   match st.project with
-  | (_, salary) -> salary
+  | None -> 0
+  | Some (_, salary) -> salary
 
 let set_current_tile st tile = 
   let orig_visited = st.visited_tiles in 
@@ -53,5 +65,7 @@ let get_current_tile st =
 let get_visited_tiles st = 
   st.visited_tiles
 
+let get_items st = 
+  st.items
 
 
