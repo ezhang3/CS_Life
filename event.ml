@@ -9,6 +9,9 @@ type event = {
   (* example of [effects] list: [("exp", 10)] ==> gain 10 exp *)
 }
 
+let create_event name id description effects = 
+  {name = name; id = id; description = description; effects = effects}
+
 let get_name e = 
   e.name 
 

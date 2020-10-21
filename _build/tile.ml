@@ -2,8 +2,6 @@ open Event
 
 type color = Red | Blue | Green | Yellow
 
-type event = Event.event
-
 type tile_id = string
 
 type tile = {
@@ -11,6 +9,9 @@ type tile = {
   event : event;
   id : tile_id;
 }
+
+let create color event id = 
+  {color = color; event = event; id = id}
 
 let get_tile_color tile =
   tile.color

@@ -7,10 +7,11 @@ type gameboard
 val create : int -> gameboard
 
 (** [next_tile cur next game] determines if *)
-val valid_move : Tile.tile -> Tile.tile -> gameboard -> bool
+(*val valid_move : Tile.tile -> Tile.tile -> gameboard -> bool*)
 
 (** [to_tile x] is the tile at location x*)
-val to_tile : int -> 'a
+(*val to_tile : int -> 'a*)
 
 (** [next_tile tile] is the list of the tiles in its path [tile]*)
-val next_tile : 'a -> ('a -> 'a -> bool)-> 'a list
+val next_tile : Tile.tile -> (Tile.tile-> Tile.tile -> bool)-> 
+  gameboard -> Tile.tile list

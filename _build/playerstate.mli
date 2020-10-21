@@ -1,26 +1,3 @@
-<<<<<<< HEAD
-type player_name = string
-type points = int
-type project
-type study_partners
-
-type state 
-
-val get_name : state -> string
-val set_points : state -> Event.event -> unit
-val get_points : state -> points
-
-val add_study_partners : state -> int -> unit
-val get_study_partners : state -> study_partners
-
-val set_project : state -> project -> unit
-val get_project : state -> project 
-
-val set_current_tile : state -> Tile.tile -> unit
-val get_current_tile : state -> Tile.tile
-
-val get_visited_tiles : state -> Tile.tile list
-=======
 (** 
    Representation of the changing player state. 
 
@@ -28,9 +5,37 @@ val get_visited_tiles : state -> Tile.tile list
    location, any items owned, and reputation level(?).
 *)
 
-(** The abstract type representing the player state. *)
-type st
+type player_name = string
+type points = int
+type project
+type study_partners
 
-(** The initial state of the player at the start of game. *)
-val init_state : Player.player -> st
->>>>>>> f4c3fb1a070fbdb670ca87f40ee16de6a86893ef
+(** The abstract type representing the player state. *)
+type st 
+
+val init_state : player_name -> Tile.tile -> st
+
+val get_name : st -> string
+val set_points : st -> Event.event -> unit
+
+(** [get_points st] is the current reputation points player has in state [st] *)
+val get_points : st -> points
+
+val add_study_partners : st -> int -> unit
+val get_study_partners : st -> study_partners
+
+val set_project : st -> project -> unit
+val get_project : st -> project 
+
+val set_current_tile : st -> Tile.tile -> unit
+(** [get_current_tile] is the tile the player is currently on in state [st] *)
+val get_current_tile : st -> Tile.tile
+
+val get_visited_tiles : st -> Tile.tile list
+
+(** [init_state p] is the initial state of player [p] at the start of game *)
+
+(** [have_items st] is the list of items the player has on hand in state [st]*)
+val get_items: st -> string list
+
+

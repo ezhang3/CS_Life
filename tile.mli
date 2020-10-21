@@ -7,9 +7,13 @@ open Event
 (** Abstract representation of values representing tiles. *)
 type tile
 (** Type that represents the tile's color on the gameboard GUI *)
-type color 
+type color = Red | Blue | Green | Yellow
 (** Type of tile identifiers. Make specific tile easy to find on board. *)
-type tile_id
+type tile_id = string
+
+(** [create color event id] creates a tile of color [color] with id
+    [id] and associated event [event]*)
+val create : color ->  Event.event -> tile_id -> tile
 
 (** [tile_color t] is the color of the tile *)
 val get_tile_color : tile -> color 

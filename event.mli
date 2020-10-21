@@ -5,15 +5,19 @@
 *)
 
 (** Abstract type of values representing events *)
-type event 
+type event
 
 (** Type of event names *)
-type event_name 
+type event_name = string 
 
 (** Type of event identifiers. To distinguish between events that have the same
     name *)
-type event_id
-type effect
+type event_id = string 
+type effect = Points of (string * int) list 
+
+(** [create_event name id description effect] creates an event with the given
+    parameters *)
+val create_event : event_name -> event_id -> string -> effect -> event
 
 (** [name e] is the name of the event with event [e] *)
 val get_name : event -> event_name
