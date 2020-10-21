@@ -5,8 +5,6 @@ open Player
 open Playerstate
 open Tile 
 
-
-
 let suite =
   "test suite for game"  >::: List.flatten [
 
