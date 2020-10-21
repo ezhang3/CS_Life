@@ -24,9 +24,9 @@ ocamlfind ocamldep -modules board.mli > board.mli.depends # cached
 # Target: board.cmi, tags: { byte, compile, extension:mli, file:board.mli, interf, ocaml, quiet }
 ocamlfind ocamlc -c -o board.cmi board.mli # cached
 # Target: board.ml.depends, tags: { extension:ml, file:board.ml, ocaml, ocamldep, quiet }
-ocamlfind ocamldep -modules board.ml > board.ml.depends
+ocamlfind ocamldep -modules board.ml > board.ml.depends # cached
 # Target: board.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:board.cmo, file:board.ml, implem, ocaml, quiet }
-ocamlfind ocamlc -c -o board.cmo board.ml
+ocamlfind ocamlc -c -o board.cmo board.ml # cached
 # Target: authors.mli.depends, tags: { extension:mli, file:authors.mli, ocaml, ocamldep, quiet }
 ocamlfind ocamldep -modules authors.mli > authors.mli.depends # cached
 # Target: authors.cmi, tags: { byte, compile, extension:mli, file:authors.mli, interf, ocaml, quiet }
