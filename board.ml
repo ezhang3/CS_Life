@@ -15,7 +15,7 @@ let event =
     (Points [("Gain", 10)])
 
 (* should ids be strings or numbers?*)
-let tile = Tile.create Red event ""
+let tile = Tile.create_tile Red event ""
 
 let test_board = [tile, [tile]]
 
