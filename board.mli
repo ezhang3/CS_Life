@@ -3,6 +3,8 @@ open Tile
 (** Represents the game board which consists of tiles *)
 type gameboard
 
+exception No_Tile 
+
 (** [create x] is a board with [x] tiles*)
 val create : int -> gameboard
 
