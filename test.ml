@@ -1,7 +1,6 @@
 open OUnit2
 open Board
 open Event
-open Player
 open Playerstate
 open Tile 
 
@@ -23,11 +22,19 @@ let get_points_test
   name >:: (fun _ ->
       assert_equal expected_output (get_points st))
 
+let player_state_test = [
+  get_player_name_test "Works?" dummy "Jason";
+  get_points_test "Just started, 0" dummy 0;
+]
+
+let board_test = [
+
+]
+
 let suite =
   "test suite for game"  >::: List.flatten [
     [
-      get_player_name_test "Works?" dummy "Jason";
-      get_points_test "Just started, 0" dummy 0;
+
     ]
   ]
 

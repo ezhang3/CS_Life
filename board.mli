@@ -3,10 +3,10 @@ open Tile
 (** Represents the game board which consists of tiles *)
 type gameboard
 
-exception No_Tile 
+exception No_Tile of string
 
-(** [create x] is a board with [x] tiles*)
-val create : int -> gameboard
+(** [create_board x] is a board with [x] tiles*)
+val create_board : int -> gameboard
 
 (** [next_tile cur next game] determines if *)
 (*val valid_move : Tile.tile -> Tile.tile -> gameboard -> bool*)

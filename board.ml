@@ -4,7 +4,7 @@ open Tile
 (** board type is implemented as an adjacency list *)
 type gameboard = (Tile.tile * (Tile.tile list)) list
 
-exception No_Tile
+exception No_Tile of string
 (** TODO: helper for generation tiles and path randomly *)
 let rand_paths = failwith "notfound"
 
@@ -15,9 +15,10 @@ let event =
     (Points [("Gain", 10)])
 
 (* should ids be strings or numbers?*)
-let tile = Tile.create_tile Red event ""
+let tile = Tile.create_tile Red event "Career Fair Red"
+let tile2 = Tile.create_tile Blue event "Career Fair Blue"
 
-let test_board = [tile, [tile]]
+let test_board = [(tile,[tile2]);(tile2,[tile])]
 
 (* how to create boards:
    function to
@@ -31,16 +32,17 @@ let test_board = [tile, [tile]]
      thinking we should add tile neighbors to the tile module
      Generate board using those tiles *)
 
-let rec create x = failwith "notfound"
+let create_board x = 
+  test_board
 (*
    match x with
 | 0 -> acc
-| x -> create (x-1) (tile :: acc
+| x -> create (x-1) (tile :: acc)
 *)
 
 let rec find_tile (tile : Tile.tile) func (board : gameboard) =
   match board with
-  | [] -> raise No_Tile
+  | [] -> raise (No_Tile "No such tile in here")
   | (a, b) :: t -> if func a tile then b else find_tile tile func t
 
 (** [next_tile tile func board] is the list of adjacent tiles to [tile]
