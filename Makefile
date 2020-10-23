@@ -4,7 +4,7 @@ MLS=$(MODULES:=.ml)
 MLIS=$(MODULES:=.mli)
 TEST=test.byte
 MAIN=main.byte
-OCAMLBUILD=ocamlbuild -use-ocamlfind
+OCAMLBUILD=ocamlbuild -use-ocamlfind -pkg graphics
 
 default: build
 	utop
