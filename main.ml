@@ -1,5 +1,4 @@
 open Graphics
-open Player
 open Event
 open Tile
 open Playerstate
