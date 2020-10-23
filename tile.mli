@@ -13,7 +13,7 @@ type tile_id = string
 
 (** [create color event id] creates a tile of color [color] with id
     [id] and associated event [event]*)
-val create : color ->  Event.event -> tile_id -> tile
+val create_tile : color ->  Event.event -> tile_id -> tile
 
 (** [tile_color t] is the color of the tile *)
 val get_tile_color : tile -> color 

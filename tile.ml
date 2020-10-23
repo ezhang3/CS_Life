@@ -10,7 +10,7 @@ type tile = {
   id : tile_id;
 }
 
-let create color event id = 
+let create_tile color event id = 
   {color = color; event = event; id = id}
 
 let get_tile_color tile =
