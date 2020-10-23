@@ -8,6 +8,7 @@ open Tile
 let e = create_event "Day 1" "school starts" "You are now a student at Cornell" []
 let started = create_tile Green e "Start"
 let dummy = init_state "Jason" started
+
 let get_player_name_test 
     (name : string)  
     (st: st)
