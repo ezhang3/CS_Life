@@ -3,6 +3,7 @@ open Event
 open Tile
 open Playerstate
 open Board
+open Bogue
 
 (** [play_game f] starts the adventure in file [f]. *)
 let play_game f =

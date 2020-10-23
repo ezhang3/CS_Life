@@ -1,26 +1,4 @@
 EXCLUDE_QUERY_DIR
-B /home/fort745/.opam/cs3110-2020fa/lib/bytes
-B /home/fort745/.opam/cs3110-2020fa/lib/ctypes
-B /home/fort745/.opam/cs3110-2020fa/lib/integers
-B /home/fort745/.opam/cs3110-2020fa/lib/ocaml
-B /home/fort745/.opam/cs3110-2020fa/lib/ocaml/threads
-B /home/fort745/.opam/cs3110-2020fa/lib/result
-B /home/fort745/.opam/cs3110-2020fa/lib/stdlib-shims
-B /home/fort745/.opam/cs3110-2020fa/lib/tsdl
-B /home/fort745/.opam/cs3110-2020fa/lib/tsdl_image
-B /home/fort745/.opam/cs3110-2020fa/lib/tsdl_ttf
-B ../_build/default/examples/.example.eobjs/byte
-B ../_build/default/lib/.bogue.objs/byte
-S /home/fort745/.opam/cs3110-2020fa/lib/bytes
-S /home/fort745/.opam/cs3110-2020fa/lib/ctypes
-S /home/fort745/.opam/cs3110-2020fa/lib/integers
-S /home/fort745/.opam/cs3110-2020fa/lib/ocaml
-S /home/fort745/.opam/cs3110-2020fa/lib/ocaml/threads
-S /home/fort745/.opam/cs3110-2020fa/lib/result
-S /home/fort745/.opam/cs3110-2020fa/lib/stdlib-shims
-S /home/fort745/.opam/cs3110-2020fa/lib/tsdl
-S /home/fort745/.opam/cs3110-2020fa/lib/tsdl_image
-S /home/fort745/.opam/cs3110-2020fa/lib/tsdl_ttf
+B ../../_build/default/bogue-master/examples/.example.eobjs/byte
 S .
-S ../lib
 FLG -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs
