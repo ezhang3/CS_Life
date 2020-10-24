@@ -6,7 +6,7 @@ type gameboard = (Tile.tile * (Tile.tile list)) list
 
 exception No_Tile of string
 (** TODO: helper for generation tiles and path randomly *)
-let rand_paths = failwith "notfound"
+(**let rand_paths = failwith "notfound"*)
 
 let event =
   create_event "Career Fair"

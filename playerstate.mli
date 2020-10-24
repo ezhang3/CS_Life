@@ -3,8 +3,7 @@
 
    This module represents the player state as the game goes on, including 
    location, any items owned, and reputation level(?).
-*)
-
+*) 
 type player_name = string
 type points = int
 type project
