@@ -19,5 +19,6 @@ val start_tile : gameboard -> Tile.tile
 
 (** [next_tile tile func board] is the list of adjacent tiles to [tile]
     [func tile1 tile2] is a function used to compare tiles *)
+(* TODO: think about rep invariant and abstraction function*)
 val next_tile : Tile.tile -> (Tile.tile-> Tile.tile -> bool)-> 
   gameboard -> Tile.tile list

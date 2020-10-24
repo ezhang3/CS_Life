@@ -24,11 +24,48 @@ let test_board = [(tile,[tile2]);(tile2,[tile])]
    function to
    Generate tiles from a list of different tiles with events
    - automatically gives them a numerical string id by order of generation
-     -
-     tiles = [
-      [color, event, neighbors, numoccur];
-      [color, event, neighbors, numoccur];
-     ]
+
+   seems like json might be easiest to use
+   start_tile input =
+   parse json |> member "start_tile" |> to_string
+
+   (* makes a tile with given attributes, with id = x *)
+   tile_from_json j = 
+
+    (* *)
+   stage =
+   parse json |> member "";
+
+   (* *)
+   stages input = 
+   parse json |> member "stages" |> List.map func_stage
+
+
+     input: {
+       start_tile = {
+         name:
+         id:
+         color:
+         description:
+         effects:
+         next: by id
+       }
+       stages = {
+         {
+          [({
+            name:
+            id:
+            color:
+            description:
+            effects:
+            next:
+          }, occurences);
+          {
+          }
+          ]
+         }
+       }
+     }]]]]]]]
      thinking we should add tile neighbors to the tile module
      Generate board using those tiles *)
 

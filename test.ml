@@ -57,7 +57,7 @@ let board_test = [
     tile compare_tiles test_board [tile2];
   next_tile_test "second to first 2 tile board"
     tile2 compare_tiles test_board [tile];
-  (* test next_tile on a tile w/o adjacent tiles*)
+  (* TODO: test next_tile on a tile w/o adjacent tiles*)
 ]
 
 let suite =
