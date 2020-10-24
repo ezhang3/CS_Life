@@ -24,6 +24,19 @@ let init_state name start = {
   items = []
 }
 
+let rec make_player_lst (n : int) (start : Tile.tile) (acc : st list) : st list= 
+  match n with 
+  | 0 -> acc
+  | _ -> 
+    print_endline ("Please enter the name of Player " ^ string_of_int n ^ "\n");
+    print_string  ("> ");
+    match read_line () with
+    | exception End_of_file -> ()
+    | player_name -> 
+      let p = init_state start in
+      p :: acc |> make_player_lst (n - 1) start
+
+
 let get_name st = 
   st.name
 

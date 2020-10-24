@@ -14,7 +14,7 @@ type study_partners
 type st 
 
 val init_state : player_name -> Tile.tile -> st
-
+val make_player_list : int -> Tile.tile -> st list
 val get_name : st -> string
 val set_points : st -> Event.event -> unit
 
