@@ -1,1 +1,4 @@
-true: package(ounit2),package(ANSITerminal),package(graphics)
+true: -traverse
+      <dir1> or <dir2>: traverse
+
+true: package(ounit2),package(yojson),package(ANSITerminal),package(graphics)

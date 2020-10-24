@@ -3,8 +3,7 @@
 
    This module represents the player state as the game goes on, including 
    location, any items owned, and reputation level(?).
-*)
-
+*) 
 type player_name = string
 type points = int
 type project
@@ -14,7 +13,7 @@ type study_partners
 type st 
 
 val init_state : player_name -> Tile.tile -> st
-
+val make_player_list : int -> Tile.tile -> st list
 val get_name : st -> string
 val set_points : st -> Event.event -> unit
 

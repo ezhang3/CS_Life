@@ -1,4 +1,4 @@
-MODULES=event playerstate board authors tile
+MODULES=event playerstate board authors tile main
 OBJECTS=$(MODULES:=.cmo)
 MLS=$(MODULES:=.ml)
 MLIS=$(MODULES:=.mli)
