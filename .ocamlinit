@@ -4,6 +4,7 @@
 #require "yojson";;
 #require "ANSITerminal";;
 #directory "_build";;
-#load "adventure.cmo";;
-#load "command.cmo";;
-#load "state.cmo";;
+#load "board.cmo";;
+#load "playerstate.cmo";;
+#load "tile.cmo";;
+#load "event.cmo";;

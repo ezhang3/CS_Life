@@ -6,7 +6,7 @@ type gameboard = (Tile.tile * (Tile.tile list)) list
 
 exception No_Tile of string
 (** TODO: helper for generation tiles and path randomly *)
-let rand_paths = failwith "notfound"
+(* let rand_paths = failwith "not_found" *)
 
 let event =
   create_event "Career Fair"
@@ -40,9 +40,14 @@ let create_board x =
 | x -> create (x-1) (tile :: acc)
 *)
 
+let start_tile (board : gameboard) = 
+  match board with
+  | [] -> raise (No_Tile "Board has no start tile")
+  | h :: t -> fst h
+
 let rec find_tile (tile : Tile.tile) func (board : gameboard) =
   match board with
-  | [] -> raise (No_Tile "No such tile in here")
+  | [] -> raise (No_Tile "No such tile exists in the given board")
   | (a, b) :: t -> if func a tile then b else find_tile tile func t
 
 (** [next_tile tile func board] is the list of adjacent tiles to [tile]

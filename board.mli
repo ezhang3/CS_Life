@@ -14,6 +14,9 @@ val create_board : int -> gameboard
 (** [to_tile x] is the tile at location x*)
 (*val to_tile : int -> 'a*)
 
+(** [start_tile board] is the first tile of the board. *)
+val start_tile : gameboard -> Tile.tile
+
 (** [next_tile tile func board] is the list of adjacent tiles to [tile]
     [func tile1 tile2] is a function used to compare tiles *)
 val next_tile : Tile.tile -> (Tile.tile-> Tile.tile -> bool)-> 
