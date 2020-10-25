@@ -24,10 +24,16 @@ let get_description e =
 let get_effects e = 
   e.effects
 
+let get_effect_desc e = 
+  match e.effects with 
+  | Points [] -> failwith "empty effect"
+  | Points ((s, _) :: t) -> s
+
 let rec add_points lst acc = 
   match lst with
   | [] -> acc
   | (_, pts) :: t -> acc + pts |> add_points t 
 
-let get_effect_points = function
+let get_effect_points e = 
+  match e.effects with 
   | Points lst -> add_points lst 0

@@ -15,7 +15,8 @@ type player
 (** [init_state name start] is the initial state of a player with name [name] 
     and current_tile [start] at the start of a game *)
 val init_state : player_name -> Tile.tile -> player
-
+(** [print_state player] prints out the player's stats *)
+val print_state : player -> unit
 (** [make_player_list n start] creates a list of n players *)
 val make_player_list : int -> Tile.tile -> player list
 val get_nth_player : player list -> int -> player

@@ -32,6 +32,7 @@ val get_description : event -> string
     Lists how much the points of each component will change. *)
 val get_effects : event -> effect
 
+val get_effect_desc : event -> string
 (** [get_effect_points eff] is the total number of points accumulated by 
     effect eff*)
-val get_effect_points : effect -> int
+val get_effect_points : event -> int

@@ -23,6 +23,11 @@ let init_state name start = {
   visited_tiles = [start];
   items = []
 }
+let print_state player = 
+  print_endline ("Name: " ^ player.name ^ 
+                 "\nPoints: " ^ string_of_int player.points ^ 
+                 "\nStudy Partners: " ^ string_of_int player.study_partners ^ 
+                 "\nProject: \nItems: ")
 
 let rec get_nth_player players n = 
   match players with 
@@ -51,9 +56,7 @@ let get_name st =
 
 let set_points st (event : Event.event) = 
   let orig_pts = st.points in
-  st.points <- Event.get_effects event 
-               |> Event.get_effect_points 
-               |> ( + ) orig_pts
+  st.points <- Event.get_effect_points event |> ( + ) orig_pts
 
 let get_points st = 
   st.points

@@ -4,44 +4,50 @@ open Tile
 open Playerstate
 open Board
 
-let event =
-  create_event "Career Fair"
-    "10"
-    "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff."
-    (Points [("Gain", 10)])
+let (test_board : Board.gameboard) = Board.create_board 0
+let start_tile = Board.start_tile test_board
 
-(* should ids be strings or numbers?*)
-let tile = Tile.create_tile Red event "Career Fair Red"
-let tile2 = Tile.create_tile Blue event "Career Fair Blue"
+let divide () = print_endline "\n********************************************************\n"
 
-let test_board = [(tile,[tile2]);(tile2,[tile])]
-let start_tile board =
-  match board with 
-  | [] -> failwith "empty"
-  | (tile, _) :: t -> tile
-let divide = print_endline "\n********************************************************\n"
-(** [play_game f] starts the adventure in file [f]. *)
+(** [roll player] *)
+let rec roll player = 
+  print_endline "\n\nType 'roll' to roll the dice: \n";
+  print_string  "> ";
+  match read_line () |> String.lowercase_ascii |> String.trim with 
+  | "roll" -> 1
+  | _ -> print_endline "\nInvalid Input. Please try again.\n"; roll player 
+
+
+(**[print_player_stats player] Prints player [player]'s stats *)
+let print_player_stats player = 
+  let name = Playerstate.get_name player in 
+  print_endline ("\n\n" ^ name ^ "'s current stats: ");
+  Playerstate.print_state player
+
+let play_event player = 
+  let event = Playerstate.get_current_tile player |> Tile.get_tile_event in
+  print_endline (Event.get_name event ^ "!\n" ^ Event.get_description event);
+  print_endline ("\n" ^ Event.get_effect_desc event ^ " " ^ 
+                 (Event.get_effect_points event |> string_of_int) ^ " points\n");
+  Playerstate.set_points player event
+
+(** [play_game players board] starts the game with players [players] and 
+    board [board]. *)
 let play_game players board =
-  for i = 0 to List.length players - 1 do 
+  for i = 0 to (List.length players - 1) do 
     let player = Playerstate.get_nth_player players i in 
     let name = Playerstate.get_name player in
-    let roll = 1 in
-    print_endline ("\nIt is " ^ name ^ "'s turn: \n");
-    divide;
-    (**Print current player stats *)
-    print_endline (name ^ "'s current stats: ");
-    divide;
-    Playerstate.print_state player;
+    divide ();
+    print_endline ("\nIt is " ^ name ^ "'s turn: ");
+    print_player_stats player;
     (**Roll dice *)
-    print_endline ("\n" ^ name ^ " rolled a " ^ string_of_int roll ^ "\n\n");
+    let r = roll player in
+    print_endline ("\n" ^ name ^ " rolled a " ^ string_of_int r ^ "\n");
     (**Go to new tile and play event *)
-    Playerstate.go player board roll; 
-    let event = Playerstate.get_current_tile player |> Tile.get_tile_event in
-    print_endline (Event.get_name event ^ "!\n" ^ Event.get_description event);
-    divide;
-    Playerstate.set_points player event;
+    Playerstate.go player board r; 
+    play_event player;
     Playerstate.print_state player;
-    divide;
+    divide (); divide ();
   done 
 
 
@@ -54,8 +60,7 @@ let main () =
   match read_line () with
   | exception End_of_file -> ()
   | num -> 
-    let players = Playerstate.make_player_list (int_of_string num) 
-        (start_tile test_board) in
+    let players = Playerstate.make_player_list (int_of_string num) start_tile in
     play_game players test_board
 
 (* Execute the game engine. *)
