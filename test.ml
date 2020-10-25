@@ -53,9 +53,13 @@ let next_tile_test (name : string) (tile) (compare) (board)
   name >:: (fun _ ->
       assert_equal expected (next_tile tile compare board))
 
+let test_player = init_state "Player name" tile 
+let cur_tile = go test_player test_board 1
+
 let player_state_test = [
   get_player_name_test "Works?" dummy "Jason";
   get_points_test "Just started, 0" dummy 0;
+  "go test" >:: (fun _ -> assert_equal tile2 (get_current_tile test_player) 
 ]
 
 let tile_test = [

@@ -37,7 +37,7 @@ val get_project : player -> project
     [board] is a valid Board.gameboard
     [n] is an int
 *)
-val go : player -> (Tile.tile * Tile.tile list) list -> int -> unit
+val go : player -> Board.gameboard -> int -> unit
 
 (** [set_current_tile st tile] sets the player's current tile to [tile]
     Requires:
