@@ -36,6 +36,15 @@ let get_points_test
   name >:: (fun _ ->
       assert_equal expected_output (get_points st))
 
+let tile_color_test (name : string) tile (expected : color) = 
+  name >:: (fun _ -> assert_equal expected (get_tile_color tile))
+
+let tile_event_test (name : string) tile (expected : event) = 
+  name >:: (fun _ -> assert_equal expected (get_tile_event tile))
+
+let tile_id_test (name : string) tile (expected : tile_id) = 
+  name >:: (fun _ -> assert_equal expected (get_tile_id tile))
+
 let start_tile_test (name : string) (board) (expected) =
   name >:: (fun _ -> assert_equal expected (start_tile board))
 
@@ -47,6 +56,12 @@ let next_tile_test (name : string) (tile) (compare) (board)
 let player_state_test = [
   get_player_name_test "Works?" dummy "Jason";
   get_points_test "Just started, 0" dummy 0;
+]
+
+let tile_test = [
+  tile_color_test "tile is red" tile Red;
+  tile_event_test "tile event is career fair" tile2 event;
+  tile_id_test "tile id is Career Fair Red" tile "Career Fair Red"
 ]
 
 (* creates a board and runs next tile to get the next board*)
@@ -62,6 +77,8 @@ let board_test = [
 
 let suite =
   "test suite for game"  >::: List.flatten [
+    player_state_test;
+    tile_test;
     board_test;
   ]
 
