@@ -19,12 +19,29 @@ let start_tile board =
   match board with 
   | [] -> failwith "empty"
   | (tile, _) :: t -> tile
-
+let divide = print_endline "\n********************************************************\n"
 (** [play_game f] starts the adventure in file [f]. *)
 let play_game players board =
   for i = 0 to List.length players - 1 do 
     let player = Playerstate.get_nth_player players i in 
-    print_endline ("\nIt is " ^ Playerstate.get_name player ^ "'s turn: \n")
+    let name = Playerstate.get_name player in
+    let roll = 1 in
+    print_endline ("\nIt is " ^ name ^ "'s turn: \n");
+    divide;
+    (**Print current player stats *)
+    print_endline (name ^ "'s current stats: ");
+    divide;
+    Playerstate.print_state player;
+    (**Roll dice *)
+    print_endline ("\n" ^ name ^ " rolled a " ^ string_of_int roll ^ "\n\n");
+    (**Go to new tile and play event *)
+    Playerstate.go player board roll; 
+    let event = Playerstate.get_current_tile player |> Tile.get_tile_event in
+    print_endline (Event.get_name event ^ "!\n" ^ Event.get_description event);
+    divide;
+    Playerstate.set_points player event;
+    Playerstate.print_state player;
+    divide;
   done 
 
 
