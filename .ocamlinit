@@ -5,12 +5,6 @@
 #require "ANSITerminal";;
 #directory "_build";;
 #load "board.cmo";;
-<<<<<<< HEAD
 #load "event.cmo";;
 #load "playerstate.cmo";;
 #load "tile.cmo";;
-=======
-#load "playerstate.cmo";;
-#load "tile.cmo";;
-#load "event.cmo";;
->>>>>>> 628f5b590329e7dc1d7dfe9d762d0b961d64eba3
