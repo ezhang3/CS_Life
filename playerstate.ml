@@ -84,6 +84,7 @@ let set_current_tile st tile =
 let get_current_tile st = 
   st.current_tile
 
+(*
 (**current implementation of [go] does not account for branching paths *)
 let go st board n = 
   let rec find_tile board n tile = 
@@ -98,7 +99,18 @@ let go st board n =
             find_tile board (n - 1) h
           else find_tile board n tile
       end in 
-  find_tile board n st.current_tile
+  find_tile board n st.current_tile *)
+
+let go st board n = 
+  let rec find_tile tile board n =
+    match n with
+    | 0 -> set_current_tile st tile
+    | _ -> begin
+        match Board.next_tile st.current_tile Board.compare_tiles_id board with
+        | [] -> failwith "not_found"
+        | tile :: [] -> find_tile tile board (n - 1)
+        | h :: t -> failwith "branching paths case not implemented, prompt user"
+      end in find_tile st.current_tile board n
 
 let get_visited_tiles st = 
   st.visited_tiles

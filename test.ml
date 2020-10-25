@@ -18,20 +18,16 @@ let tile2 = Tile.create_tile Blue event "Career Fair Blue"
 let dummy_player = init_state "Jason" tile
 let test_board = create_board 2
 
-(* Should this be default in board? *)
-let compare_tiles tile1 tile2 = if get_tile_id tile1 = get_tile_id tile2
-  then true else false
-
 let get_player_name_test 
     (name : string)  
-    (st: st)
+    (st: player)
     (expected_output : string) : test = 
   name >:: (fun _ -> 
       assert_equal expected_output (get_name st))
 
 let get_points_test 
     (name: string)
-    (st: st)
+    (st: player)
     (expected_output: int) : test = 
   name >:: (fun _ ->
       assert_equal expected_output (get_points st))
@@ -73,9 +69,9 @@ let board_test = [
   (* need a start tile to give to players*)
   start_tile_test "start tile is career fair" test_board tile;
   next_tile_test "first to second 2 tile board"
-    tile compare_tiles test_board [tile2];
+    tile compare_tiles_id test_board [tile2];
   next_tile_test "second to first 2 tile board"
-    tile2 compare_tiles test_board [tile];
+    tile2 compare_tiles_id test_board [tile];
   (* TODO: test next_tile on a tile w/o adjacent tiles*)
 ]
 
