@@ -4,7 +4,7 @@ type salary = int
 type project_name = string
 type project = (project_name * salary) option
 type study_partners = int
-type st = {
+type player = {
   name : player_name;
   mutable points : points;
   mutable study_partners : study_partners;
@@ -24,6 +24,14 @@ let init_state name start = {
   items = []
 }
 
+let rec get_nth_player players n = 
+  match players with 
+  | [] -> failwith "no players"
+  | h :: t -> if n = 0 then h 
+    else get_nth_player t (n - 1)
+
+(** current implementation of make_player_list does not account for different 
+    starting points. All players will currently all start at the same tile. *)
 let make_player_list (n : int) (start : Tile.tile) = 
   let rec make_list n acc = 
     match n with 
@@ -75,6 +83,22 @@ let set_current_tile st tile =
 
 let get_current_tile st = 
   st.current_tile
+
+(**current implementation of [go] does not account for branching paths *)
+let go st board n = 
+  let rec find_tile board n tile = 
+    match n with
+    | 0 -> set_current_tile st tile
+    | _ -> begin
+        match board with 
+        | [] -> failwith "tile not found"
+        | (head, []) :: tail -> failwith "no more tiles"
+        | (head, h :: t) :: tail  -> 
+          if head = st.current_tile then 
+            find_tile board (n - 1) h
+          else find_tile board n tile
+      end in 
+  find_tile board n st.current_tile
 
 let get_visited_tiles st = 
   st.visited_tiles

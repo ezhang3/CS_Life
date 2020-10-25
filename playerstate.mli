@@ -10,31 +10,48 @@ type project
 type study_partners
 
 (** The abstract type representing the player state. *)
-type st 
+type player
 
-val init_state : player_name -> Tile.tile -> st
-val make_player_list : int -> Tile.tile -> st list
-val get_name : st -> string
-val set_points : st -> Event.event -> unit
+(** [init_state name start] is the initial state of a player with name [name] 
+    and current_tile [start] at the start of a game *)
+val init_state : player_name -> Tile.tile -> player
+
+(** [make_player_list n start] creates a list of n players *)
+val make_player_list : int -> Tile.tile -> player list
+val get_nth_player : player list -> int -> player
+val get_name : player -> string
+val set_points : player -> Event.event -> unit
 
 (** [get_points st] is the current reputation points player has in state [st] *)
-val get_points : st -> points
+val get_points : player -> points
 
-val add_study_partners : st -> int -> unit
-val get_study_partners : st -> study_partners
+val add_study_partners : player -> int -> unit
+val get_study_partners : player -> study_partners
 
-val set_project : st -> project -> unit
-val get_project : st -> project 
+val set_project : player -> project -> unit
+val get_project : player -> project 
 
-val set_current_tile : st -> Tile.tile -> unit
-(** [get_current_tile] is the tile the player is currently on in state [st] *)
-val get_current_tile : st -> Tile.tile
+(** [go st board n] moves the player [st] [n] tiles forward. 
+    Requires:
+    [st] is a valid Playerstate.st
+    [board] is a valid Board.gameboard
+    [n] is an int
+*)
+val go : player -> (Tile.tile * Tile.tile list) list -> int -> unit
 
-val get_visited_tiles : st -> Tile.tile list
+(** [set_current_tile st tile] sets the player's current tile to [tile]
+    Requires:
+    [st] is a valid Playerstate.st
+    [tile] is a valid Tile.tile 
+*)
+val set_current_tile : player -> Tile.tile -> unit
 
-(** [init_state p] is the initial state of player [p] at the start of game *)
+(** [get_current_tile st] is the tile the player is currently on in state [st] *)
+val get_current_tile : player -> Tile.tile
+
+val get_visited_tiles : player -> Tile.tile list
 
 (** [have_items st] is the list of items the player has on hand in state [st]*)
-val get_items: st -> string list
+val get_items: player -> string list
 
 

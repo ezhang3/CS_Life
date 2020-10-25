@@ -22,7 +22,11 @@ let start_tile board =
 
 (** [play_game f] starts the adventure in file [f]. *)
 let play_game players board =
-  open_graph ""
+  for i = 0 to List.length players - 1 do 
+    let player = Playerstate.get_nth_player players i in 
+    print_endline ("\nIt is " ^ Playerstate.get_name player ^ "'s turn: \n")
+  done 
+
 
 (** [main ()] prompts for the game to play, then starts it. *)
 let main () =
