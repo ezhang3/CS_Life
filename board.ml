@@ -1,10 +1,12 @@
 open Event
 open Tile
+open Yojson.Basic.Util
 
 (** board type is implemented as an adjacency list *)
 type gameboard = (Tile.tile * (Tile.tile list)) list
 
 exception No_Tile of string
+
 
 (** TODO: helper for generation tiles and path randomly *)
 (* let rand_paths = failwith "not_found" *)
