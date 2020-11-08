@@ -1,4 +1,3 @@
-open Event
 open Tile
 open Yojson.Basic.Util
 
@@ -7,7 +6,7 @@ type gameboard = (Tile.tile * (Tile.tile list)) list
 
 exception No_Tile of string
 
-
+(* 
 (** TODO: helper for generation tiles and path randomly *)
 (* let rand_paths = failwith "not_found" *)
 
@@ -16,10 +15,20 @@ let event =
     "10"
     "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff."
     (Points [("Gain", 10)])
+*)
 
-(* should ids be strings or numbers?*)
-let tile = Tile.create_tile Red event "Career Fair Red"
-let tile2 = Tile.create_tile Blue event "Career Fair Blue"
+
+let tile = Tile.create_tile 
+  "Tile1" 
+  Red "Career Fair" 
+  "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff." 
+  (Points [("Gain", 10)])
+
+let tile2 = Tile.create_tile 
+  "Tile2" 
+  Blue "Career Fair" 
+  "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff." 
+  (Points [("Gain", 10)])
 
 let test_board = [(tile,[tile2]);(tile2,[tile])]
 

@@ -1,4 +1,3 @@
-open Event
 open Yojson.Basic.Util
 
 type color = Red | Blue | Green | Yellow | Black
@@ -26,8 +25,6 @@ let get_color = function
 let create_tile id color event_name description effects= 
   {id = id; color = color; event_name = event_name; description = description;
    effects = effects }
-
-let event_placeholder = create_event "placeholder" "" "lalala" (Points [])
 
 (* sample code to extract from JSON. Need to wait until tile and event are combined*)
 (* let tile_of_json json = {
