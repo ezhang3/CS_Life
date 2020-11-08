@@ -1,25 +1,24 @@
-open Event
 open Tile
 open Yojson.Basic.Util
 
 (** board type is implemented as an adjacency list *)
-(* type gameboard = (Tile.tile * (Tile.tile list)) list *)
+(* type gameboard = (Tile.tile * (Tile.tile list)) list (* it's possibile we might
+   have to change up the implementation of board*)
+*)
 
 exception No_Tile of string
 
-
-(** TODO: helper for generation tiles and path randomly *)
-(* let rand_paths = failwith "not_found" *)
-
-let event =
-  create_event "Career Fair"
-    "10"
-    "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff."
+let tile = Tile.create_tile 
+    "Tile1" 
+    "Red" "Career Fair" 
+    "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff." 
     (Points [("Gain", 10)])
 
-(* should ids be strings or numbers?*)
-let tile = Tile.create_tile Red event "Career Fair Red"
-let tile2 = Tile.create_tile Blue event "Career Fair Blue"
+let tile2 = Tile.create_tile 
+    "Tile2" 
+    "Blue" "Career Fair" 
+    "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff." 
+    (Points [("Gain", 10)])
 
 let test_board = [(tile,[tile2]);(tile2,[tile])]
 
@@ -106,11 +105,11 @@ let assign_next_tiles lst =
 
 let build_tile json = 
   let id = get_mem json "id" |> to_string in
-  let color = get_mem json "color" |> to_string |> get_color in
+  let color = get_mem json "color" |> to_string in
   let event_name = get_mem json "event" |> to_string in
   let description = get_mem json "description" |> to_string in
   let effects = get_mem json "effects" |> to_string in
-  create_tile color (create_event event_name id description effects) id
+  create_tile id color event_name description effects
 
 let build_tiles json = {
   tiles = json |> to_list |> List.map build_tile |> assign_next_tiles;
@@ -146,5 +145,4 @@ let rec find_tile (tile : Tile.tile) func (board : gameboard) =
 (* TODO: Think about how to optimize because search is O(n) *)
 let next_tile = find_tile
 
-let compare_tiles_id tile1 tile2 = if get_tile_id tile1 = get_tile_id tile2
-  then true else false
+let compare_tiles_id tile1 tile2 = get_tile_id tile1 = get_tile_id tile2

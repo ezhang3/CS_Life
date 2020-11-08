@@ -1,4 +1,3 @@
-open Event
 (** 
    Representation of data in a tile
    Stores the id, color, and events associated with it
@@ -10,10 +9,16 @@ type tile
 type color = Red | Blue | Green | Yellow | Black
 (** Type of tile identifiers. Make specific tile easy to find on board. *)
 type tile_id = string
+(** Type of effects *)
+type effect = Points of (string * int) list 
 
-(** [create color event id] creates a tile of color [color] with id
-    [id] and associated event [event]*)
-val create_tile : color ->  Event.event -> tile_id -> tile
+(* MIGHT HAVE TO CHANGE SIGNATURES SO THAT METHODS TAKE IN tile_id INSTEAD OF
+   TILE *)
+
+(* have to edit specs later *)
+(** [create_tile id color event_name description effects] creates a tile of 
+    color [color] with id [id] and associated event [event]*)
+val create_tile : tile_id -> string -> string -> string -> effect ->  tile
 
 (** [get_tile_id t] is the [tile_id] of tile [t] *)
 val get_tile_id : tile -> tile_id
@@ -29,7 +34,7 @@ val get_color : string -> color
 val get_tile_event_name : tile -> string
 
 (** [description t] is the description of the event occuring on tile [t] *)
-val get_description : tile -> string
+val get_tile_description : tile -> string
 
 (** [get_effects t] is the list of effects that landing on tile [t] will 
     cause a person. 
