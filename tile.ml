@@ -64,3 +64,6 @@ let rec add_points lst acc =
 let get_effect_points tile = 
   match tile.effects with 
   | Points lst -> add_points lst 0
+
+(* take string, output a function to apply to points, ie for losing,
+   gaining, multiplying, etc points*)

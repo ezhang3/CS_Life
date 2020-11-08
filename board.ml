@@ -3,7 +3,7 @@ open Tile
 open Yojson.Basic.Util
 
 (** board type is implemented as an adjacency list *)
-type gameboard = (Tile.tile * (Tile.tile list)) list
+(* type gameboard = (Tile.tile * (Tile.tile list)) list *)
 
 exception No_Tile of string
 
@@ -80,6 +80,48 @@ let test_board = [(tile,[tile2]);(tile2,[tile])]
      }]]]]]]]]]]]]]]]]]]]]]
      thinking we should add tile neighbors to the tile module
      Generate board using those tiles *)
+type stage = {
+  tiles : (Tile.tile * (Tile.tile list)) list
+}
+type gameboard = {
+  stages : stage (* list *)
+}
+(* id : tile_id;
+   color : color;
+   event_name : string; 
+   description: string; 
+   effects: effect; *)
+let get_mem json str =
+  json |> member str
+
+(* replaces each tile of lst with a tuple of the tile and a list with the
+   following tile in the list (empty list if no following tile)*)
+let assign_next_tiles lst =
+  let rec helper lst acc = 
+    match lst with
+    | [] -> failwith "Impossible"
+    | h :: [] -> List.rev ((h, []) :: acc)
+    | f :: s :: t -> helper t ((f, [s]) :: acc)
+  in helper lst []
+
+let build_tile json = 
+  let id = get_mem json "id" |> to_string in
+  let color = get_mem json "color" |> to_string |> get_color in
+  let event_name = get_mem json "event" |> to_string in
+  let description = get_mem json "description" |> to_string in
+  let effects = get_mem json "effects" |> to_string in
+  create_tile color (create_event event_name id description effects) id
+
+let build_tiles json = {
+  tiles = json |> to_list |> List.map build_tile |> assign_next_tiles;
+}
+let build_stage json = {
+  stages = json |> member "tiles" |> build_tiles;
+}
+
+let from_json json =
+  try build_stage json
+  with Type_error (s, _) -> failwith ("Failed to build board from json: " ^ s)
 
 let create_board x = 
   test_board
