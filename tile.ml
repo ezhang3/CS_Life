@@ -4,15 +4,15 @@ type color = Red | Blue | Green | Yellow | Black
 
 type tile_id = string
 
-type effect = Points of (string * int) list 
+type effect = Points of (string * int) list (*see if we can write this so that
+it can activate a mini-game*)
 
 type tile = {
   id : tile_id;
   color : color;
   event_name : string; 
   description: string; 
-  effects: effect; 
-  (* example of [effects] list: [("exp", 10)] ==> gain 10 exp *)
+  effects: effect; (* example of [effects] list: [("exp", 10)] ==> gain 10 exp *)
 }
 
 let get_color = function

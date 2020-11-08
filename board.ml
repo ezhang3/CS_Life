@@ -2,21 +2,10 @@ open Tile
 open Yojson.Basic.Util
 
 (** board type is implemented as an adjacency list *)
-type gameboard = (Tile.tile * (Tile.tile list)) list
+type gameboard = (Tile.tile * (Tile.tile list)) list (* it's possibile we might
+have to change up the implementation of board*)
 
 exception No_Tile of string
-
-(* 
-(** TODO: helper for generation tiles and path randomly *)
-(* let rand_paths = failwith "not_found" *)
-
-let event =
-  create_event "Career Fair"
-    "10"
-    "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff."
-    (Points [("Gain", 10)])
-*)
-
 
 let tile = Tile.create_tile 
   "Tile1" 
@@ -113,5 +102,4 @@ let rec find_tile (tile : Tile.tile) func (board : gameboard) =
 (* TODO: Think about how to optimize because search is O(n) *)
 let next_tile = find_tile
 
-let compare_tiles_id tile1 tile2 = if get_tile_id tile1 = get_tile_id tile2
-  then true else false
+let compare_tiles_id tile1 tile2 = get_tile_id tile1 = get_tile_id tile2

@@ -12,6 +12,9 @@ type tile_id = string
 (** Type of effects *)
 type effect = Points of (string * int) list 
 
+(* MIGHT HAVE TO CHANGE SIGNATURES SO THAT METHODS TAKE IN tile_id INSTEAD OF
+TILE *)
+
 (* have to edit specs later *)
 (** [create_tile id color event_name description effects] creates a tile of 
     color [color] with id [id] and associated event [event]*)
