@@ -4,7 +4,7 @@ type color = Red | Blue | Green | Yellow | Black
 
 type tile_id = string
 
-type effect = Points of (string * int) list (*see if we can write this so that
+type effect = Points of (string * int) (*see if we can write this so that
                                               it can activate a mini-game*)
 
 type tile = {
@@ -12,19 +12,37 @@ type tile = {
   color : color;
   event_name : string; 
   description: string; 
-  effects: effect; (* example of [effects] list: [("exp", 10)] ==> gain 10 exp *)
+  effects: effect list; (* example of [effects] list: [("exp", 10)] ==> gain 10 exp *)
 }
 
-let get_color = function
-  | "Red" -> Red
-  | "Blue" -> Blue
-  | "Green" -> Green
-  | "Yellow" -> Yellow
+let get_color str = match String.lowercase_ascii str with
+  | "red" -> Red
+  | "blue" -> Blue
+  | "green" -> Green
+  | "yellow" -> Yellow
   | _ -> Black
+
+let parse_helper lst = 
+  let rec helper acc = function
+    | [] -> List.rev acc
+    | "" :: t -> helper acc t
+    | h :: t ->  helper (h :: acc) t
+  in helper [] lst
+
+let parse_effect str =
+  let split = String.split_on_char ' ' str
+  in split |> parse_helper
+
+let get_effects str =
+  if str = "" then failwith "invalid" else
+    match parse_effect (String.lowercase_ascii str) with 
+    | "gain" :: t :: [] -> Points ("Gained", int_of_string t)
+    | "lose" :: t :: [] -> Points ("Lost", int_of_string t)
+    | _ -> failwith "invalid"
 
 let create_tile id color event_name description effects= 
   {id = id; color = get_color color; event_name = event_name; description = description;
-   effects = effects }
+   effects = List.map get_effects effects }
 
 (* sample code to extract from JSON. Need to wait until tile and event are combined*)
 (* let tile_of_json json = {
