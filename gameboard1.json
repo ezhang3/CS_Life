@@ -12,7 +12,7 @@
       "color" :  "Green",
       "event" : "Start CS 1110",
       "description": "Walker White rules!",
-      "effects" : "gain 100"
+      "effects" : "gain 100,minigame"
     },
     {
       "id" : "3110",
@@ -21,7 +21,5 @@
       "description": "Camels are fun!",
       "effects" : "gain 300"
     }
-  ],
-  "first tile": "CS 1110",
-  "last tile" : "Graduation :)"
+  ]
 }

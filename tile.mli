@@ -14,9 +14,10 @@ type effect = Points of (string * int)
 
 (* MIGHT HAVE TO CHANGE SIGNATURES AND SPECS *)
 
-(** [create_tile id color event_name description effects] creates a tile of 
-    color [color] with id [id] and associated event [event]*)
-val create_tile : tile_id -> string -> string -> string -> string -> tile
+(** [create_tile id color event_name desc effects] creates a tile of 
+    color [color] with id [id], description [desc], associated event 
+    [event_name], and corresponding effects [effects] *)
+val create_tile : tile_id -> string -> string -> string -> string list -> tile
 
 (** [get_tile_id t] is the [tile_id] of tile [t] *)
 val get_tile_id : tile -> tile_id

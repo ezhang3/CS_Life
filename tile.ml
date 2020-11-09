@@ -22,6 +22,9 @@ let get_color str = match String.lowercase_ascii str with
   | "yellow" -> Yellow
   | _ -> Black
 
+(** [sep_effects s] separates the effects give in a string. *)
+let sep_effects s = String.split_on_char ',' s
+
 let parse_helper lst = 
   let rec helper acc = function
     | [] -> List.rev acc
@@ -38,6 +41,7 @@ let get_effects str =
     match parse_effect (String.lowercase_ascii str) with 
     | "gain" :: t :: [] -> Points ("Gained", int_of_string t)
     | "lose" :: t :: [] -> Points ("Lost", int_of_string t)
+    | "minigame" :: t :: [] -> failwith "not implemeneted yet"
     | _ -> failwith "invalid"
 
 let create_tile id color event_name description effects= 
