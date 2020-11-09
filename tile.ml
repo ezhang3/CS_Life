@@ -46,7 +46,7 @@ let get_effects str =
 
 let create_tile id color event_name description effects= 
   {id = id; color = get_color color; event_name = event_name; description = description;
-   effects = List.map get_effects (parse_effect effects) }
+   effects = List.map get_effects effects}
 
 let get_tile_id tile = 
   tile.id

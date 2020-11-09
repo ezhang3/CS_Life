@@ -11,13 +11,13 @@ let tile = Tile.create_tile
     "Tile1" 
     "Red" "Career Fair" 
     "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff." 
-    [Points ("Gain",10)]
+    ["gain 10"]
 
 let tile2 = Tile.create_tile 
     "Tile2" 
     "Blue" "Career Fair" 
     "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff." 
-    [Points ("Gain",10)]
+    ["gain 10"]
 
 let dummy_player = init_state "Jason" tile
 let test_board = create_board 2

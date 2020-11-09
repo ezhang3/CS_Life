@@ -12,14 +12,14 @@ let tile = Tile.create_tile
     "Tile1" 
     "Red" "Career Fair" 
     "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff." 
-    "gain 10"
+    ["gain 10"]
 
 let tile2 = Tile.create_tile 
     "Tile2" 
     "Blue" "Career Fair" 
     "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff." 
     (*["Gain"]*)
-    "gain 10"
+    ["gain 10"]
 
 let test_board = [(tile,[tile2]);(tile2,[tile])]
 
@@ -109,7 +109,7 @@ let build_tile json =
   let color = get_mem json "color" |> to_string in
   let event_name = get_mem json "event" |> to_string in
   let description = get_mem json "description" |> to_string in
-  let effects = get_mem json "effects" |> to_string in
+  let effects = get_mem json "effects" |> to_list |> List.map to_string in
   create_tile id color event_name description effects
 
 let build_tiles json = {
