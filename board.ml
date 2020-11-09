@@ -12,13 +12,14 @@ let tile = Tile.create_tile
     "Tile1" 
     "Red" "Career Fair" 
     "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff." 
-    (Points [("Gain", 10)])
+    "gain 10"
 
 let tile2 = Tile.create_tile 
     "Tile2" 
     "Blue" "Career Fair" 
     "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff." 
-    (Points [("Gain", 10)])
+    (*["Gain"]*)
+    "gain 10"
 
 let test_board = [(tile,[tile2]);(tile2,[tile])]
 
@@ -130,19 +131,21 @@ let create_board x =
 | x -> create (x-1) (tile :: acc)
 *)
 
-let start_tile (board : gameboard) = 
-  match board with
+let start_tile (board : gameboard) = failwith "thinking of new implementation"
+ (* match board with
   | [] -> raise (No_Tile "Board has no start tile")
-  | h :: t -> fst h
+  | h :: t -> fst h *)
 
 let rec find_tile (tile : Tile.tile) func (board : gameboard) =
+  failwith "thinking of new implementation"
+  (*
   match board with
   | [] -> raise (No_Tile "No such tile exists in the given board")
-  | (a, b) :: t -> if func a tile then b else find_tile tile func t
+  | (a, b) :: t -> if func a tile then b else find_tile tile func t *)
 
 (** [next_tile tile func board] searches through the board to find the
     tile that matches tile and gives a list of adjacent tiles. *)
 (* TODO: Think about how to optimize because search is O(n) *)
-let next_tile = find_tile
+let next_tile = (* find_tile *) failwith "thinking of new implementation"
 
 let compare_tiles_id tile1 tile2 = get_tile_id tile1 = get_tile_id tile2

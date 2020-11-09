@@ -12,7 +12,7 @@ type tile = {
   color : color;
   event_name : string; 
   description: string; 
-  effects: effect list; (* example of [effects] list: [("exp", 10)] ==> gain 10 exp *)
+  effects: effect list; 
 }
 
 let get_color str = match String.lowercase_ascii str with
@@ -42,14 +42,7 @@ let get_effects str =
 
 let create_tile id color event_name description effects= 
   {id = id; color = get_color color; event_name = event_name; description = description;
-   effects = List.map get_effects effects }
-
-(* sample code to extract from JSON. Need to wait until tile and event are combined*)
-(* let tile_of_json json = {
-   id = json |> member "id" |> to_string;
-   color = json |> member "color" |> to_string |> get_color;
-   event_name = event_placeholder; 
-   } *)
+   effects = List.map get_effects (parse_effect effects) }
 
 let get_tile_id tile = 
   tile.id
@@ -68,8 +61,11 @@ let get_tile_effects tile =
 
 let get_effect_desc tile = 
   match tile.effects with 
+  | [] -> failwith "empty effects" 
+  | Points (s,_) :: t -> s 
+  (*
   | Points [] -> failwith "empty effect"
-  | Points ((s, _) :: t) -> s
+  | Points ((s, _) :: t) -> s *)
 
 let rec add_points lst acc = 
   match lst with

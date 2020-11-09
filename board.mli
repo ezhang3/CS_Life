@@ -3,9 +3,8 @@ open Tile
 (** Represents the game board which consists of tiles *)
 type gameboard
 
-(** An exception given if the tile requested was not found in the board *)
+(** An exception give if the tile doesn't appear in board *)
 exception No_Tile of string
-
 (** [create_board x] is a board to be implemented with a json.
     Currently uses an integer as a placeholder value*)
 val create_board : int -> gameboard
@@ -18,7 +17,6 @@ val start_tile : gameboard -> tile
     [func tile1 tile2] is a function used to compare tiles.
     Raises: No_Tile if [tile] is not in [board] *)
 (* TODO: think about rep invariant and abstraction function*)
-val next_tile : tile -> (tile-> tile -> bool) -> 
-  gameboard -> tile list
+val next_tile : tile -> (tile-> tile -> bool) -> gameboard -> tile list
 
 val compare_tiles_id : tile -> tile -> bool
