@@ -2,9 +2,8 @@ open Tile
 open Yojson.Basic.Util
 
 (** board type is implemented as an adjacency list *)
-(* type gameboard = (Tile.tile * (Tile.tile list)) list (* it's possibile we might
-   have to change up the implementation of board*)
-*)
+(* type gameboard = (Tile.tile * (Tile.tile list)) list  *)
+(* it's possibile we might have to change up the implementation of board *)
 
 exception No_Tile of string
 
@@ -123,7 +122,7 @@ let from_json json =
   try build_stage json
   with Type_error (s, _) -> failwith ("Failed to build board from json: " ^ s)
 
-let create_board x = 
+let create_board (x : int) = 
   test_board
 (*
    match x with
@@ -132,9 +131,9 @@ let create_board x =
 *)
 
 let start_tile (board : gameboard) = failwith "thinking of new implementation"
- (* match board with
-  | [] -> raise (No_Tile "Board has no start tile")
-  | h :: t -> fst h *)
+(* match board with
+   | [] -> raise (No_Tile "Board has no start tile")
+   | h :: t -> fst h *)
 
 let rec find_tile (tile : Tile.tile) func (board : gameboard) =
   failwith "thinking of new implementation"
