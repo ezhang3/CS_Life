@@ -25,10 +25,10 @@ let print_player_stats player =
   Playerstate.print_state player
 
 let play_event player = 
-  let event = Playerstate.get_current_tile player |> Tile.get_tile_event in
-  print_endline (Event.get_name event ^ "!\n" ^ Event.get_description event);
-  print_endline ("\n" ^ Event.get_effect_desc event ^ " " ^ 
-                 (Event.get_effect_points event |> string_of_int) ^ " points\n");
+  let event = Playerstate.get_current_tile player  in
+  print_endline (Tile.get_tile_event_name event ^ "!\n" ^ Tile.get_tile_description event);
+  print_endline ("\n" ^ Tile.get_effect_desc event ^ " " ^ 
+                 (Tile.get_effect_points event |> string_of_int) ^ " points\n");
   Playerstate.set_points player event
 
 (** [play_game players board] starts the game with players [players] and 

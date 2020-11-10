@@ -54,9 +54,9 @@ let make_player_list (n : int) (start : Tile.tile) =
 let get_name st = 
   st.name
 
-let set_points st (event : Event.event) = 
+let set_points st (tile : Tile.tile) = 
   let orig_pts = st.points in
-  st.points <- Event.get_effect_points event |> ( + ) orig_pts
+  st.points <- Tile.get_effect_points tile |> ( + ) orig_pts
 
 let get_points st = 
   st.points

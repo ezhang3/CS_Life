@@ -21,7 +21,7 @@ val print_state : player -> unit
 val make_player_list : int -> Tile.tile -> player list
 val get_nth_player : player list -> int -> player
 val get_name : player -> string
-val set_points : player -> Event.event -> unit
+val set_points : player -> Tile.tile -> unit
 
 (** [get_points st] is the current reputation points player has in state [st] *)
 val get_points : player -> points
