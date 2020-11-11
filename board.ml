@@ -20,7 +20,6 @@ let tile2 = Tile.create_tile
     (*["Gain"]*)
     ["gain 10"]
 
-let test_board = [(tile,[tile2]);(tile2,[tile])]
 
 (* how to create boards:
    function to
@@ -85,6 +84,8 @@ type stage = {
 type gameboard = {
   stages : stage (* list *)
 }
+
+let test_board = {stages = {tiles = [(tile,[tile2]);(tile2,[tile])]}}
 (* id : tile_id;
    color : color;
    event_name : string; 
