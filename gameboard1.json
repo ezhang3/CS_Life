@@ -1,5 +1,6 @@
-{
-  "tiles" : [
+{"stages" : [
+  {
+    "tiles" : [
     {
       "id" : "tile 1",
       "color" :  "Red",
@@ -21,5 +22,7 @@
       "description": "Camels are fun!",
       "effects" : ["gain 300"]
     }
+  ]
+  }
   ]
 }
