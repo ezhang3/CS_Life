@@ -128,6 +128,7 @@ let create_board (x : int) =
 | x -> create (x-1) (tile :: acc)
 *)
 
+(* board is a flattened list *)
 let start_tile (board : gameboard) = failwith "thinking of new implementation"
 (* match board with
    | [] -> raise (No_Tile "Board has no start tile")
