@@ -114,12 +114,13 @@ let build_tile json =
 
 let build_tiles json = 
   json |> to_list |> List.map build_tile |> assign_next_tiles
+(* assign tile in last stage to point to first tile in following stage*)
 let build_stage json = get_mem json "tiles" |> build_tiles
 let build_stages json =
   get_mem json "stages"|> to_list |> List.map build_stage
 
 let from_json json =
-  try build_stages json
+  try List.flatten (build_stages json)
   with Type_error (s, _) -> failwith ("Failed to build board from json: " ^ s)
 
 let create_board (x : int) = 
