@@ -76,9 +76,10 @@ let rec add_points lst acc =
   | [] -> acc
   | (_, pts) :: t -> acc + pts |> add_points t 
 
-let get_effect_points tile = 
-  match tile.effects with 
-  | Points lst -> add_points lst 0
+
+let get_effect_points tile = failwith "gonna work on this later"
+(*match tile.effects with 
+  | Points lst -> add_points lst 0 *)
 
 (* take string, output a function to apply to points, ie for losing,
    gaining, multiplying, etc points*)
