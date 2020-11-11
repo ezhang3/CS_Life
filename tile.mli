@@ -38,11 +38,11 @@ val get_tile_description : tile -> string
 (** [get_effects t] is the list of effects that landing on tile [t] will 
     cause a person. 
     Lists how much the points of each component will change. *)
-val get_tile_effects : tile -> effect
+val get_tile_effects : tile -> effect list
 
 val get_effect_desc : tile -> string
 (** [get_effect_points eff] is the total number of points accumulated by 
     effect eff*)
 val get_effect_points : tile -> int
 
-val get_effects : string list -> effect list
+val get_effects : string -> effect
