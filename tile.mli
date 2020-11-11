@@ -4,20 +4,19 @@
 *)
 
 (** Abstract representation of values representing tiles. *)
-type tile
-(** Type that represents the tile's color on the gameboard GUI *)
+type tile 
+(** Type that represents the tile's color on the gameboard GUI*)
 type color = Red | Blue | Green | Yellow | Black
 (** Type of tile identifiers. Make specific tile easy to find on board. *)
 type tile_id = string
 (** Type of effects *)
 type effect = Points of (string * int)
 
-(* MIGHT HAVE TO CHANGE SIGNATURES SO THAT METHODS TAKE IN tile_id INSTEAD OF
-   TILE *)
+(* MIGHT HAVE TO CHANGE SIGNATURES AND SPECS *)
 
-(* have to edit specs later *)
-(** [create_tile id color event_name description effects] creates a tile of 
-    color [color] with id [id] and associated event [event]*)
+(** [create_tile id color event_name desc effects] creates a tile of 
+    color [color] with id [id], description [desc], associated event 
+    [event_name], and corresponding effects [effects] *)
 val create_tile : tile_id -> string -> string -> string -> string list -> tile
 
 (** [get_tile_id t] is the [tile_id] of tile [t] *)

@@ -2,9 +2,8 @@ open Tile
 open Yojson.Basic.Util
 
 (** board type is implemented as an adjacency list *)
-(* type gameboard = (Tile.tile * (Tile.tile list)) list (* it's possibile we might
-   have to change up the implementation of board*)
-*)
+(* type gameboard = (Tile.tile * (Tile.tile list)) list  *)
+(* it's possibile we might have to change up the implementation of board *)
 
 exception No_Tile of string
 
@@ -12,15 +11,15 @@ let tile = Tile.create_tile
     "Tile1" 
     "Red" "Career Fair" 
     "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff." 
-    (Points [("Gain", 10)])
+    ["gain 10"]
 
 let tile2 = Tile.create_tile 
     "Tile2" 
     "Blue" "Career Fair" 
     "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff." 
-    (Points [("Gain", 10)])
+    (*["Gain"]*)
+    ["gain 10"]
 
-let test_board = [(tile,[tile2]);(tile2,[tile])]
 
 (* how to create boards:
    function to
@@ -79,11 +78,14 @@ let test_board = [(tile,[tile2]);(tile2,[tile])]
      }]]]]]]]]]]]]]]]]]]]]]
      thinking we should add tile neighbors to the tile module
      Generate board using those tiles *)
+type stage = {
+  tiles : (Tile.tile * (Tile.tile list)) list
+}
+type gameboard = {
+  stages : stage (* list *)
+}
 
-(* could have string list instead of tile list*)
-type stage = (Tile.tile * (Tile.tile list)) list
-type gameboard = stage (* list *)
-
+let test_board = {stages = {tiles = [(tile,[tile2]);(tile2,[tile])]}}
 (* id : tile_id;
    color : color;
    event_name : string; 
@@ -118,7 +120,7 @@ let from_json json =
   try build_stage json
   with Type_error (s, _) -> failwith ("Failed to build board from json: " ^ s)
 
-let create_board x = 
+let create_board (x : int) = 
   test_board
 (*
    match x with
@@ -126,19 +128,21 @@ let create_board x =
 | x -> create (x-1) (tile :: acc)
 *)
 
-let start_tile (board : gameboard) = 
-  match board with
-  | [] -> raise (No_Tile "Board has no start tile")
-  | h :: t -> fst h
+let start_tile (board : gameboard) = failwith "thinking of new implementation"
+(* match board with
+   | [] -> raise (No_Tile "Board has no start tile")
+   | h :: t -> fst h *)
 
 let rec find_tile (tile : Tile.tile) func (board : gameboard) =
+  failwith "thinking of new implementation"
+  (*
   match board with
   | [] -> raise (No_Tile "No such tile exists in the given board")
-  | (a, b) :: t -> if func a tile then b else find_tile tile func t
+  | (a, b) :: t -> if func a tile then b else find_tile tile func t *)
 
 (** [next_tile tile func board] searches through the board to find the
     tile that matches tile and gives a list of adjacent tiles. *)
 (* TODO: Think about how to optimize because search is O(n) *)
-let next_tile = find_tile
+let next_tile = (* find_tile *) failwith "thinking of new implementation"
 
 let compare_tiles_id tile1 tile2 = get_tile_id tile1 = get_tile_id tile2

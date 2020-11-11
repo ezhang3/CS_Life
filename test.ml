@@ -1,20 +1,24 @@
 open OUnit2
 open Board
-open Event
 open Playerstate
 open Tile 
 
-let e = create_event "Day 1" "school starts" "You are now a student at Cornell" (Points [("None", 0)])
-let started = create_tile Green e "Start"
-let dummy = init_state "Jason" started
+let start = create_tile "Start" "green" "School starts" 
+"You are now a student at Cornell" []
+let dummy = init_state "Jason" start
 
-let event =
-  create_event "Career Fair"
-    "10"
-    "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff."
-    (Points [("Gain", 10)])
-let tile = Tile.create_tile Red event "Career Fair Red"
-let tile2 = Tile.create_tile Blue event "Career Fair Blue"
+let tile = Tile.create_tile 
+    "Tile1" 
+    "Red" "Career Fair" 
+    "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff." 
+    ["gain 10"]
+
+let tile2 = Tile.create_tile 
+    "Tile2" 
+    "Blue" "Career Fair" 
+    "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff." 
+    ["gain 10"]
+
 let dummy_player = init_state "Jason" tile
 let test_board = create_board 2
 
@@ -35,8 +39,8 @@ let get_points_test
 let tile_color_test (name : string) tile (expected : color) = 
   name >:: (fun _ -> assert_equal expected (get_tile_color tile))
 
-let tile_event_test (name : string) tile (expected : event) = 
-  name >:: (fun _ -> assert_equal expected (get_tile_event tile))
+let tile_event_test (name : string) tile expected = 
+  name >:: (fun _ -> assert_equal expected (get_tile_event_name tile))
 
 let tile_id_test (name : string) tile (expected : tile_id) = 
   name >:: (fun _ -> assert_equal expected (get_tile_id tile))
@@ -66,7 +70,7 @@ let player_state_test = [
 
 let tile_test = [
   tile_color_test "tile is red" tile Red;
-  tile_event_test "tile event is career fair" tile2 event;
+  tile_event_test "tile event is career fair" tile2 "Career Fair";
   tile_id_test "tile id is Career Fair Red" tile "Career Fair Red"
 ]
 

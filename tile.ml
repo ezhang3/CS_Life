@@ -12,7 +12,7 @@ type tile = {
   color : color;
   event_name : string; 
   description: string; 
-  effects: effect list; (* example of [effects] list: [("exp", 10)] ==> gain 10 exp *)
+  effects: effect list; 
 }
 
 let get_color str = match String.lowercase_ascii str with
@@ -21,6 +21,9 @@ let get_color str = match String.lowercase_ascii str with
   | "green" -> Green
   | "yellow" -> Yellow
   | _ -> Black
+
+(** [sep_effects s] separates the effects give in a string. *)
+let sep_effects s = String.split_on_char ',' s
 
 let parse_helper lst = 
   let rec helper acc = function
@@ -38,19 +41,16 @@ let get_effects str =
     match parse_effect (String.lowercase_ascii str) with 
     | "gain" :: t :: [] -> Points ("Gained", int_of_string t)
     | "lose" :: t :: [] -> Points ("Lost", int_of_string t)
+<<<<<<< HEAD
     (* minigame *)
+=======
+    | "minigame" :: t :: [] -> failwith "not implemeneted yet"
+>>>>>>> f9ccc3f13b1e4e92a03ccf94f7b71a603e20a59d
     | _ -> failwith "invalid"
 
 let create_tile id color event_name description effects= 
   {id = id; color = get_color color; event_name = event_name; description = description;
-   effects = List.map get_effects effects }
-
-(* sample code to extract from JSON. Need to wait until tile and event are combined*)
-(* let tile_of_json json = {
-   id = json |> member "id" |> to_string;
-   color = json |> member "color" |> to_string |> get_color;
-   event_name = event_placeholder; 
-   } *)
+   effects = List.map get_effects effects}
 
 let get_tile_id tile = 
   tile.id
@@ -69,17 +69,21 @@ let get_tile_effects tile =
 
 let get_effect_desc tile = 
   match tile.effects with 
+  | [] -> failwith "empty effects" 
+  | Points (s,_) :: t -> s 
+  (*
   | Points [] -> failwith "empty effect"
-  | Points ((s, _) :: t) -> s
+  | Points ((s, _) :: t) -> s *)
 
 let rec add_points lst acc = 
   match lst with
   | [] -> acc
   | (_, pts) :: t -> acc + pts |> add_points t 
 
-let get_effect_points tile = 
-  match tile.effects with 
-  | Points lst -> add_points lst 0
+
+let get_effect_points tile = failwith "gonna work on this later"
+(*match tile.effects with 
+  | Points lst -> add_points lst 0 *)
 
 (* take string, output a function to apply to points, ie for losing,
    gaining, multiplying, etc points*)
