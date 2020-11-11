@@ -79,12 +79,11 @@ let test_board = [(tile,[tile2]);(tile2,[tile])]
      }]]]]]]]]]]]]]]]]]]]]]
      thinking we should add tile neighbors to the tile module
      Generate board using those tiles *)
-type stage = {
-  tiles : (Tile.tile * (Tile.tile list)) list
-}
-type gameboard = {
-  stages : stage (* list *)
-}
+
+(* could have string list instead of tile list*)
+type stage = (Tile.tile * (Tile.tile list)) list
+type gameboard = stage (* list *)
+
 (* id : tile_id;
    color : color;
    event_name : string; 
@@ -108,15 +107,12 @@ let build_tile json =
   let color = get_mem json "color" |> to_string in
   let event_name = get_mem json "event" |> to_string in
   let description = get_mem json "description" |> to_string in
-  let effects = get_mem json "effects" |> to_string in
+  let effects = get_mem json "effects" |> to_list |> List.map to_string in
   create_tile id color event_name description effects
 
-let build_tiles json = {
-  tiles = json |> to_list |> List.map build_tile |> assign_next_tiles;
-}
-let build_stage json = {
-  stages = json |> member "tiles" |> build_tiles;
-}
+let build_tiles json = 
+  json |> to_list |> List.map build_tile |> assign_next_tiles
+let build_stage json = json |> member "tiles" |> build_tiles
 
 let from_json json =
   try build_stage json

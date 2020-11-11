@@ -38,6 +38,7 @@ let get_effects str =
     match parse_effect (String.lowercase_ascii str) with 
     | "gain" :: t :: [] -> Points ("Gained", int_of_string t)
     | "lose" :: t :: [] -> Points ("Lost", int_of_string t)
+    (* minigame *)
     | _ -> failwith "invalid"
 
 let create_tile id color event_name description effects= 
