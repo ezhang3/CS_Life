@@ -30,13 +30,8 @@ let tile_description_test (name : string) tile (expected : string) =
 let tile_effects_test (name : string) tile (expected : effect list) = 
   name >:: (fun _ -> assert_equal expected (get_tile_effects tile))
 
-let start_tile_test (name : string) (board) (expected) =
-  name >:: (fun _ -> assert_equal expected (start_tile board))
-
-let next_tile_test (name : string) (tile) (compare) (board)
-    expected =
-  name >:: (fun _ ->
-      assert_equal expected (next_tile tile compare board))
+let tile_effects_points_test (name : string) tile (expected : int) = 
+  name >:: (fun _ -> assert_equal expected (get_effect_points tile))
 
 let tile_test = [
   tile_color_test "Red tile" tile1 Red;
@@ -48,51 +43,56 @@ let tile_test = [
   tile_description_test "tile1 description" tile1 "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff.";
   tile_description_test "tile2 description" tile2 "Prelims. A time to shut yourself in your room to study and hopefully pass all your classes.";
   (* tile_effects_test "tile1 effects" tile1 ["gain"; "10"];  *)
-  (* tile_effects_test "tile2 effects" tile2 *)
+  (* tile_effects_test "tile2 effects" tile2 *) (* issue with abstract type*)
+  (* tile_effects_points_test *)
 ]
 
-(* let dummy_player = init_state "Jason" tile1
-   let test_board = create_board (Yojson.Basic.from_file "gameboard1.json")
+let test_player = init_state "Jason" tile1
+let test_board = create_board (Yojson.Basic.from_file "gameboard1.json")
+let new_tile = go test_player test_board 1; get_current_tile test_player
+let two_spaces = go test_player test_board 2; get_current_tile test_player
 
-   let test_player = init_state "Player name" tile1
-   let new_tile = go test_player test_board 1; get_current_tile test_player
-   let two_spaces = go test_player test_board 2; get_current_tile test_player
+let start_tile_test (name : string) (board) (expected) =
+  name >:: (fun _ -> assert_equal expected (start_tile board))
 
+let next_tile_test (name : string) (tile) (compare) (board)
+    expected =
+  name >:: (fun _ ->
+      assert_equal expected (next_tile tile compare board))
 
-   (* creates a board and runs next tile to get the next board*)
-   let board_test = [
-   (* need a start tile to give to players*)
-   start_tile_test "start tile is career fair" test_board tile1;
-   next_tile_test "first to second 2 tile board"
+let board_test = [
+  (* need a start tile to give to players*)
+  start_tile_test "start tile is career fair" test_board tile1;
+  next_tile_test "first to second 2 tile board"
     tile1 compare_tiles_id test_board [tile2];
-   next_tile_test "second to first 2 tile board"
+  next_tile_test "second to first 2 tile board"
     tile2 compare_tiles_id test_board [tile1];
-   (* TODO: test next_tile on a tile w/o adjacent tiles*)
-   ]
+  (* TODO: test next_tile on a tile w/o adjacent tiles*)
+]
 
-   let get_player_name_test 
+let get_player_name_test 
     (name : string)  
     (st: player)
     (expected_output : string) : test = 
-   name >:: (fun _ -> 
+  name >:: (fun _ -> 
       assert_equal expected_output (get_name st))
 
-   let get_points_test 
+let get_points_test 
     (name: string)
     (st: player)
     (expected_output: int) : test = 
-   name >:: (fun _ ->
+  name >:: (fun _ ->
       assert_equal expected_output (get_points st))
 
-   let go_test (name : string) player board moves expected= 
-   name >:: (fun _ -> assert_equal expected (get_current_tile player))
+let go_test (name : string) player board moves expected= 
+  name >:: (fun _ -> assert_equal expected (get_current_tile player))
 
-   let player_state_test = [
-   get_player_name_test "Works?" dummy_player "Jason";
-   get_points_test "Just started, 0" dummy_player 0; (*
+let player_state_test = [
+  get_player_name_test "Works?" test_player "Jason";
+  get_points_test "Just started, 0" test_player 0; (*
    go_test "go test 1 move" test_player test_board 1 new_tile;
    go_test "go test 2 moves" test_player test_board 1 two_spaces *)
-   ] *)
+]
 
 let suite =
   "test suite for game"  >::: List.flatten [
