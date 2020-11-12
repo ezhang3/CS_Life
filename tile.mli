@@ -10,7 +10,7 @@ type color = Red | Blue | Green | Yellow | Black
 (** Type of tile identifiers. Make specific tile easy to find on board. *)
 type tile_id = string
 (** Type of effects *)
-type effect = Points of (string * int)
+type effect = Points of (string * int) | Minigame of string
 
 (* MIGHT HAVE TO CHANGE SIGNATURES AND SPECS *)
 

@@ -4,25 +4,35 @@ open Playerstate
 open Board
 
 let (test_board : Board.gameboard) = Board.create_board 
-  (Yojson.Basic.from_file "gameboard1.json")
+    (Yojson.Basic.from_file "gameboard1.json")
 let start_tile = Board.start_tile test_board
+
 
 let divide () = print_endline "\n********************************************************\n"
 
+
 (** [roll player] *)
-let rec roll player = 
+let rec roll p = 
   print_endline "\n\nType 'roll' to roll the dice: \n";
   print_string  "> ";
   match read_line () |> String.lowercase_ascii |> String.trim with 
-  | "roll" -> 1
-  | _ -> print_endline "\nInvalid Input. Please try again.\n"; roll player 
+  | "roll" -> Random.int 5 + 1
+  | _ -> print_endline "\nInvalid Input. Please try again.\n"; roll p
 
+let rec finish_player_round () = 
+  print_endline "\n\nType 'done' to finish your turn: \n";
+  print_string  "> ";
+  match read_line () |> String.lowercase_ascii |> String.trim with 
+  | "done" -> ()
+  | _ -> print_endline "\nInvalid Input. Please try again.\n"; 
+    finish_player_round ()
 
 (**[print_player_stats player] Prints player [player]'s stats *)
 let print_player_stats player = 
   let name = Playerstate.get_name player in 
   print_endline ("\n\n" ^ name ^ "'s current stats: ");
   Playerstate.print_state player
+
 
 let play_event player = 
   let tile = Playerstate.get_current_tile player  in
@@ -32,36 +42,42 @@ let play_event player =
                  (Tile.get_effect_points tile |> string_of_int) ^ " points\n");
   Playerstate.set_points player tile
 
+
 (** [play_game players board] starts the game with players [players] and 
     board [board]. *)
 let rec play_round players board =
   match players with 
   | [] -> ()
   | p :: t -> begin
-      let name = Playerstate.get_name p in
-      divide ();
-      print_endline ("\nIt is " ^ name ^ "'s turn: ");
-      print_player_stats p;
-      (**Roll dice *)
-      let r = roll p in
-      print_endline ("\n" ^ name ^ " rolled a " ^ string_of_int r ^ "\n");
-      (**Go to new tile and play event *)
-      Playerstate.go p board r; 
-      play_event p;
-      Playerstate.print_state p;
-      divide (); divide ();
-      play_round t board
+      if Playerstate.get_current_tile p = Board.end_tile board then play_round t board 
+      else
+        let name = Playerstate.get_name p in
+        divide ();
+        print_endline ("\nIt is " ^ name ^ "'s turn: ");
+        print_player_stats p;
+        (**Roll dice *)
+        let r = roll p in
+        print_endline ("\n" ^ name ^ " rolled a " ^ string_of_int r ^ "\n");
+        (**Go to new tile and play event *)
+        Playerstate.go p board r; 
+        play_event p;
+        Playerstate.print_state p;
+        divide (); divide ();
+        finish_player_round ();
+        play_round t board
     end
+
 
 (** [finished_game board players] is true if every player's current_tile 
     in players is board's end_tile. False otherwise.*)
 let rec finished_game board = function 
-  | [] -> true 
+  | [] -> false 
   | h :: t -> begin
       if Playerstate.get_current_tile h == Board.end_tile board then 
         finished_game board t 
-      else false
+      else true
     end
+
 
 (** [find_winner players] is the player with the most in players. 
     Does not account for ties yet*)
@@ -71,6 +87,7 @@ let rec find_winner max = function
     if Playerstate.get_points p > Playerstate.get_points max then 
       find_winner p t 
     else find_winner max t
+
 
 let play_game players board = 
   while finished_game board players do 

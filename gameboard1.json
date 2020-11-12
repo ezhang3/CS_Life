@@ -4,7 +4,7 @@
       "tiles": [
         {
           "id": "tile 1",
-          "color": "Red",
+          "color": "Green",
           "event": "Career Fair",
           "description": "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff.",
           "effects": [
