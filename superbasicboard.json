@@ -1,0 +1,29 @@
+{
+  "stages": [
+    {
+      "tiles": [
+        {
+          "id": "tile 1",
+          "color": "Red",
+          "event": "Career Fair",
+          "description": "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff.",
+          "effects": [
+            "gain 10"
+          ]
+        },
+        {
+          "id": "1110",
+          "color": "Green",
+          "event": "Start CS 1110",
+          "description": "Walker White rules!",
+          "effects": [
+            "gain 100"
+          ]
+        }
+      ]
+    },
+    {
+      "tiles": []
+    }
+  ]
+}
