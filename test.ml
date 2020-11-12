@@ -49,11 +49,14 @@ let tile_test = [
 
 let test_player = init_state "Jason" tile1
 let test_board = create_board (Yojson.Basic.from_file "gameboard1.json")
-let new_tile = go test_player test_board 1; get_current_tile test_player
-let two_spaces = go test_player test_board 2; get_current_tile test_player
+(* let new_tile = go test_player test_board 1; get_current_tile test_player
+   let two_spaces = go test_player test_board 2; get_current_tile test_player *)
 
 let start_tile_test (name : string) (board) (expected) =
   name >:: (fun _ -> assert_equal expected (start_tile board))
+
+let end_tile_test (name : string) (board) (expected) =
+  name >:: (fun _ -> assert_equal expected (end_tile board))
 
 let next_tile_test (name : string) (tile) (compare) (board)
     expected =
@@ -63,10 +66,10 @@ let next_tile_test (name : string) (tile) (compare) (board)
 let board_test = [
   (* need a start tile to give to players*)
   start_tile_test "start tile is career fair" test_board tile1;
-  next_tile_test "first to second 2 tile board"
-    tile1 compare_tiles_id test_board [tile2];
-  next_tile_test "second to first 2 tile board"
-    tile2 compare_tiles_id test_board [tile1];
+  next_tile_test "first to second 2 tile board" tile1 compare_tiles_id 
+    test_board [tile2];
+  next_tile_test "second to first 2 tile board" tile2 compare_tiles_id 
+    test_board [tile1];
   (* TODO: test next_tile on a tile w/o adjacent tiles*)
 ]
 

@@ -89,7 +89,7 @@ let from_json json =
 let create_board json = from_json json
 (* test_board *)
 
-let start_tile board = match board with
+let start_tile (board : gameboard) = match board with
   | [] -> raise (No_Tile "Board has no start tile")
   | h :: t -> fst h 
 
