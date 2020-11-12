@@ -33,7 +33,7 @@ let play_event player =
 
 (** [play_game players board] starts the game with players [players] and 
     board [board]. *)
-let play_game players board =
+let play_round players board =
   for i = 0 to (List.length players - 1) do 
     let player = Playerstate.get_nth_player players i in 
     let name = Playerstate.get_name player in
@@ -49,6 +49,20 @@ let play_game players board =
     Playerstate.print_state player;
     divide (); divide ();
   done 
+
+let rec finished_game board = function 
+  | [] -> true 
+  | h :: t -> begin
+      if Playerstate.get_current_tile h == Board.end_tile board then 
+        finished_game board t 
+      else false
+    end
+
+let find_winner players = failwith "unimplemented"
+let play_game players board = 
+  while finished_game board players do 
+    play_round players board
+  done
 
 
 (** [main ()] prompts for the game to play, then starts it. *)

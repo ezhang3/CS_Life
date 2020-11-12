@@ -12,7 +12,8 @@ val create_board : int -> gameboard
 (** [start_tile board] is the first tile of the board.
     Raises: No_Tile if [board] has no starting tile *)
 val start_tile : gameboard -> tile
-
+(** [end_tile] board is the last tile of the board*)
+val end_tile : gameboard -> tile
 (** [next_tile tile func board] is the list of adjacent tiles to [tile]
     [func tile1 tile2] is a function used to compare tiles.
     Raises: No_Tile if [tile] is not in [board] *)

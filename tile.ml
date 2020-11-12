@@ -1,10 +1,11 @@
 open Yojson.Basic.Util
+open Playerstate
 
 type color = Red | Blue | Green | Yellow | Black
 
 type tile_id = string
 
-type effect = Points of (string * int) (*see if we can write this so that
+type effect = Points of (string * int)(*see if we can write this so that
                                               it can activate a mini-game*)
 
 type tile = {
@@ -76,7 +77,9 @@ let rec add_points lst acc =
   | [] -> acc
   | (_, pts) :: t -> acc + pts |> add_points t 
 
-
+(* If gain, return positive points
+   If lose, return negative points
+   If minigame, find minigame in special events(to be implemented)*)
 let get_effect_points tile = failwith "gonna work on this later"
 (*match tile.effects with 
   | Points lst -> add_points lst 0 *)

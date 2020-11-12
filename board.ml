@@ -137,6 +137,8 @@ let start_tile (board : gameboard) = failwith "thinking of new implementation"
    | [] -> raise (No_Tile "Board has no start tile")
    | h :: t -> fst h *)
 
+let end_tile (board : gameboard) = failwith "unimplemented"
+
 let rec find_tile (tile : Tile.tile) func (board : gameboard) =
   failwith "thinking of new implementation"
   (*
