@@ -1,5 +1,4 @@
 open Yojson.Basic.Util
-open Playerstate
 
 type color = Red | Blue | Green | Yellow | Black
 
