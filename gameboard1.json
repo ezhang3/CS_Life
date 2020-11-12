@@ -17,8 +17,7 @@
           "event": "Start CS 1110",
           "description": "Walker White rules!",
           "effects": [
-            "gain 100",
-            "minigame"
+            "gain 100"
           ]
         },
         {

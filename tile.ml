@@ -15,6 +15,7 @@ type tile = {
   effects: effect list; 
 }
 
+(** [get_color s] is the color of the same name as s. Case insensitive. *)
 let get_color str = match String.lowercase_ascii str with
   | "red" -> Red
   | "blue" -> Blue
@@ -36,13 +37,14 @@ let parse_effect str =
   let split = String.split_on_char ' ' str
   in split |> parse_helper
 
+(*needs to handle multiple effects in a tile *)
 let get_effects str =
-  if str = "" then failwith "invalid" else
+  if str = "" then failwith "invalid, empty string" else
     match parse_effect (String.lowercase_ascii str) with 
     | "gain" :: t :: [] -> Points ("Gained", int_of_string t)
     | "lose" :: t :: [] -> Points ("Lost", int_of_string t)
     | "minigame" :: t :: [] -> failwith "not implemented yet"
-    | _ -> failwith "invalid"
+    | _ -> failwith "invalid, wildcard, shouldn't happen"
 
 let create_tile id color event_name description effects= 
   {id = id; color = get_color color; event_name = event_name; description = description;

@@ -25,9 +25,6 @@ val get_tile_id : tile -> tile_id
 (** [tile_color t] is the color of the tile *)
 val get_tile_color : tile -> color 
 
-(** [get_color s] is the color of the same name as s. Case insensitive. *)
-val get_color : string -> color
-
 (** [tile_event t] is the name of the event that happens upon landing on the 
     tile [t] *)
 val get_tile_event_name : tile -> string

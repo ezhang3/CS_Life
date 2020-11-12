@@ -13,7 +13,6 @@ let tile2 = Tile.create_tile
     "Tile2" 
     "Blue" "Career Fair" 
     "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff." 
-    (*["Gain"]*)
     ["gain 10"]
 
 (** gamenode represents a node of the gameboard *)
