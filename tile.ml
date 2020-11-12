@@ -4,8 +4,8 @@ type color = Red | Blue | Green | Yellow | Black
 
 type tile_id = string
 
-type effect = Points of (string * int)(*see if we can write this so that
-                                              it can activate a mini-game*)
+type effect = Points of (string * int) | Minigame of string(*see if we can write this so that
+                                                             it can activate a mini-game*)
 
 type tile = {
   id : tile_id;
@@ -81,9 +81,11 @@ let rec add_points lst acc =
 (* If gain, return positive points
    If lose, return negative points
    If minigame, find minigame in special events(to be implemented)*)
-let get_effect_points tile = failwith "get_effect_points not done yet"
-(*match tile.effects with 
-  | Points lst -> add_points lst 0 *)
+let get_effect_points tile = 
+  match tile.effects with 
+  | [] -> failwith "empty"
+  | Points (s, pts) :: t -> pts
+  | Minigame s :: t -> failwith "unimplemented"
 
 (* take string, output a function to apply to points, ie for losing,
    gaining, multiplying, etc points*)

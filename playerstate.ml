@@ -110,13 +110,13 @@ let go st board n =
     | 0 -> set_current_tile st tile
     | _ -> begin
         match Board.next_tile st.current_tile Board.compare_tiles_id board with
-        | [] -> failwith "not_found"
+        | [] -> Board.end_tile board |> set_current_tile st 
         | tile :: [] -> find_tile tile board (n - 1)
         | h :: t -> failwith "branching paths case not implemented, prompt user"
       end in find_tile st.current_tile board n
 
 let get_visited_tiles st = 
-  st.visited_tiles
+  st.visited_tiles 
 
 let get_items st = 
   st.items

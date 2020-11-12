@@ -100,13 +100,21 @@ let start_tile (board : gameboard) = match board with
 let rec find_tile (tile : Tile.tile) func board =
   match board with
   | [] -> raise (No_Tile "No such tile exists in the given board")
-  | (a, b) :: t -> if func a tile then b else find_tile tile func t
+  | (a, b) :: t -> 
+    if func a tile then b 
+    else if b = [] then b
+    else find_tile tile func t
 
 (** [next_tile tile func board] searches through the board to find the
     tile that matches tile and gives a list of adjacent tiles. *)
 (* TODO: Think about how to optimize because search is O(n) *)
 let next_tile = find_tile
 
-let end_tile board = match last_of_list board with | (a, b) -> a
+let rec end_tile (board : gameboard) = 
+  (* match last_of_list board with | (a, b) -> a *)
+  match board with 
+  | [] -> failwith "emptyboard"
+  | (last, _) :: [] -> last 
+  | h :: t -> end_tile t
 
 let compare_tiles_id tile1 tile2 = get_tile_id tile1 = get_tile_id tile2
