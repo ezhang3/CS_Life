@@ -33,23 +33,27 @@ let play_event player =
 
 (** [play_game players board] starts the game with players [players] and 
     board [board]. *)
-let play_round players board =
-  for i = 0 to (List.length players - 1) do 
-    let player = Playerstate.get_nth_player players i in 
-    let name = Playerstate.get_name player in
-    divide ();
-    print_endline ("\nIt is " ^ name ^ "'s turn: ");
-    print_player_stats player;
-    (**Roll dice *)
-    let r = roll player in
-    print_endline ("\n" ^ name ^ " rolled a " ^ string_of_int r ^ "\n");
-    (**Go to new tile and play event *)
-    Playerstate.go player board r; 
-    play_event player;
-    Playerstate.print_state player;
-    divide (); divide ();
-  done 
+let rec play_round players board =
+  match players with 
+  | [] -> ()
+  | p :: t -> begin
+      let name = Playerstate.get_name p in
+      divide ();
+      print_endline ("\nIt is " ^ name ^ "'s turn: ");
+      print_player_stats p;
+      (**Roll dice *)
+      let r = roll p in
+      print_endline ("\n" ^ name ^ " rolled a " ^ string_of_int r ^ "\n");
+      (**Go to new tile and play event *)
+      Playerstate.go p board r; 
+      play_event p;
+      Playerstate.print_state p;
+      divide (); divide ();
+      play_round t board
+    end
 
+(** [finished_game board players] is true if every player's current_tile 
+    in players is board's end_tile. False otherwise.*)
 let rec finished_game board = function 
   | [] -> true 
   | h :: t -> begin
@@ -58,11 +62,22 @@ let rec finished_game board = function
       else false
     end
 
-let find_winner players = failwith "unimplemented"
+(** [find_winner players] is the player with the most in players. 
+    Does not account for ties yet*)
+let rec find_winner max = function 
+  | [] -> max 
+  | p :: t -> 
+    if Playerstate.get_points p > Playerstate.get_points max then 
+      find_winner p t 
+    else find_winner max t
+
 let play_game players board = 
   while finished_game board players do 
     play_round players board
-  done
+  done;
+  let winner = find_winner (List.hd players) players in 
+  print_endline ("\n\nCongratulations to " ^ (Playerstate.get_name winner) 
+                 ^ " for winning with the most points!\n\n Thanks for playing!")
 
 
 (** [main ()] prompts for the game to play, then starts it. *)
