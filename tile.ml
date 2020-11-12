@@ -39,16 +39,16 @@ let parse_effect str =
 
 (*needs to handle multiple effects in a tile *)
 let get_effects str =
-  if str = "" then failwith "invalid, empty string" else
+  if str = "" then failwith "invalid effect for get_effects" else
     match parse_effect (String.lowercase_ascii str) with 
     | "gain" :: t :: [] -> Points ("Gained", int_of_string t)
     | "lose" :: t :: [] -> Points ("Lost", int_of_string t)
-    | "minigame" :: t :: [] -> failwith "not implemented yet"
-    | _ -> failwith "invalid, wildcard, shouldn't happen"
+    | "minigame" :: t :: [] -> failwith "get_effects: minigame not implemented"
+    | _ -> failwith "invalid effect for get_effects"
 
 let create_tile id color event_name description effects= 
-  {id = id; color = get_color color; event_name = event_name; description = description;
-   effects = List.map get_effects effects}
+  {id = id; color = get_color color; event_name = event_name; 
+   description = description; effects = List.map get_effects effects}
 
 let get_tile_id tile = 
   tile.id
@@ -67,7 +67,7 @@ let get_tile_effects tile =
 
 let get_effect_desc tile = 
   match tile.effects with 
-  | [] -> failwith "empty effects" 
+  | [] -> failwith "get_effect_desc empty effects" 
   | Points (s,_) :: t -> s 
   (*
   | Points [] -> failwith "empty effect"
@@ -81,7 +81,7 @@ let rec add_points lst acc =
 (* If gain, return positive points
    If lose, return negative points
    If minigame, find minigame in special events(to be implemented)*)
-let get_effect_points tile = failwith "gonna work on this later"
+let get_effect_points tile = failwith "get_effect_points not done yet"
 (*match tile.effects with 
   | Points lst -> add_points lst 0 *)
 
