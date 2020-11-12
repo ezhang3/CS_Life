@@ -1,10 +1,6 @@
 open Tile
 open Yojson.Basic.Util
 
-(** board type is implemented as an adjacency list *)
-(* type gameboard = (Tile.tile * (Tile.tile list)) list  *)
-(* it's possibile we might have to change up the implementation of board *)
-
 exception No_Tile of string
 
 let tile = Tile.create_tile 
@@ -20,90 +16,50 @@ let tile2 = Tile.create_tile
     (*["Gain"]*)
     ["gain 10"]
 
+(** gamenode represents a node of the gameboard *)
+type gamenode = Tile.tile * (Tile.tile list)
 
-(* how to create boards:
-   function to
-   Generate tiles from a list of different tiles with events
-   - automatically gives them a numerical string id by order of generation
+(** gameboard represents a gameboard parsed from a json. It is an acyclic
+    directed graph. Implemented as an adjacency list containing
+    tiles and neighboring tiles. *)
+type gameboard = gamenode list
 
-   seems like json might be easiest to use
-   List.map applies function to all elements and builds list
-   start_tile json =
-   json |> member "start_tile" |> to_string
+let test_board = [(tile,[tile2]);(tile2,[tile])]
 
-   (* makes a tile with given attributes, with id = x *)
-   tile_from_json j = 
-   name = json |> member "name" |> to_string
-   id = //make incremented id
-   color = let color = json |> member "color" |> to_string in
-   match color with | "red" -> Red | "blue" -> Blue | "green" -> Green
-   | "yellow" -> Yellow
-   description = json |> member "description" |> to_string
-   effects = //make effect from string
+(* ------------------- FUNCS FOR CREATING GAME BOARD -------------------- *)
 
-    (* makes all the tiles in each stage*)
-   stage j =
-   j |> List.map tile_from_json;
+(* Main gist of building board:
+   build indiv tile -> tile list -> randomization -> tile list list
+   -> flatten -> assign pointers -> gameboard*)
 
-
-   (* find stages and iterates over each stage*)
-   stages input = 
-   parse json |> member "stages" |> List.map func_stage
-
-
-     input: {
-       start_tile = {
-         name:
-         id:
-         color:
-         description:
-         effects:
-         next: by id
-       }
-       stages = {
-         {
-          [({
-            name:
-            id:
-            color:
-            description:
-            effects:
-            next:
-          }, occurences);
-          {
-          }
-          ]
-         }
-       }
-     }]]]]]]]]]]]]]]]]]]]]]
-     thinking we should add tile neighbors to the tile module
-     Generate board using those tiles *)
-type stage = {
-  tiles : (Tile.tile * (Tile.tile list)) list
-}
-type gameboard = {
-  stages : stage (* list *)
-}
-
-let test_board = {stages = {tiles = [(tile,[tile2]);(tile2,[tile])]}}
-(* id : tile_id;
-   color : color;
-   event_name : string; 
-   description: string; 
-   effects: effect; *)
+(** gets a string member from a json and converts to string *)
 let get_mem json str =
   json |> member str
 
-(* replaces each tile of lst with a tuple of the tile and a list with the
-   following tile in the list (empty list if no following tile)*)
+(** [Assign_next_tiles lst] replaces each tile in [lst] with a tuple
+    of the tile and a list with the following tiles in the list.
+    Tile.tile - > (Tile.tile * (Tile.tile list))
+    Following tile list is empty list if there is no following tile in [lst]*)
 let assign_next_tiles lst =
   let rec helper lst acc = 
     match lst with
-    | [] -> failwith "Impossible"
+    | [] -> raise (No_Tile "List of tiles empty")
     | h :: [] -> List.rev ((h, []) :: acc)
     | f :: s :: t -> helper t ((f, [s]) :: acc)
   in helper lst []
 
+(** gets the last element of a list *)
+let rec last_of_list = function
+  | [] -> raise (No_Tile "List empty. No last element exists")
+  | _ :: x :: [] -> x
+  | h :: t -> last_of_list t
+
+(** gets the first element of a list. Raises error if list is empty *)
+let first_of_list = function
+  | [] -> raise (No_Tile "List empty. No first element exists") | h :: t -> h
+
+(** [build_tile json] creates an individual tile as specified by
+    json information *)
 let build_tile json = 
   let id = get_mem json "id" |> to_string in
   let color = get_mem json "color" |> to_string in
@@ -112,43 +68,44 @@ let build_tile json =
   let effects = get_mem json "effects" |> to_list |> List.map to_string in
   create_tile id color event_name description effects
 
-let build_tiles json = 
-  json |> to_list |> List.map build_tile |> assign_next_tiles
-(* assign tile in last stage to point to first tile in following stage*)
-let build_stage json = get_mem json "tiles" |> build_tiles
-let build_stages json =
-  get_mem json "stages"|> to_list |> List.map build_stage
+(** [build_tiles json] builds list of tiles and randomizes *)
+(* TODO: Randomization function after build_tile*)
+let build_stage json =
+  get_mem json "tiles" |> to_list |> List.map build_tile (* |> randomize *)
 
+(** [build_stages json] builds a list of randomized stages, flattens them,
+    and assigns pointers *)
+(* TODO: Implement branching paths *)
+let build_stages json =
+  get_mem json "stages"|> to_list |> List.map build_stage |> List.flatten
+  |> assign_next_tiles
+
+(** [from_json json] parses a valid json into game_board*)
 let from_json json =
-  try List.flatten (build_stages json)
+  try build_stages json
   with Type_error (s, _) -> failwith ("Failed to build board from json: " ^ s)
 
-let create_board (x : int) = 
-  test_board
-(*
-   match x with
-| 0 -> acc
-| x -> create (x-1) (tile :: acc)
-*)
+(* ------------------------- INTERFACE FUNCTIONS -------------------------*)
 
-(* board is a flattened list *)
-let start_tile (board : gameboard) = failwith "thinking of new implementation"
-(* match board with
-   | [] -> raise (No_Tile "Board has no start tile")
-   | h :: t -> fst h *)
+let create_board json = from_json json
+(* test_board *)
+
+let start_tile board = match board with
+  | [] -> raise (No_Tile "Board has no start tile")
+  | h :: t -> fst h 
 
 let end_tile (board : gameboard) = failwith "unimplemented"
 
-let rec find_tile (tile : Tile.tile) func (board : gameboard) =
-  failwith "thinking of new implementation"
-  (*
+let rec find_tile (tile : Tile.tile) func board =
   match board with
   | [] -> raise (No_Tile "No such tile exists in the given board")
-  | (a, b) :: t -> if func a tile then b else find_tile tile func t *)
+  | (a, b) :: t -> if func a tile then b else find_tile tile func t
 
 (** [next_tile tile func board] searches through the board to find the
     tile that matches tile and gives a list of adjacent tiles. *)
 (* TODO: Think about how to optimize because search is O(n) *)
-let next_tile = (* find_tile *) failwith "thinking of new implementation"
+let next_tile = find_tile
+
+let end_tile board = match last_of_list board with | (a, b) -> a
 
 let compare_tiles_id tile1 tile2 = get_tile_id tile1 = get_tile_id tile2
