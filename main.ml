@@ -3,7 +3,8 @@ open Tile
 open Playerstate
 open Board
 
-let (test_board : Board.gameboard) = Board.create_board 0
+let (test_board : Board.gameboard) = Board.create_board 
+  (Yojson.Basic.from_file "gameboard1.json")
 let start_tile = Board.start_tile test_board
 
 let divide () = print_endline "\n********************************************************\n"
