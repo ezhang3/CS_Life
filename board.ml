@@ -44,8 +44,8 @@ let assign_next_tiles lst =
   let rec helper lst acc = 
     match lst with
     | [] -> raise (No_Tile "List of tiles empty")
+    | f :: s :: t -> helper (s :: t) ((f, [s]) :: acc)
     | h :: [] -> List.rev ((h, []) :: acc)
-    | f :: s :: t -> helper t ((f, [s]) :: acc)
   in helper lst []
 
 (** gets the last element of a list *)
@@ -62,11 +62,11 @@ let first_of_list = function
     json information *)
 let build_tile json = 
   print_endline "Building tile...";
-  let id = get_mem json "id" |> to_string in
-  let color = get_mem json "color" |> to_string in
-  let event_name = get_mem json "event" |> to_string in
-  let description = get_mem json "description" |> to_string in
-  let effects = get_mem json "effects" |> to_list |> List.map to_string in
+  print_endline "Getting id..."; let id = get_mem json "id" |> to_string in
+  print_endline "Getting color..."; let color = get_mem json "color" |> to_string in
+  print_endline "Getting event..."; let event_name = get_mem json "event" |> to_string in
+  print_endline "Getting description..."; let description = get_mem json "description" |> to_string in
+  print_endline "Getting effects..."; let effects = get_mem json "effects" |> to_list |> List.map to_string in
   create_tile id color event_name description effects
 
 (** [build_tiles json] builds list of tiles and randomizes *)
@@ -80,7 +80,7 @@ let build_stage json =
 (* TODO: Implement branching paths *)
 let build_stages json =
   print_endline "Building stages...";
-  get_mem json "stages"|> to_list |> List.map build_stage |> List.flatten
+  get_mem json "stages" |> to_list |> List.map build_stage |> List.flatten
   |> assign_next_tiles
 
 (** [from_json json] parses a valid json into game_board*)

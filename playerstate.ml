@@ -104,6 +104,8 @@ let go st board n =
       end in 
   find_tile board n st.current_tile *)
 
+(** moves the player n spaces forward.
+    TODO: Cannot handle branching paths yet *)
 let go st board n = 
   let rec find_tile tile board n =
     match n with

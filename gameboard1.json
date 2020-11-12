@@ -37,7 +37,7 @@
           "id": "Graduation",
           "color": "Green",
           "event": "Commencement",
-          "decription": "Congrats! You graduated!",
+          "description": "Congrats! You graduated!",
           "effects": [
             "gain 100"
           ]
