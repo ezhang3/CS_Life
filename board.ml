@@ -94,7 +94,7 @@ let start_tile board = match board with
   | [] -> raise (No_Tile "Board has no start tile")
   | h :: t -> fst h 
 
-let end_tile (board : gameboard) = failwith "unimplemented"
+let end_tile (board : gameboard) = failwith "end_tile unimplemented"
 
 let rec find_tile (tile : Tile.tile) func board =
   match board with
