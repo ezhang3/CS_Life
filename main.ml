@@ -49,7 +49,7 @@ let rec play_round players board =
   match players with 
   | [] -> ()
   | p :: t -> begin
-      if Playerstate.get_current_tile p = Board.end_tile board then play_round t board 
+      if compare_tiles_id (Playerstate.get_current_tile p) (Board.end_tile board) then play_round t board 
       else
         let name = Playerstate.get_name p in
         divide ();
@@ -73,7 +73,7 @@ let rec play_round players board =
 let rec finished_game board = function 
   | [] -> false 
   | h :: t -> begin
-      if Playerstate.get_current_tile h == Board.end_tile board then 
+      if compare_tiles_id (Playerstate.get_current_tile h) (Board.end_tile board) then 
         finished_game board t 
       else true
     end
