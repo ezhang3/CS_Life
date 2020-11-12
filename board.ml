@@ -40,6 +40,7 @@ let get_mem json str =
     Tile.tile - > (Tile.tile * (Tile.tile list))
     Following tile list is empty list if there is no following tile in [lst]*)
 let assign_next_tiles lst =
+  print_endline "Assigning next_tiles...";
   let rec helper lst acc = 
     match lst with
     | [] -> raise (No_Tile "List of tiles empty")
@@ -60,6 +61,7 @@ let first_of_list = function
 (** [build_tile json] creates an individual tile as specified by
     json information *)
 let build_tile json = 
+  print_endline "Building tile...";
   let id = get_mem json "id" |> to_string in
   let color = get_mem json "color" |> to_string in
   let event_name = get_mem json "event" |> to_string in
@@ -70,12 +72,14 @@ let build_tile json =
 (** [build_tiles json] builds list of tiles and randomizes *)
 (* TODO: Randomization function after build_tile*)
 let build_stage json =
+  print_endline "Building stage...";
   get_mem json "tiles" |> to_list |> List.map build_tile (* |> randomize *)
 
 (** [build_stages json] builds a list of randomized stages, flattens them,
     and assigns pointers *)
 (* TODO: Implement branching paths *)
 let build_stages json =
+  print_endline "Building stages...";
   get_mem json "stages"|> to_list |> List.map build_stage |> List.flatten
   |> assign_next_tiles
 
@@ -92,8 +96,6 @@ let create_board json = from_json json
 let start_tile (board : gameboard) = match board with
   | [] -> raise (No_Tile "Board has no start tile")
   | h :: t -> fst h 
-
-let end_tile (board : gameboard) = failwith "end_tile unimplemented"
 
 let rec find_tile (tile : Tile.tile) func board =
   match board with

@@ -32,7 +32,17 @@
       ]
     },
     {
-      "tiles": []
+      "tiles": [
+        {
+          "id": "Graduation",
+          "color": "Green",
+          "event": "Commencement",
+          "decription": "Congrats! You graduated!",
+          "effects": [
+            "gain 100"
+          ]
+        }
+      ]
     }
   ]
 }
