@@ -13,13 +13,14 @@ let divide () = print_endline "\n***********************************************
 
 (** [roll player] *)
 let rec roll p = 
-  let custom_roll = 1 in
-  print_endline "\n\nType 'roll' to roll the dice: \n";
+  let custom_roll = 4 in
+  print_endline "\n\nType 'roll' to roll the dice or 'quit' to end the game: \n";
   print_string  "> ";
   match read_line () |> String.lowercase_ascii |> String.trim with 
   | "roll" -> 
     if custom_roll = 0 then (Random.int 5) + 1
     else custom_roll
+  | "quit" -> exit 0
   | _ -> print_endline "\nInvalid Input. Please try again.\n"; roll p
 
 
@@ -136,6 +137,10 @@ let play_game players board =
   print_endline ("\n\nCongratulations to " ^ (Playerstate.get_name winner) 
                  ^ " for winning with the most points!\n\n Thanks for playing!")
 
+let check_valid_num num = 
+  try int_of_string num with 
+  | _ -> print_endline "\nInvalid number. Please try again.\n\n";
+    exit 0
 
 (** [main ()] prompts for the game to play, then starts it. *)
 let main () =
@@ -145,9 +150,10 @@ let main () =
   print_string  "> ";
   match read_line () with
   | exception End_of_file -> ()
-  | num -> 
-    let players = Playerstate.make_player_list (int_of_string num) start_tile in
-    play_game players test_board
-
+  | num -> begin 
+      let checked_num = check_valid_num num in
+      let players = Playerstate.make_player_list checked_num start_tile in
+      play_game players test_board
+    end 
 (* Execute the game engine. *)
 let () = main ()

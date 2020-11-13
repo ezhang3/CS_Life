@@ -1,9 +1,23 @@
 
+let rec find_player name = function 
+  | [] -> None
+  | p :: t -> 
+    if Playerstate.get_name p |> String.lowercase_ascii |> String.trim = name 
+    then Some p 
+    else find_player name t
 
-let academic_integrity (t : Tile.tile) =
-  print_endline "Who would you like to accuse of academic integrity?";
-  match read_line () with 
-  | player -> 1000
+let rec academic_integrity player players =
+  print_endline "Who would you like to accuse of academic integrity?\n";
+  print_endline "> ";
+  match read_line () |> String.lowercase_ascii |> String.trim with 
+  | p -> 
+    match find_player p players with 
+    | None -> 
+      print_endline "\nNot a valid player. Please re-enter: \n\n"; 
+      academic_integrity player players 
+    | Some p2 -> 
+      Playerstate.set_points p2 (-1000);
+      Playerstate.set_points player 1000
 
 let minigame_1110 player = failwith "unimplemented"
 
