@@ -3,17 +3,6 @@ open Yojson.Basic.Util
 
 exception No_Tile of string
 
-let tile = Tile.create_tile 
-    "Tile1" 
-    "Red" "Career Fair" 
-    "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff." 
-    ["gain 10"]
-
-let tile2 = Tile.create_tile 
-    "Tile2" 
-    "Blue" "Prelims" 
-    "Prelims. A time to shut yourself in your room to study and hopefully pass all your classes." 
-    ["gain 15"]
 
 (** gamenode represents a node of the gameboard *)
 type gamenode = Tile.tile * (Tile.tile list)
@@ -22,8 +11,6 @@ type gamenode = Tile.tile * (Tile.tile list)
     directed graph. Implemented as an adjacency list containing
     tiles and neighboring tiles. *)
 type gameboard = gamenode list
-
-let test_board = [(tile,[tile2]);(tile2,[tile])]
 
 (* ------------------- FUNCS FOR CREATING GAME BOARD -------------------- *)
 
@@ -40,12 +27,11 @@ let get_mem json str =
     Tile.tile - > (Tile.tile * (Tile.tile list))
     Following tile list is empty list if there is no following tile in [lst]*)
 let assign_next_tiles lst =
-  print_endline "Assigning next_tiles...";
   let rec helper lst acc = 
     match lst with
     | [] -> raise (No_Tile "List of tiles empty")
     | f :: s :: t -> helper (s :: t) ((f, [s]) :: acc)
-    | h :: [] -> List.rev ((h, []) :: acc)
+    | h :: [] -> (h, []) :: acc |> List.rev
   in helper lst []
 
 (** gets the last element of a list *)
@@ -77,15 +63,13 @@ let build_tile json =
 (** [build_tiles json] builds list of tiles and randomizes *)
 (* TODO: Randomization function after build_tile*)
 let build_stage json =
-  print_endline "Building stage...";
-  get_mem json "tiles" |> to_list |> List.map build_tile (* |> randomize *)
+  get_mem json "tiles" |> to_list |> List.map build_tile(* |> randomize *)
 
 (** [build_stages json] builds a list of randomized stages, flattens them,
     and assigns pointers *)
 (* TODO: Implement branching paths *)
 let build_stages json =
-  print_endline "Building stages...";
-  get_mem json "stages" |> to_list |> List.map build_stage |> List.flatten
+  get_mem json "stages"|> to_list |> List.map build_stage |> List.flatten
   |> assign_next_tiles
 
 (** [from_json json] parses a valid json into game_board*)
@@ -102,18 +86,17 @@ let start_tile (board : gameboard) = match board with
   | [] -> raise (No_Tile "Board has no start tile")
   | h :: t -> fst h 
 
-let rec find_tile (tile : Tile.tile) func board =
+let rec find_tiles (tile : Tile.tile) func board =
   match board with
   | [] -> raise (No_Tile "No such tile exists in the given board")
-  | (a, b) :: t -> 
+  | (a, b) :: t2 -> 
     if func a tile then b 
-    else if b = [] then b
-    else find_tile tile func t
+    else find_tiles tile func t2
 
 (** [next_tile tile func board] searches through the board to find the
     tile that matches tile and gives a list of adjacent tiles. *)
 (* TODO: Think about how to optimize because search is O(n) *)
-let next_tile = find_tile
+let next_tiles = find_tiles
 
 let rec end_tile (board : gameboard) = 
   (* match last_of_list board with | (a, b) -> a *)

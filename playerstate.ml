@@ -4,6 +4,7 @@ type salary = int
 type project_name = string
 type project = (project_name * salary) option
 type study_partners = int
+
 type player = {
   name : player_name;
   mutable points : points;
@@ -23,6 +24,7 @@ let init_state name start = {
   visited_tiles = [start];
   items = []
 }
+
 let print_state player = 
   print_endline ("Name: " ^ player.name ^ 
                  "\nPoints: " ^ string_of_int player.points ^ 
@@ -53,6 +55,7 @@ let make_player_list (n : int) (start : Tile.tile) =
 
 let get_name st = 
   st.name
+
 
 let set_points st pts = 
   let orig_pts = st.points in
@@ -107,36 +110,20 @@ let go st board n =
 (** moves the player n spaces forward.
     TODO: Cannot handle branching paths yet *)
 let go st board n = 
-  let rec find_tile tile board n =
+  let rec find_tile tile1 board n =
     match n with
-    | 0 -> set_current_tile st tile
-    | n -> begin
-        set_current_tile st tile;
-        match Board.next_tile st.current_tile Board.compare_tiles_id board with
-        | [] -> set_current_tile st tile
+    | 0 -> set_current_tile st tile1
+    | _ -> begin
+        set_current_tile st tile1;
+        match Board.next_tiles st.current_tile Board.compare_tiles_id board with
+        | [] -> ()
         | tile :: [] -> begin
             if Tile.get_tile_color tile = Yellow then 
               set_current_tile st tile 
             else find_tile tile board (n - 1)
           end
         | h :: t -> failwith "branching paths case not implemented, prompt user"
-      end in find_tile st.current_tile board n
-
-let print_event tile = 
-  print_endline (Tile.get_tile_event_name tile ^ "!\n" ^ 
-                 Tile.get_tile_description tile);
-  print_endline ("\n" ^ Tile.get_effect_desc tile ^ "\n")
-
-let rec play_event player (tile_effect: Tile.effect list) =
-  let tile = get_current_tile player  in
-  match tile_effect with 
-  | [] -> ()
-  | Points ("Gained", n) :: t -> set_points player n; print_event tile; play_event player t
-  | Points ("Lost", n) :: t -> n * (-1) |> set_points player; play_event player t
-  | Points (_, n) :: t -> failwith "Invalid Points (_, _)"
-  | Minigame s :: t -> failwith "Minigame not yet implemented"
-  | Study_Partner n :: t -> add_study_partners player n; play_event player t
-  | Project proj :: t -> set_project player proj; play_event player t
+      end in find_tile st.current_tile board (n + 1)
 
 let get_visited_tiles st = 
   st.visited_tiles 

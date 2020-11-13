@@ -4,12 +4,18 @@ type color = Red | Blue | Green | Yellow | Black
 
 type tile_id = string
 
+<<<<<<< HEAD
 type effect = 
   | None 
   | Points of (string * int) 
   | Minigame of string 
   | Study_Partner of int 
   | Project of (string * int) option
+=======
+type effect = Points of (string * int) 
+            | Minigame of string 
+            | Study_Partner of int 
+>>>>>>> 1db9e527995f2db08dfcf9be63786c9f920f292a
 
 type tile = {
   id : tile_id;
@@ -43,6 +49,7 @@ let parse_effect str =
 
 (*needs to handle multiple effects in a tile *)
 let get_effects str = 
+<<<<<<< HEAD
   match parse_effect (String.lowercase_ascii str) with 
   | "" :: [] -> None
   | "gain" :: t :: [] -> Points ("Gained", int_of_string t)
@@ -51,6 +58,15 @@ let get_effects str =
   | "study_partner" :: t :: [] -> Study_Partner (int_of_string t)
   | "project" :: name :: salary :: [] -> Project (Some (name, int_of_string salary))
   | _ -> failwith "invalid effect for get_effects"
+=======
+  if str = "" then failwith "invalid effect for get_effects" else
+    match parse_effect (String.lowercase_ascii str) with 
+    | "gain" :: t :: [] -> Points ("Gained", int_of_string t)
+    | "lose" :: t :: [] -> Points ("Lost", int_of_string t)
+    | "study_partner" :: t :: [] -> Study_Partner (int_of_string t)
+    | "minigame" :: t :: [] -> Minigame t
+    | _ -> failwith "invalid effect for get_effects"
+>>>>>>> 1db9e527995f2db08dfcf9be63786c9f920f292a
 
 let create_tile id color event_name description effects = 
   {id = id; color = get_color color; event_name = event_name; 
@@ -71,19 +87,12 @@ let get_tile_description tile =
 let get_tile_effects tile = 
   tile.effects
 
-let get_effect_desc tile = 
-  let effects = tile.effects in
-  let rec helper tile_effects =
-    match tile_effects with 
-    | [] -> "" 
-    | Points (s,n) :: t -> "\n" ^ s ^ " " ^ (string_of_int n) ^ " points\n" ^ helper t
-    | Minigame s :: t -> s (* Note: minigames not implemented yet *)
-    | Study_Partner i :: t-> "\nGained 1 study partner!\n"
-    | Project Some (proj, salary) :: t -> "You are now working on project: " 
-                                          ^ proj ^ ".\nYour salary is: " 
-                                          ^ (string_of_int salary)
-    | Project None :: t -> failwith "can't have no project" in 
-  helper effects
+let get_effect_desc effect = 
+  match effect with 
+  | Points (s,n) -> s ^ " " ^ (string_of_int n) ^ " points\n" 
+  | Study_Partner i -> "Gained 1 study partner!\n" 
+  | Minigame s -> "Special Event!\n" 
+
 
   (*
   | Points [] -> failwith "empty effect"
@@ -92,13 +101,14 @@ let get_effect_desc tile =
 (* If gain, return positive points
    If lose, return negative points
    If minigame, find minigame in special events(to be implemented)*)
-let get_effect_points tile = 
-  let rec helper lst acc = 
-    match lst with 
-    | [] -> acc
-    | Points (_,pts) :: t -> helper t (acc + pts)
-    | Minigame s :: t -> helper t acc 
-  in helper tile.effects 0
+let get_effect_points tile = failwith "get_effect_points not needed"
+(* let rec helper lst acc = 
+   match lst with 
+   | [] -> acc
+   | Points (_,pts) :: t -> helper t (acc + pts)
+   | Minigame s :: t -> helper t acc  
+
+   in helper tile.effects 0 *)
 
 (* take string, output a function to apply to points, ie for losing,
    gaining, multiplying, etc points*)

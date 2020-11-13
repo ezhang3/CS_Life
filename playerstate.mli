@@ -12,7 +12,7 @@ type project = (project_name * salary) option
 type study_partners
 
 (** The abstract type representing the player state. *)
-type player
+type player 
 
 (** [init_state name start] is the initial state of a player with name [name] 
     and current_tile [start] at the start of a game *)
@@ -57,5 +57,4 @@ val get_visited_tiles : player -> Tile.tile list
 (** [have_items st] is the list of items the player has on hand in state [st]*)
 val get_items: player -> string list
 
-val play_event : player -> Tile.effect list -> unit
 

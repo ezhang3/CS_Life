@@ -16,12 +16,18 @@ type color = Red | Blue | Green | Yellow | Black
 (** Type of tile identifiers. Make specific tile easy to find on board. *)
 type tile_id = string
 (** Type of effects *)
+<<<<<<< HEAD
 type effect = 
   | None
   | Points of (string * int) 
   | Minigame of string 
   | Study_Partner of int 
   | Project of (string * int) option
+=======
+type effect = Points of (string * int) 
+            | Minigame of string 
+            | Study_Partner of int 
+>>>>>>> 1db9e527995f2db08dfcf9be63786c9f920f292a
 
 type tile = {
   id : tile_id;
@@ -55,7 +61,7 @@ val get_tile_description : tile -> string
     Lists how much the points of each component will change. *)
 val get_tile_effects : tile -> effect list
 
-val get_effect_desc : tile -> string
+val get_effect_desc : effect -> string
 (** [get_effect_points eff] is the total number of points accumulated by 
     effect eff*)
 val get_effect_points : tile -> int
