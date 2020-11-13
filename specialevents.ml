@@ -84,4 +84,5 @@ let find_special_event player players str =
   | "birthday" -> birthday player players
   | "pay_day" -> pay_day player 
   | "pay_raise" -> pay_raise player
+  | "academic_integrity" -> academic_integrity player players
   | _ -> failwith "special event not found"

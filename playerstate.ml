@@ -37,6 +37,8 @@ let rec get_nth_player players n =
   | h :: t -> if n = 0 then h 
     else get_nth_player t (n - 1)
 
+let check_valid_player player players = not (List.mem player players)
+
 (** current implementation of make_player_list does not account for different 
     starting points. All players will currently all start at the same tile. *)
 let make_player_list (n : int) (start : Tile.tile) = 
@@ -47,10 +49,15 @@ let make_player_list (n : int) (start : Tile.tile) =
       print_endline ("\nPlease enter the name of Player " ^ 
                      string_of_int n ^ "\n");
       print_string  ("> ");
-      match read_line () with
+      match read_line ()|> String.lowercase_ascii |> String.trim with
       | name -> 
         let p = init_state name start in
-        p :: acc |> make_list (n - 1) in
+        if check_valid_player p acc then 
+          p :: acc |> make_list (n - 1) 
+        else begin
+          print_endline "\nPlayer name is already taken\n";
+          make_list n acc
+        end in
   make_list n []
 
 let get_name st = 
