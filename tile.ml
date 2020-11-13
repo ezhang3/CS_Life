@@ -4,10 +4,12 @@ type color = Red | Blue | Green | Yellow | Black
 
 type tile_id = string
 
-type effect = Points of (string * int) 
-            | Minigame of string 
-            | Study_Partner of int 
-            | Project of (string * int) option
+type effect = 
+  | None 
+  | Points of (string * int) 
+  | Minigame of string 
+  | Study_Partner of int 
+  | Project of (string * int) option
 
 type tile = {
   id : tile_id;
@@ -41,14 +43,14 @@ let parse_effect str =
 
 (*needs to handle multiple effects in a tile *)
 let get_effects str = 
-  if str = "" then failwith "invalid effect for get_effects" else
-    match parse_effect (String.lowercase_ascii str) with 
-    | "gain" :: t :: [] -> Points ("Gained", int_of_string t)
-    | "lose" :: t :: [] -> Points ("Lost", int_of_string t)
-    | "minigame" :: t :: [] -> failwith "get_effects: minigame not implemented"
-    | "study_partner" :: t :: [] -> Study_Partner (int_of_string t)
-    | "project" :: name :: salary :: [] -> Project (Some (name, int_of_string salary))
-    | _ -> failwith "invalid effect for get_effects"
+  match parse_effect (String.lowercase_ascii str) with 
+  | "" :: [] -> None
+  | "gain" :: t :: [] -> Points ("Gained", int_of_string t)
+  | "lose" :: t :: [] -> Points ("Lost", int_of_string t)
+  | "minigame" :: t :: [] -> failwith "get_effects: minigame not implemented"
+  | "study_partner" :: t :: [] -> Study_Partner (int_of_string t)
+  | "project" :: name :: salary :: [] -> Project (Some (name, int_of_string salary))
+  | _ -> failwith "invalid effect for get_effects"
 
 let create_tile id color event_name description effects = 
   {id = id; color = get_color color; event_name = event_name; 

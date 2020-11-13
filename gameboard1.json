@@ -46,7 +46,7 @@
           "effects": [
             "gain 10"
           ]
-        },       
+        },
         {
           "id": "First prelim",
           "color": "Red",
@@ -59,7 +59,7 @@
       ]
     },
     {
-      "tiles" : [
+      "tiles": [
         {
           "id": "Start 2110",
           "color": "Yellow",
@@ -74,7 +74,7 @@
           "color": "Blue",
           "event": "Get roasted by Gries on Piazza",
           "description": "You asked a (silly?) question and Gries just roasted you. It's a bit shocking but at least you know that the Java Hypertext is helpful",
-          "effects": [ ]
+          "effects": []
         },
         {
           "id": "CS 2800 final",
@@ -112,7 +112,6 @@
             "lose 300"
           ]
         }
-
       ]
     },
     {

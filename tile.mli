@@ -16,10 +16,12 @@ type color = Red | Blue | Green | Yellow | Black
 (** Type of tile identifiers. Make specific tile easy to find on board. *)
 type tile_id = string
 (** Type of effects *)
-type effect = Points of (string * int) 
-            | Minigame of string 
-            | Study_Partner of int 
-            | Project of (string * int) option
+type effect = 
+  | None
+  | Points of (string * int) 
+  | Minigame of string 
+  | Study_Partner of int 
+  | Project of (string * int) option
 
 type tile = {
   id : tile_id;
