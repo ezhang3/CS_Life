@@ -110,9 +110,9 @@ let go st board n =
   let rec find_tile tile board n =
     match n with
     | 0 -> set_current_tile st tile
-    | _ -> begin
+    | n -> begin
         match Board.next_tile st.current_tile Board.compare_tiles_id board with
-        | [] -> Board.end_tile board |> set_current_tile st 
+        | [] -> set_current_tile st tile
         | tile :: [] -> find_tile tile board (n - 1)
         | h :: t -> failwith "branching paths case not implemented, prompt user"
       end in find_tile st.current_tile board n
