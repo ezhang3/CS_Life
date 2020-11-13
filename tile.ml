@@ -87,16 +87,21 @@ let get_effect_desc tile =
   | Points [] -> failwith "empty effect"
   | Points ((s, _) :: t) -> s *)
 
-let rec add_points lst acc = 
-  match lst with
-  | [] -> acc
-  | (_, pts) :: t -> acc + pts |> add_points t 
-
 (* If gain, return positive points
    If lose, return negative points
    If minigame, find minigame in special events(to be implemented)*)
+<<<<<<< HEAD
 let rec get_effect_points tile = failwith "unimplemented"
 
+=======
+let get_effect_points tile = 
+  let rec helper lst acc = 
+    match lst with 
+    | [] -> acc
+    | Points (_,pts) :: t -> helper t (acc + pts)
+    | Minigame s :: t -> helper t acc 
+  in helper tile.effects 0
+>>>>>>> 7a4a42a41d37e43148f25a88a1322a51dd34498a
 
 (* take string, output a function to apply to points, ie for losing,
    gaining, multiplying, etc points*)

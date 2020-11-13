@@ -71,7 +71,7 @@ let last = end_tile just_two
 
 let board_test = [
   start_tile_test "start tile is career fair" test_board "Career Fair";
-  end_tile_test "end tile is prelims" test_board "Start CS 3110"; 
+  end_tile_test "end tile is prelims" test_board "Commencement"; 
   next_tile_test "first to second 2 tile board" start compare_tiles_id 
     just_two [last];
   (* next_tile_test "second to first 2 tile board" tile2 compare_tiles_id 
