@@ -34,6 +34,16 @@ let assign_next_tiles lst =
     | h :: [] -> (h, []) :: acc |> List.rev
   in helper lst []
 
+(* Random compare function to use with List.sort *)
+let rand_comp x y = let randn = (Random.int 3) 
+  in print_endline (string_of_int randn); randn - 1
+
+(* [randomize lst] is a randomized version of [lst] *)
+let randomize lst = 
+  let on = true in
+  if not on then lst else List.sort rand_comp lst
+
+
 (** gets the last element of a list *)
 let rec last_of_list = function
   | [] -> raise (No_Tile "List empty. No last element exists")
@@ -63,7 +73,7 @@ let build_tile json =
 (** [build_tiles json] builds list of tiles and randomizes *)
 (* TODO: Randomization function after build_tile*)
 let build_stage json =
-  get_mem json "tiles" |> to_list |> List.map build_tile(* |> randomize *)
+  get_mem json "tiles" |> to_list |> List.map build_tile |> randomize
 
 (** [build_stages json] builds a list of randomized stages, flattens them,
     and assigns pointers *)
