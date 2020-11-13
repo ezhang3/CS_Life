@@ -52,7 +52,7 @@ val get_tile_description : tile -> string
     Lists how much the points of each component will change. *)
 val get_tile_effects : tile -> effect list
 
-val get_effect_desc : tile -> string
+val get_effect_desc : effect -> string
 (** [get_effect_points eff] is the total number of points accumulated by 
     effect eff*)
 val get_effect_points : tile -> int

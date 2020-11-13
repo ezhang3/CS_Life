@@ -67,15 +67,12 @@ let get_tile_description tile =
 let get_tile_effects tile = 
   tile.effects
 
-let get_effect_desc tile = 
-  let effects = tile.effects in
-  let rec helper tile_effects =
-    match tile_effects with 
-    | [] -> "" 
-    | Points (s,n) :: t -> "\n" ^ s ^ " " ^ (string_of_int n) ^ " points\n" ^ helper t
-    | Study_Partner i :: t-> "\nGained 1 study partner!\n" 
-    | Minigame s :: t -> "\nSpecial Event!\n" in 
-  helper effects
+let get_effect_desc effect = 
+  match effect with 
+  | Points (s,n) -> s ^ " " ^ (string_of_int n) ^ " points\n" 
+  | Study_Partner i -> "Gained 1 study partner!\n" 
+  | Minigame s -> "Special Event!\n" 
+
 
   (*
   | Points [] -> failwith "empty effect"

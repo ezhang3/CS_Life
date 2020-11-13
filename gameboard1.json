@@ -4,7 +4,7 @@
       "tiles": [
         {
           "id": "start",
-          "color": "Yellow",
+          "color": "Black",
           "event": "Start Tile",
           "description": "Start Tile",
           "effects": [

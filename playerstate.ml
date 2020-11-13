@@ -115,8 +115,8 @@ let go st board n =
     | 0 -> set_current_tile st tile
     | n -> begin
         set_current_tile st tile;
-        match Board.next_tile st.current_tile Board.compare_tiles_id board with
-        | [] -> set_current_tile st tile
+        match Board.next_tiles st.current_tile Board.compare_tiles_id board with
+        | [] -> ()
         | tile :: [] -> begin
             if Tile.get_tile_color tile = Yellow then 
               set_current_tile st tile 

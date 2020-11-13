@@ -13,7 +13,7 @@ let divide () = print_endline "\n***********************************************
 
 (** [roll player] *)
 let rec roll p = 
-  let custom_roll = 2 in
+  let custom_roll = 1 in
   print_endline "\n\nType 'roll' to roll the dice: \n";
   print_string  "> ";
   match read_line () |> String.lowercase_ascii |> String.trim with 
@@ -39,39 +39,40 @@ let print_player_stats player =
   Playerstate.print_state player
 
 
-let print_effect tile = 
-  print_endline ("\n" ^ Tile.get_effect_desc tile ^ "\n")
+let print_effect effect = 
+  print_endline ("\n" ^ Tile.get_effect_desc effect ^ "\n")
 
 (** [play_event player players tile_effect] plays out each effect in 
     [tile_effect] for [player]. Depending on the effect, other players in 
     [players] can be affected as well *)
-let rec play_event player players (tile_effect: Tile.effect list) =
+let play_event player players (tile_effect: Tile.effect list) =
   let tile = get_current_tile player  in
   print_endline (Tile.get_tile_event_name tile ^ "!\n" ^ 
                  Tile.get_tile_description tile);
-  match tile_effect with 
-  | [] -> ()
-  | Points ("Gained", n) :: t -> begin
-      set_points player n; 
-      print_effect tile; 
-      play_event player players t
-    end
-  | Points ("Lost", n) :: t -> begin
-      n * (-1) |> set_points player; 
-      print_effect tile; 
-      play_event player players t
-    end
-  | Points (_, _) :: t -> failwith "Invalid Points (_, _)"
-  | Study_Partner n :: t -> begin
-      add_study_partners player n; 
-      print_effect tile; 
-      play_event player players t
-    end
-  | Minigame s :: t -> begin
-      print_effect tile;
-      Specialevents.find_special_event player players s
-    end
-
+  let rec helper player players (tile_effect) = 
+    match tile_effect with 
+    | [] -> ()
+    | Points ("Gained", n) as e :: t -> begin
+        set_points player n; 
+        print_effect e; 
+        helper player players t
+      end
+    | Points ("Lost", n) as e:: t -> begin
+        n * (-1) |> set_points player; 
+        print_effect e; 
+        helper player players t
+      end
+    | Points (_, _) :: t -> failwith "Invalid Points (_, _)"
+    | Study_Partner n as e :: t -> begin
+        add_study_partners player n; 
+        print_effect e; 
+        helper player players t
+      end
+    | Minigame s as e :: t -> begin
+        print_effect e;
+        Specialevents.find_special_event player players s
+      end in
+  helper player players tile_effect
 
 (** [play_game players board] starts the game with players [players] and 
     board [board]. *)
