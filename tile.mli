@@ -19,7 +19,6 @@ type tile_id = string
 type effect = Points of (string * int) 
             | Minigame of string 
             | Study_Partner of int 
-            | Project of (string * int) option
 
 type tile = {
   id : tile_id;
