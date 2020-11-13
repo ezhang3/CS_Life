@@ -76,7 +76,7 @@
           ]
         },
         {
-          "id":"Bug 1",
+          "id": "Bug 1",
           "color": "Red",
           "event": "ERROR",
           "description": "Error: You need to debug.",
@@ -152,12 +152,21 @@
           ]
         },
         {
-          "id":"Bug 2",
+          "id": "Bug 2",
           "color": "Red",
           "event": "ERROR",
           "description": "Error: You need to debug.",
           "effects": [
             "minigame debug1"
+          ]
+        },
+        {
+          "id": "CS 3410",
+          "color": "Yellow",
+          "event": "Start 3410",
+          "description": "You're not really sure why you have to take a class on hardware if you're planning on just coding for a job. But hopefully it won't be too bad. . .",
+          "effects": [
+            "gain 10"
           ]
         }
       ]
@@ -187,7 +196,7 @@
           ]
         },
         {
-          "id":"Bug 3",
+          "id": "Bug 3",
           "color": "Red",
           "event": "ERROR",
           "description": "Error: Bug in your code. You need to debug.",

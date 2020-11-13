@@ -30,9 +30,6 @@ let tile_description_test (name : string) tile (expected : string) =
 let tile_effects_test (name : string) tile (expected : effect list) = 
   name >:: (fun _ -> assert_equal expected (get_tile_effects tile))
 
-let tile_effects_points_test (name : string) tile (expected : int) = 
-  name >:: (fun _ -> assert_equal expected (get_effect_points tile))
-
 let tile_test = [
   tile_color_test "Red tile" tile1 Red;
   tile_color_test "Blue tile" tile2 Blue;
@@ -44,38 +41,35 @@ let tile_test = [
   tile_description_test "tile2 description" tile2 "Prelims. A time to shut yourself in your room to study and hopefully pass all your classes.";
   (* tile_effects_test "tile1 effects" tile1 ["gain"; "10"];  *)
   (* tile_effects_test "tile2 effects" tile2 *) (* issue with abstract type*)
-  (* tile_effects_points_test *)
 ]
 let test_player = init_state "Jason" tile1
 let test_board = create_board (Yojson.Basic.from_file "gameboard1.json")
 
 let start_tile_test (name : string) (board : gameboard) (expected : string) =
-  name >:: (fun _ -> assert_equal expected (get_tile_event_name 
-                                              (start_tile board)))
+  name >:: (fun _ -> assert_equal expected (get_tile_id (start_tile board)))
 
-let end_tile_test (name : string) (board) (expected) =
-  name >:: (fun _ -> assert_equal expected (get_tile_event_name 
-                                              (end_tile board)))
+let end_tile_test (name : string) (board: gameboard) (expected: string) =
+  name >:: (fun _ -> assert_equal expected (get_tile_id (end_tile board)))
 
 let next_tile_test (name : string) tile compare board expected =
   name >:: (fun _ ->
       assert_equal expected (next_tiles tile compare board))
 
-let compare_tiles_id_teset (name: string) tile_f tile_s (expected : bool) 
+let compare_tiles_id_test (name: string) tile_f tile_s (expected : bool) 
   = name >:: (fun _ -> assert_equal expected (compare_tiles_id tile_f tile_s))
 
-let just_two = create_board (Yojson.Basic.from_file 
+(* let just_two = create_board (Yojson.Basic.from_file 
                                "superbasicboard.json")
-let first = start_tile just_two
-let last = end_tile just_two
+   let first = start_tile just_two
+   let last = end_tile just_two *)
 
 let start = start_tile test_board
 
 let board_test = [
-  start_tile_test "start tile is start" test_board "Start Tile";
-  end_tile_test "end tile is prelims" test_board "Commencement"; 
-  next_tile_test "first to second 2 tile board" first compare_tiles_id 
-    just_two [last];
+  start_tile_test "start tile is start" test_board "start";
+  end_tile_test "end tile is graduation" test_board "Graduation"; 
+  (* next_tile_test "first to second 2 tile board" first compare_tiles_id 
+     just_two [last]; *)
   (* TODO: test next_tile on a tile w/o adjacent tiles*)
   (* next_tile_test "multiple next tiles" start compare_tiles_id test_board [stuff] *)
 ]
