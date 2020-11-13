@@ -4,7 +4,7 @@ open Playerstate
 open Board
 
 let (test_board : Board.gameboard) = Board.create_board 
-    (Yojson.Basic.from_file "gameboard1.json")
+    (Yojson.Basic.from_file "gameboard1_oldversion.json")
 let start_tile = Board.start_tile test_board
 
 

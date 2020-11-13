@@ -110,11 +110,11 @@ let go st board n =
 (** moves the player n spaces forward.
     TODO: Cannot handle branching paths yet *)
 let go st board n = 
-  let rec find_tile tile board n =
+  let rec find_tile tile1 board n =
     match n with
-    | 0 -> set_current_tile st tile
-    | n -> begin
-        set_current_tile st tile;
+    | 0 -> set_current_tile st tile1
+    | _ -> begin
+        set_current_tile st tile1;
         match Board.next_tiles st.current_tile Board.compare_tiles_id board with
         | [] -> ()
         | tile :: [] -> begin
@@ -123,7 +123,7 @@ let go st board n =
             else find_tile tile board (n - 1)
           end
         | h :: t -> failwith "branching paths case not implemented, prompt user"
-      end in find_tile st.current_tile board n
+      end in find_tile st.current_tile board (n + 1)
 
 let get_visited_tiles st = 
   st.visited_tiles 
