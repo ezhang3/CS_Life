@@ -59,7 +59,7 @@ let end_tile_test (name : string) (board) (expected) =
 
 let next_tile_test (name : string) tile compare board expected =
   name >:: (fun _ ->
-      assert_equal expected (next_tile tile compare board))
+      assert_equal expected (next_tiles tile compare board))
 
 let compare_tiles_id_teset (name: string) tile_f tile_s (expected : bool) 
   = name >:: (fun _ -> assert_equal expected (compare_tiles_id tile_f tile_s))
