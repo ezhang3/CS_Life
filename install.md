@@ -6,4 +6,4 @@
    **_ Note: did this for Windows on WSL _**
 3. install XMing from https://sourceforge.net/projects/xming/
 4. configure XLaunch settings to default settings (just keep pressing next)
-5. Play game by running "make play"
+5. Play game by running "make play" (this is all that's really important)
