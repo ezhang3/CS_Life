@@ -34,8 +34,7 @@
           "event": "First CS Assignemnt!",
           "description": "Time to write some code!",
           "effects": [
-            "gain 50",
-            "minigame"
+            "gain 50"
           ]
         },
         {
@@ -53,7 +52,7 @@
           "event": "You failed a prelim!",
           "description": "It's unfortunate, but it's happened to everyone. Maybe you can improve your study habits",
           "effects": [
-            "lose 50"
+            "lose 5"
           ]
         }
       ]
@@ -74,7 +73,7 @@
           "color": "Blue",
           "event": "Get roasted by Gries on Piazza",
           "description": "You asked a (silly?) question and Gries just roasted you. It's a bit shocking but at least you know that the Java Hypertext is helpful",
-          "effects": [ ]
+          "effects": ["gain 100" ]
         },
         {
           "id": "CS 2800 final",
@@ -109,7 +108,7 @@
           "event": "Pull an All-Nighter",
           "description": "Just had to get some work done. It was worth it. Right?",
           "effects": [
-            "lose 300"
+            "gain 0"
           ]
         }
 
