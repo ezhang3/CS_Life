@@ -111,6 +111,7 @@ let go st board n =
     match n with
     | 0 -> set_current_tile st tile
     | n -> begin
+        set_current_tile st tile;
         match Board.next_tile st.current_tile Board.compare_tiles_id board with
         | [] -> set_current_tile st tile
         | tile :: [] -> find_tile tile board (n - 1)
