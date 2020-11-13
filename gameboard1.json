@@ -7,7 +7,9 @@
           "color": "Yellow",
           "event": "Start Tile",
           "description": "Start Tile",
-          "effects": []
+          "effects": [
+            "gain 0"
+          ]
         },
         {
           "id": "tile 1",
@@ -34,8 +36,16 @@
           "event": "First CS Assignemnt!",
           "description": "Time to write some code!",
           "effects": [
-            "gain 50",
-            "minigame"
+            "gain 50"
+          ]
+        },
+        {
+          "id": "birthday",
+          "color": "Green",
+          "event": "It's your birthday!",
+          "description": "Happy birthday! Each player must gift you 25 points.",
+          "effects": [
+            "minigame birthday"
           ]
         },
         {
@@ -46,7 +56,7 @@
           "effects": [
             "gain 10"
           ]
-        },       
+        },
         {
           "id": "First prelim",
           "color": "Red",
@@ -55,11 +65,20 @@
           "effects": [
             "lose 50"
           ]
+        },
+        {
+          "id": "First prelim Pass",
+          "color": "Green",
+          "event": "You Aced a prelim!",
+          "description": "Congrats! You aced you first prelim! Looks like all that study paid off.",
+          "effects": [
+            "gain 50"
+          ]
         }
       ]
     },
     {
-      "tiles" : [
+      "tiles": [
         {
           "id": "Start 2110",
           "color": "Yellow",
@@ -74,7 +93,7 @@
           "color": "Blue",
           "event": "Get roasted by Gries on Piazza",
           "description": "You asked a (silly?) question and Gries just roasted you. It's a bit shocking but at least you know that the Java Hypertext is helpful",
-          "effects": [ ]
+          "effects": []
         },
         {
           "id": "CS 2800 final",
@@ -112,7 +131,6 @@
             "lose 300"
           ]
         }
-
       ]
     },
     {
