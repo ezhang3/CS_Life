@@ -74,6 +74,24 @@
           "effects": [
             "gain 50"
           ]
+        },
+        {
+          "id":"Bug 1",
+          "color": "Red",
+          "event": "ERROR",
+          "description": "Error: You need to debug.",
+          "effects": [
+            "minigame debug1"
+          ]
+        },
+        {
+          "id": "First final",
+          "color": "Blue",
+          "event": "Taking your first final!",
+          "description": "Time for your first final! See if you can demonstrate you've learned something.",
+          "effects": [
+            "minigame 1110"
+          ]
         }
       ]
     },
@@ -130,7 +148,16 @@
           "event": "Pull an All-Nighter",
           "description": "Just had to get some work done. It was worth it. Right?",
           "effects": [
-            "gain 0"
+            "lose 5"
+          ]
+        },
+        {
+          "id":"Bug 2",
+          "color": "Red",
+          "event": "ERROR",
+          "description": "Error: You need to debug.",
+          "effects": [
+            "minigame debug1"
           ]
         }
       ]
@@ -157,6 +184,15 @@
           "description": "The hours of grinding leetcode and CS training have paid off! You've earned a dose of the real world!",
           "effects": [
             "gain 1000"
+          ]
+        },
+        {
+          "id":"Bug 3",
+          "color": "Red",
+          "event": "ERROR",
+          "description": "Error: Bug in your code. You need to debug.",
+          "effects": [
+            "minigame debug1"
           ]
         },
         {
