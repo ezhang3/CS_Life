@@ -1,0 +1,153 @@
+{
+  "stages": [
+    {
+      "tiles": [
+        {
+          "id": "start",
+          "color": "Yellow",
+          "event": "Start Tile",
+          "description": "Start Tile",
+          "effects": []
+        },
+        {
+          "id": "tile 1",
+          "color": "Green",
+          "event": "Freshman Orientation",
+          "description": "Welcome to Cornell University! Take your time to get accustomed to the campus and meet new people!",
+          "effects": [
+            "gain 20",
+            "study_partner 1"
+          ]
+        },
+        {
+          "id": "1110",
+          "color": "Yellow",
+          "event": "Start CS 1110",
+          "description": "You'll learn how to do python. Walker White Rules!",
+          "effects": [
+            "gain 100"
+          ]
+        },
+        {
+          "id": "1110 Assignemnt",
+          "color": "Green",
+          "event": "First CS Assignemnt!",
+          "description": "Time to write some code!",
+          "effects": [
+            "gain 50"
+          ]
+        },
+        {
+          "id": "tile 2",
+          "color": "Green",
+          "event": "Career Fair",
+          "description": "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff.",
+          "effects": [
+            "gain 10"
+          ]
+        },       
+        {
+          "id": "First prelim",
+          "color": "Red",
+          "event": "You failed a prelim!",
+          "description": "It's unfortunate, but it's happened to everyone. Maybe you can improve your study habits",
+          "effects": [
+            "lose 5"
+          ]
+        }
+      ]
+    },
+    {
+      "tiles" : [
+        {
+          "id": "Start 2110",
+          "color": "Yellow",
+          "event": "Start CS 2110",
+          "description": "CS 2110 is the class where you try to solve the mystery of the 5th loopy question and try to gain 59 years of programming experience",
+          "effects": [
+            "gain 200"
+          ]
+        },
+        {
+          "id": "2110 Piazza",
+          "color": "Blue",
+          "event": "Get roasted by Gries on Piazza",
+          "description": "You asked a (silly?) question and Gries just roasted you. It's a bit shocking but at least you know that the Java Hypertext is helpful",
+          "effects": ["gain 100" ]
+        },
+        {
+          "id": "CS 2800 final",
+          "color": "Blue",
+          "event": "CS 2800 Final",
+          "description": "You are a bit traumatized by regular expressions.",
+          "effects": [
+            "gain 300"
+          ]
+        },
+        {
+          "id": "Start 3110",
+          "color": "Yellow",
+          "event": "Start CS 3110",
+          "description": "Camels are fun! Clarkson rules! Peace, love, and 3110",
+          "effects": [
+            "gain 300"
+          ]
+        },
+        {
+          "id": "CS 3110 A0",
+          "color": "Green",
+          "event": "3110 A0 Warmup",
+          "description": "Functional programming is really really difficult. It's a tough adjustment, but you'll get it soon.",
+          "effects": [
+            "gain 10"
+          ]
+        },
+        {
+          "id": "All-nighter",
+          "color": "Red",
+          "event": "Pull an All-Nighter",
+          "description": "Just had to get some work done. It was worth it. Right?",
+          "effects": [
+            "gain 0"
+          ]
+        }
+
+      ]
+    },
+    {
+      "tiles": [
+        {
+          "id": "CS 4820",
+          "color": "Yellow",
+          "event": "Start algo",
+          "description": "Oh, it's algo. More like, Lgo. This is like 2800, but on crack. Expect to spend tons of time on assignments",
+          "effects": [
+            "gain 100"
+          ]
+        }
+      ]
+    },
+    {
+      "tiles": [
+        {
+          "id": "internship",
+          "color": "Green",
+          "event": "First Internship!",
+          "description": "The hours of grinding leetcode and CS training have paid off! You've earned a dose of the real world!",
+          "effects": [
+            "gain 1000"
+          ]
+        },
+        {
+          "id": "Graduation",
+          "color": "Green",
+          "event": "Commencement",
+          "description": "Congrats! You graduated!",
+          "effects": [
+            "gain 100"
+          ]
+        }
+      ]
+    }
+  ]
+}
