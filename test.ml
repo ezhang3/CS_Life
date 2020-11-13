@@ -66,17 +66,18 @@ let compare_tiles_id_teset (name: string) tile_f tile_s (expected : bool)
 
 let just_two = create_board (Yojson.Basic.from_file 
                                "superbasicboard.json")
-let start = start_tile just_two
+let first = start_tile just_two
 let last = end_tile just_two
+
+let start = start_tile test_board
 
 let board_test = [
   start_tile_test "start tile is career fair" test_board "Career Fair";
   end_tile_test "end tile is prelims" test_board "Commencement"; 
-  next_tile_test "first to second 2 tile board" start compare_tiles_id 
+  next_tile_test "first to second 2 tile board" first compare_tiles_id 
     just_two [last];
-  (* next_tile_test "second to first 2 tile board" tile2 compare_tiles_id 
-     test_board [tile1]; *)
   (* TODO: test next_tile on a tile w/o adjacent tiles*)
+  (* next_tile_test "multiple next tiles" start compare_tiles_id test_board [stuff] *)
 ]
 
 (* let new_tile = go test_player test_board 1; get_current_tile test_player
@@ -97,14 +98,16 @@ let get_points_test
       assert_equal expected_output (get_points st))
 
 let go_test (name : string) player board moves (expected: string) = 
-  name >:: (fun _ -> assert_equal expected (get_tile_event_name(
-      get_current_tile player)))
+  name >:: (fun _ -> go player board moves; 
+             assert_equal expected (player 
+                                    |> get_current_tile 
+                                    |> get_tile_event_name))
 
 let player_state_test = [
   get_player_name_test "Works?" test_player "Jason";
   get_points_test "Just started, 0" test_player 0; 
-  (* go_test "go test 1 move" test_player test_board 1 "Start CS 1110";
-     go_test "go test 2 moves" test_player test_board 1 "Start CS 3110" *)
+  go_test "go test 1 move" test_player test_board 1 "Start CS 1110";
+  (* go_test "go test 2 moves" test_player test_board 1 "Start CS 3110" *)
 ]
 
 let suite =
