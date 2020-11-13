@@ -42,8 +42,10 @@ let tile_test = [
   (* tile_effects_test "tile1 effects" tile1 ["gain"; "10"];  *)
   (* tile_effects_test "tile2 effects" tile2 *) (* issue with abstract type*)
 ]
-let test_player = init_state "Jason" tile1
-let test_board = create_board (Yojson.Basic.from_file "gameboard1.json")
+
+let test_board = create_board_nr (Yojson.Basic.from_file "gameboard1.json")
+let start = start_tile test_board
+let test_player = init_state "Jason" start
 
 let start_tile_test (name : string) (board : gameboard) (expected : string) =
   name >:: (fun _ -> assert_equal expected (get_tile_id (start_tile board)))
@@ -58,12 +60,10 @@ let next_tile_test (name : string) tile compare board expected =
 let compare_tiles_id_test (name: string) tile_f tile_s (expected : bool) 
   = name >:: (fun _ -> assert_equal expected (compare_tiles_id tile_f tile_s))
 
-(* let just_two = create_board (Yojson.Basic.from_file 
+(* let just_two = Board.create_board (Yojson.Basic.from_file 
                                "superbasicboard.json")
    let first = start_tile just_two
    let last = end_tile just_two *)
-
-let start = start_tile test_board
 
 let board_test = [
   start_tile_test "start tile is start" test_board "start";
