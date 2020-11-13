@@ -6,7 +6,9 @@
 *) 
 type player_name = string
 type points = int
-type project
+type salary = int
+type project_name = string
+type project = (project_name * salary) option
 type study_partners
 
 (** The abstract type representing the player state. *)
@@ -21,7 +23,7 @@ val print_state : player -> unit
 val make_player_list : int -> Tile.tile -> player list
 val get_nth_player : player list -> int -> player
 val get_name : player -> string
-val set_points : player -> Tile.tile -> unit
+val set_points : player -> int -> unit
 
 (** [get_points st] is the current reputation points player has in state [st] *)
 val get_points : player -> points
@@ -55,4 +57,5 @@ val get_visited_tiles : player -> Tile.tile list
 (** [have_items st] is the list of items the player has on hand in state [st]*)
 val get_items: player -> string list
 
+val play_event : player -> Tile.effect list -> unit
 

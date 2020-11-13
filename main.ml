@@ -16,7 +16,7 @@ let rec roll p =
   print_endline "\n\nType 'roll' to roll the dice: \n";
   print_string  "> ";
   match read_line () |> String.lowercase_ascii |> String.trim with 
-  | "roll" -> Random.int 5 + 1
+  | "roll" -> (Random.int 5) + 1
   | _ -> print_endline "\nInvalid Input. Please try again.\n"; roll p
 
 let rec finish_player_round () = 
@@ -33,14 +33,13 @@ let print_player_stats player =
   print_endline ("\n\n" ^ name ^ "'s current stats: ");
   Playerstate.print_state player
 
-
+(* 
 let play_event player = 
   let tile = Playerstate.get_current_tile player  in
   print_endline (Tile.get_tile_event_name tile ^ "!\n" ^ 
                  Tile.get_tile_description tile);
-  print_endline ("\n" ^ Tile.get_effect_desc tile ^ " " ^ 
-                 (Tile.get_effect_points tile |> string_of_int) ^ " points\n");
-  Playerstate.set_points player tile
+  print_endline ("\n" ^ Tile.get_effect_desc tile ^ "!\n");
+  Playerstate.play_event player tile *)
 
 
 (** [play_game players board] starts the game with players [players] and 
@@ -60,7 +59,10 @@ let rec play_round players board =
         print_endline ("\n" ^ name ^ " rolled a " ^ string_of_int r ^ "\n");
         (**Go to new tile and play event *)
         Playerstate.go p board r; 
-        play_event p;
+        Playerstate.get_current_tile p 
+        |> Tile.get_tile_effects 
+        |> Playerstate.play_event p;
+
         Playerstate.print_state p;
         divide (); divide ();
         finish_player_round ();
