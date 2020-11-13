@@ -4,14 +4,30 @@
 *)
 
 (** Abstract representation of values representing tiles. *)
-type tile 
-(** Type that represents the tile's color on the gameboard GUI*)
+(* type tile  *)
+(** Type that represents the tile's color on the gameboard GUI
+    [Red] : lose points
+    [Green] : gain points
+    [Blue] : ?
+    [Yellow] : Must stop. End of stage
+    [Black] : ?
+*)
 type color = Red | Blue | Green | Yellow | Black
 (** Type of tile identifiers. Make specific tile easy to find on board. *)
 type tile_id = string
 (** Type of effects *)
-type effect = Points of (string * int) | Minigame of string
+type effect = Points of (string * int) 
+            | Minigame of string 
+            | Study_Partner of int 
+            | Project of (string * int) option
 
+type tile = {
+  id : tile_id;
+  color : color;
+  event_name : string; 
+  description: string; 
+  effects: effect list; 
+}
 (* MIGHT HAVE TO CHANGE SIGNATURES AND SPECS *)
 
 (** [create_tile id color event_name desc effects] creates a tile of 

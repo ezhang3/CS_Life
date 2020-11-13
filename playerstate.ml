@@ -54,9 +54,9 @@ let make_player_list (n : int) (start : Tile.tile) =
 let get_name st = 
   st.name
 
-let set_points st (tile : Tile.tile) = 
+let set_points st pts = 
   let orig_pts = st.points in
-  st.points <- Tile.get_effect_points tile |> ( + ) orig_pts
+  st.points <- pts + orig_pts
 
 let get_points st = 
   st.points
@@ -116,6 +116,22 @@ let go st board n =
         | tile :: [] -> find_tile tile board (n - 1)
         | h :: t -> failwith "branching paths case not implemented, prompt user"
       end in find_tile st.current_tile board n
+
+let print_event tile = 
+  print_endline (Tile.get_tile_event_name tile ^ "!\n" ^ 
+                 Tile.get_tile_description tile);
+  print_endline ("\n" ^ Tile.get_effect_desc tile ^ "\n")
+
+let rec play_event player (tile_effect: Tile.effect list) =
+  let tile = get_current_tile player  in
+  match tile_effect with 
+  | [] -> ()
+  | Points ("Gained", n) :: t -> set_points player n; print_event tile; play_event player t
+  | Points ("Lost", n) :: t -> n * (-1) |> set_points player; play_event player t
+  | Points (_, n) :: t -> failwith "Invalid Points (_, _)"
+  | Minigame s :: t -> failwith "Minigame not yet implemented"
+  | Study_Partner n :: t -> add_study_partners player n; play_event player t
+  | Project proj :: t -> set_project player proj; play_event player t
 
 let get_visited_tiles st = 
   st.visited_tiles 
