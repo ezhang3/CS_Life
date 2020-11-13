@@ -114,7 +114,11 @@ let go st board n =
         set_current_tile st tile;
         match Board.next_tile st.current_tile Board.compare_tiles_id board with
         | [] -> set_current_tile st tile
-        | tile :: [] -> find_tile tile board (n - 1)
+        | tile :: [] -> begin
+            if Tile.get_tile_color tile = Yellow then 
+              set_current_tile st tile 
+            else find_tile tile board (n - 1)
+          end
         | h :: t -> failwith "branching paths case not implemented, prompt user"
       end in find_tile st.current_tile board n
 
