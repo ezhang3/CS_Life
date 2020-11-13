@@ -77,6 +77,7 @@ let play_event player players (tile_effect: Tile.effect list) =
 (** [play_game players board] starts the game with players [players] and 
     board [board]. *)
 let  play_round players board =
+  let all_players = players in
   let rec helper players_lst board = 
     match players_lst with 
     | [] -> ()
@@ -95,7 +96,7 @@ let  play_round players board =
           Playerstate.go p board r; 
           Playerstate.get_current_tile p 
           |> Tile.get_tile_effects 
-          |> play_event p players;
+          |> play_event p all_players;
 
           Playerstate.print_state p;
           divide (); divide ();

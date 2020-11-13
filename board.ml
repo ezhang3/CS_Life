@@ -30,8 +30,8 @@ let assign_next_tiles lst =
   let rec helper lst acc = 
     match lst with
     | [] -> raise (No_Tile "List of tiles empty")
-    | h :: [] -> (h, []) :: acc |> List.rev
     | f :: s :: t -> helper (s :: t) ((f, [s]) :: acc)
+    | h :: [] -> (h, []) :: acc |> List.rev
   in helper lst []
 
 (** gets the last element of a list *)
