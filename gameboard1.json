@@ -93,13 +93,9 @@
           "color": "Blue",
           "event": "Get roasted by Gries on Piazza",
           "description": "You asked a (silly?) question and Gries just roasted you. It's a bit shocking but at least you know that the Java Hypertext is helpful",
-<<<<<<< HEAD
-          "effects": []
-=======
           "effects": [
             "lose 10"
           ]
->>>>>>> 1db9e527995f2db08dfcf9be63786c9f920f292a
         },
         {
           "id": "CS 2800 final",

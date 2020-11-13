@@ -56,7 +56,6 @@ let make_player_list (n : int) (start : Tile.tile) =
 let get_name st = 
   st.name
 
-
 let set_points st pts = 
   let orig_pts = st.points in
   st.points <- pts + orig_pts
@@ -90,40 +89,19 @@ let set_current_tile st tile =
 let get_current_tile st = 
   st.current_tile
 
-(*
-(**current implementation of [go] does not account for branching paths *)
-let go st board n = 
-  let rec find_tile board n tile = 
-    match n with
-    | 0 -> set_current_tile st tile
-    | _ -> begin
-        match board with 
-        | [] -> failwith "tile not found"
-        | (head, []) :: tail -> failwith "no more tiles"
-        | (head, h :: t) :: tail  -> 
-          if head = st.current_tile then 
-            find_tile board (n - 1) h
-          else find_tile board n tile
-      end in 
-  find_tile board n st.current_tile *)
-
 (** moves the player n spaces forward.
     TODO: Cannot handle branching paths yet *)
 let go st board n = 
-  let rec find_tile tile1 board n =
+  let rec find_tile tile board n =
     match n with
-    | 0 -> set_current_tile st tile1
+    | 0 -> set_current_tile st tile
     | _ -> begin
-        set_current_tile st tile1;
+        set_current_tile st tile;
         match Board.next_tiles st.current_tile Board.compare_tiles_id board with
-        | [] -> ()
-        | tile :: [] -> begin
-            if Tile.get_tile_color tile = Yellow then 
-              set_current_tile st tile 
-            else find_tile tile board (n - 1)
-          end
+        | [] -> Board.end_tile board |> set_current_tile st 
+        | tile :: [] -> find_tile tile board (n - 1)
         | h :: t -> failwith "branching paths case not implemented, prompt user"
-      end in find_tile st.current_tile board (n + 1)
+      end in find_tile st.current_tile board n
 
 let get_visited_tiles st = 
   st.visited_tiles 
