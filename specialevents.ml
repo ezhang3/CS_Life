@@ -40,19 +40,22 @@ let minigame_4820 player = failwith "unimplemented"
 (* I'm intending to make this one extremely annoying to simulate what it feels
   like to debug stuff. Multiple spaces will have this. *)
 let rec minigame_debug_v1 player num = 
-  print_endline "To debug, correctly guess a number between 1 and 10.\n";
+  
+  if num = 3 then 
+    print_endline "Give up :(";
+    Playerstate.set_points player (~-50)
+  else  
+  print_endline "To debug, correctly guess a number between 1 and 10. \n";
   print_endline ("Attempt: " ^ string_of_int num ^ " Type your number below\n");
-  print_endline "> \n";
-  let current_points = Playerstate.get_points player in 
-  let correct = string_of_int (Random.int 10) in 
+  print_endline "> ";
+  let correct = string_of_int (Random.int 10 + 1) in 
   if (read_line () |> String.trim = correct) 
   then 
     print_endline "You did it!"
   else 
     print_endline "Wrong answer. Lose 5 points.\nTry again."; 
-    Playerstate.set_points player (current_points - 5);
+    Playerstate.set_points player (~-5);
     minigame_debug_v1 player (num+1)
-
 
 let choose_project player = failwith "unimplemented"
 
