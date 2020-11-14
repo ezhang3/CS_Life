@@ -43,7 +43,6 @@ let randomize lst =
   let on = true in
   if not on then lst else List.sort rand_comp lst
 
-
 (** gets the last element of a list *)
 let rec last_of_list = function
   | [] -> raise (No_Tile "List empty. No last element exists")
