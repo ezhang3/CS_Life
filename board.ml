@@ -87,12 +87,12 @@ let from_json json =
   try build_stages json
   with Type_error (s, _) -> failwith ("Failed to build board from json: " ^ s)
 
-(** for testing purposes, building a not random board *)
+(** ---for testing purposes, building a not random board--- *)
 
 (** [build_stage_nr json] builds list of tiles in the order they are found
     in the json *)
 let build_stage_nr json =
-  get_mem json "tiles" |> to_list |> List.map build_tile |> randomize
+  get_mem json "tiles" |> to_list |> List.map build_tile
 
 (** [build_stages_nr json] builds a list of stages, flattens them,
     and assigns pointers *)

@@ -43,8 +43,9 @@ let tile_test = [
   (* tile_effects_test "tile2 effects" tile2 *) (* issue with abstract type*)
 ]
 
-let test_board = create_board_nr (Yojson.Basic.from_file "gameboard1.json")
+let test_board = Board.create_board_nr (Yojson.Basic.from_file "gameboard1.json")
 let start = start_tile test_board
+let last = end_tile test_board
 let test_player = init_state "Jason" start
 
 let start_tile_test (name : string) (board : gameboard) (expected : string) =
@@ -53,25 +54,29 @@ let start_tile_test (name : string) (board : gameboard) (expected : string) =
 let end_tile_test (name : string) (board: gameboard) (expected: string) =
   name >:: (fun _ -> assert_equal expected (get_tile_id (end_tile board)))
 
-let next_tile_test (name : string) tile compare board expected =
+let rec tile_id_list acc (lst: tile list)= match lst with
+  | [] -> acc
+  | h :: t -> tile_id_list (get_tile_id h :: acc) t
+
+let next_tile_test (name : string) tile compare board (expected) =
+  let next_tiles_id_list = tile_id_list [] (next_tiles tile compare board) in 
   name >:: (fun _ ->
-      assert_equal expected (next_tiles tile compare board))
+      assert_equal expected next_tiles_id_list)
 
 let compare_tiles_id_test (name: string) tile_f tile_s (expected : bool) 
   = name >:: (fun _ -> assert_equal expected (compare_tiles_id tile_f tile_s))
 
-(* let just_two = Board.create_board (Yojson.Basic.from_file 
-                               "superbasicboard.json")
-   let first = start_tile just_two
-   let last = end_tile just_two *)
-
 let board_test = [
   start_tile_test "start tile is start" test_board "start";
-  end_tile_test "end tile is graduation" test_board "Graduation"; 
-  (* next_tile_test "first to second 2 tile board" first compare_tiles_id 
-     just_two [last]; *)
-  (* TODO: test next_tile on a tile w/o adjacent tiles*)
-  (* next_tile_test "multiple next tiles" start compare_tiles_id test_board [stuff] *)
+  end_tile_test "end tile is graduation" test_board "Graduation";
+  compare_tiles_id_test "start and end tile" start last false;
+  next_tile_test "first to second 2 tile board" start compare_tiles_id 
+    test_board ["tile 1"];
+  next_tile_test "next tile for end tile" last compare_tiles_id 
+    test_board [];  
+  (* when branching paths implemented *)                              
+  (* next_tile_test "multiple next tiles" start compare_tiles_id test_board 
+     [stuff] *)
 ]
 
 (* let new_tile = go test_player test_board 1; get_current_tile test_player
@@ -95,13 +100,13 @@ let go_test (name : string) player board moves (expected: string) =
   name >:: (fun _ -> go player board moves; 
              assert_equal expected (player 
                                     |> get_current_tile 
-                                    |> get_tile_event_name))
+                                    |> get_tile_id))
 
 let player_state_test = [
   get_player_name_test "Works?" test_player "Jason";
   get_points_test "Just started, 0" test_player 0; 
-  go_test "go test 1 move" test_player test_board 1 "Start CS 1110";
-  (* go_test "go test 2 moves" test_player test_board 1 "Start CS 3110" *)
+  go_test "go test 1 move" test_player test_board 1 "tile 1";
+  (* go_test "go test 2 moves" test_player test_board 1 "1110"; *)
 ]
 
 let suite =
