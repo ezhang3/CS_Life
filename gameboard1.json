@@ -168,6 +168,15 @@
           "effects": [
             "gain 10"
           ]
+        },
+        {
+          "id": "BTRY 3080",
+          "color": "Yellow",
+          "event": "Start Stats",
+          "description": "A requirement for the CS Major. If you're good, maybe it means you can do ML in the future. Otherwise will just do regular coding again.",
+          "effects": [
+            "gain 70"
+          ]
         }
       ]
     },
@@ -187,12 +196,48 @@
     {
       "tiles": [
         {
+          "id": "First intership interview bad",
+          "color": "Red",
+          "event": "You bombed your first technical interview!",
+          "description": "You grinded so much leetcode, but during that interview your brain just did not work. . .",
+          "effects": [
+            "lose 10"
+          ]
+        },
+        {
+          "id": "intership interview pass",
+          "color": "Green",
+          "event": "You breezed through that technical interview!",
+          "description": "Your command of data structues was excellent, all thanks to leetcode and 2110. Hopefully you'll hear good news soon!",
+          "effects": [
+            "gain 200"
+          ]
+        },
+        {
           "id": "internship",
           "color": "Green",
           "event": "First Internship!",
           "description": "The hours of grinding leetcode and CS training have paid off! You've earned a dose of the real world!",
           "effects": [
             "gain 1000"
+          ]
+        },
+        {
+          "id": "CS 4780",
+          "color": "Yellow",
+          "event": "Start 4780",
+          "description": "It's machine learning! Hopefully it's as good as they say. . .",
+          "effects": [
+            "gain 150"
+          ]
+        },
+        {
+          "id": "CS 4701",
+          "color": "Yellow",
+          "event": "Start 4701, AI Prac",
+          "description": "You weren't really sure which Prac to take, but started this one since everyone said it was an easy A with not that much work.",
+          "effects": [
+            "gain 15"
           ]
         },
         {
