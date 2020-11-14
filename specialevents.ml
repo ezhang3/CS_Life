@@ -7,6 +7,9 @@ let rec find_player name = function
     else find_player name t
 
 let rec academic_integrity player players =
+  if List.length players < 2 then 
+    print_endline "Sorry, there is no one to accuse of academic integrity?\n"
+  else 
   print_endline "Who would you like to accuse of academic integrity?\n";
   print_endline "> ";
   match read_line () |> String.lowercase_ascii |> String.trim with 
@@ -33,6 +36,23 @@ let minigame_3410 player = failwith "unimplemented"
 let minigame_4410 player = failwith "unimplemented"
 
 let minigame_4820 player = failwith "unimplemented"
+
+(* I'm intending to make this one extremely annoying to simulate what it feels
+  like to debug stuff. Multiple spaces will have this. *)
+let rec minigame_debug_v1 player num = 
+  print_endline "To debug, correctly guess a number between 1 and 10.\n";
+  print_endline ("Attempt: " ^ string_of_int num ^ " Type your number below\n");
+  print_endline "> \n";
+  let current_points = Playerstate.get_points player in 
+  let correct = string_of_int (Random.int 10) in 
+  if (read_line () |> String.trim = correct) 
+  then 
+    print_endline "You did it!"
+  else 
+    print_endline "Wrong answer. Lose 5 points.\nTry again."; 
+    Playerstate.set_points player (current_points - 5);
+    minigame_debug_v1 player (num+1)
+
 
 let choose_project player = failwith "unimplemented"
 
@@ -79,6 +99,7 @@ let find_special_event player players str =
   | "3410" -> minigame_3410 player
   | "4410" -> minigame_4410 player
   | "4820" -> minigame_4820 player
+  | "debug1" -> minigame_debug_v1 player 1
   | "choose_project" -> choose_project player
   | "change_project" -> change_project player
   | "birthday" -> birthday player players

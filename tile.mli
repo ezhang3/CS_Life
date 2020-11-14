@@ -8,7 +8,7 @@
 (** Type that represents the tile's color on the gameboard GUI
     [Red] : lose points
     [Green] : gain points
-    [Blue] : ?
+    [Blue] : special event
     [Yellow] : Must stop. End of stage
     [Black] : ?
 *)

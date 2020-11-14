@@ -114,5 +114,3 @@ let get_visited_tiles st =
 
 let get_items st = 
   st.items
-
-

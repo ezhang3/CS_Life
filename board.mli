@@ -7,9 +7,13 @@ type gameboard
 (** An exception give if the tile doesn't appear in board *)
 exception No_Tile of string
 
-(** [create_board x] is a board created from a valid json. ie a json that
-    consists of nonempty stages and tiles *)
+(** [create_board x] is a board created from a valid json [x], which
+    consists of nonempty stages and tiles, randomized *)
 val create_board : Yojson.Basic.t -> gameboard
+
+(** [create_board x] is a board created from a valid json [x], which
+    consists of nonempty stages and tiles, not randomized; for testing *)
+val create_board_nr : Yojson.Basic.t -> gameboard
 
 (** [start_tile board] is the first tile of the board.
     Raises: No_Tile if [board] has no starting tile *)
