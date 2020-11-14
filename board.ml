@@ -40,7 +40,7 @@ let rand_comp x y = let randn = (Random.int 3)
 
 (* [randomize lst] is a randomized version of [lst] *)
 let randomize lst = 
-  let on = true in
+  let on = false in
   if not on then lst else List.sort rand_comp lst
 
 
@@ -87,31 +87,10 @@ let from_json json =
   try build_stages json
   with Type_error (s, _) -> failwith ("Failed to build board from json: " ^ s)
 
-(** ---for testing purposes, building a not random board--- *)
-
-(** [build_stage_nr json] builds list of tiles in the order they are found
-    in the json *)
-let build_stage_nr json =
-  get_mem json "tiles" |> to_list |> List.map build_tile
-
-(** [build_stages_nr json] builds a list of stages, flattens them,
-    and assigns pointers *)
-let build_stages_nr json =
-  get_mem json "stages"|> to_list |> List.map build_stage_nr |> List.flatten
-  |> assign_next_tiles
-
-(** [from_json_nr json] parses a valid json into game_board*)
-let from_json_nr json =
-  try build_stages_nr json
-  with Type_error (s, _) -> failwith ("Failed to build board from json: " ^ s)
-
 (* ------------------------- INTERFACE FUNCTIONS -------------------------*)
 
 let create_board json = from_json json
 (* test_board *)
-
-(* for testing *)
-let create_board_nr json = from_json_nr json 
 
 let start_tile (board : gameboard) = match board with
   | [] -> raise (No_Tile "Board has no start tile")

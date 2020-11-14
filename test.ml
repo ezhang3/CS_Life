@@ -56,7 +56,7 @@ let tile_test = [
   (* tile_effects_test "tile2 effects" tile2 *) (* issue with abstract type*)
 ]
 
-let test_board = Board.create_board_nr (Yojson.Basic.from_file "gameboard1.json")
+let test_board = Board.create_board (Yojson.Basic.from_file "gameboard1.json")
 let start = start_tile test_board
 let last = end_tile test_board
 let test_player = init_state "Jason" start
