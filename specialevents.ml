@@ -24,7 +24,15 @@ let rec academic_integrity player players =
 
 let minigame_1110 player = failwith "unimplemented"
 
-let minigame_2110 player = failwith "unimplemented"
+let minigame_2110 player = 
+  print_endline "How many loopy questions are there? \n>"
+  if read_line () |> String.trim = "4" 
+  then 
+  print_endline "Good job! Gain 10 points";
+  Playerstate.set_points player 10;
+  else 
+  print_endline "Wrong answer :( Lose 10 points"
+  Playerstate.set_points player ~-10
 
 let minigame_2800 player = failwith "unimplemented"
 
@@ -40,7 +48,7 @@ let minigame_4820 player = failwith "unimplemented"
 (* I'm intending to make this one extremely annoying to simulate what it feels
    like to debug stuff. Multiple spaces will have this. *)
 let rec minigame_debug_v1 player num = 
-  if num = 3 then begin
+  if num = 5 then begin
     print_endline "Give up :(";
     Playerstate.set_points player (~-50); end
   else begin
@@ -61,6 +69,8 @@ let rec minigame_debug_v1 player num =
 let choose_project player = failwith "unimplemented"
 
 let change_project player = failwith "unimplemented"
+
+let lose_project player = failwith "unimplemented"
 
 let birthday (player : Playerstate.player) players = 
   let rec helper (player : Playerstate.player) players (acc : int) = 
@@ -106,6 +116,7 @@ let find_special_event player players str =
   | "debug1" -> minigame_debug_v1 player 1
   | "choose_project" -> choose_project player
   | "change_project" -> change_project player
+  | "lose project" -> lose_project player 
   | "birthday" -> birthday player players
   | "pay_day" -> pay_day player 
   | "pay_raise" -> pay_raise player
