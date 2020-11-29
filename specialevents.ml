@@ -10,7 +10,7 @@ let rec academic_integrity player players =
   if List.length players < 2 then 
     print_endline "Sorry, there is no one to accuse of academic integrity?\n"
   else 
-  print_endline "Who would you like to accuse of academic integrity?\n";
+    print_endline "Who would you like to accuse of academic integrity?\n";
   print_endline "> ";
   match read_line () |> String.lowercase_ascii |> String.trim with 
   | p -> 
@@ -24,7 +24,15 @@ let rec academic_integrity player players =
 
 let minigame_1110 player = failwith "unimplemented"
 
-let minigame_2110 player = failwith "unimplemented"
+let minigame_2110 player = 
+  print_endline "How many loopy questions are there? \n>"
+  if read_line () |> String.trim = "4" 
+  then 
+  print_endline "Good job! Gain 10 points";
+  Playerstate.set_points player 10;
+  else 
+  print_endline "Wrong answer :( Lose 10 points"
+  Playerstate.set_points player ~-10
 
 let minigame_2800 player = failwith "unimplemented"
 
@@ -38,25 +46,31 @@ let minigame_4410 player = failwith "unimplemented"
 let minigame_4820 player = failwith "unimplemented"
 
 (* I'm intending to make this one extremely annoying to simulate what it feels
-  like to debug stuff. Multiple spaces will have this. *)
+   like to debug stuff. Multiple spaces will have this. *)
 let rec minigame_debug_v1 player num = 
-  print_endline "To debug, correctly guess a number between 1 and 10.\n";
-  print_endline ("Attempt: " ^ string_of_int num ^ " Type your number below\n");
-  print_endline "> \n";
-  let current_points = Playerstate.get_points player in 
-  let correct = string_of_int (Random.int 10) in 
-  if (read_line () |> String.trim = correct) 
-  then 
-    print_endline "You did it!"
-  else 
-    print_endline "Wrong answer. Lose 5 points.\nTry again."; 
-    Playerstate.set_points player (current_points - 5);
-    minigame_debug_v1 player (num+1)
-
+  if num = 5 then begin
+    print_endline "Give up :(";
+    Playerstate.set_points player (~-50); end
+  else begin
+    print_endline "To debug, correctly guess a number between 1 and 5.\n";
+    print_endline ("Attempt #"^ string_of_int num ^"\nType your number below");
+    print_string "> ";
+    let correct = string_of_int (Random.int 5 + 1) in 
+    if (read_line () |> String.trim = correct) 
+    then 
+      print_endline "You did it!"
+    else begin
+      print_endline "Wrong answer. Lose 5 points.\nTry again."; 
+      Playerstate.set_points player (-5);
+      minigame_debug_v1 player (num+1)
+    end
+  end 
 
 let choose_project player = failwith "unimplemented"
 
 let change_project player = failwith "unimplemented"
+
+let lose_project player = failwith "unimplemented"
 
 let birthday (player : Playerstate.player) players = 
   let rec helper (player : Playerstate.player) players (acc : int) = 
@@ -102,6 +116,7 @@ let find_special_event player players str =
   | "debug1" -> minigame_debug_v1 player 1
   | "choose_project" -> choose_project player
   | "change_project" -> change_project player
+  | "lose project" -> lose_project player 
   | "birthday" -> birthday player players
   | "pay_day" -> pay_day player 
   | "pay_raise" -> pay_raise player
