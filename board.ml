@@ -71,7 +71,6 @@ let build_tile json =
   create_tile id color event_name description effects
 
 (** [build_stage json] builds list of tiles and randomizes *)
-(* TODO: Randomization function after build_tile*)
 let build_stage json =
   get_mem json "tiles" |> to_list |> List.map build_tile |> randomize
 

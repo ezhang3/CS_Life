@@ -25,13 +25,14 @@ let rec academic_integrity player players =
 let minigame_1110 player = failwith "unimplemented"
 
 let minigame_2110 player = 
-  print_endline "How many loopy questions are there? \n>"
-  if read_line () |> String.trim = "4" 
-  then 
+  print_endline "How many loopy questions are there? \n>";
+  if (read_line () |> String.trim) = "4" 
+  then begin
   print_endline "Good job! Gain 10 points";
-  Playerstate.set_points player 10;
+  Playerstate.set_points player 10
+  end
   else 
-  print_endline "Wrong answer :( Lose 10 points"
+  print_endline "Wrong answer :( Lose 10 points";
   Playerstate.set_points player ~-10
 
 let minigame_2800 player = failwith "unimplemented"
