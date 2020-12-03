@@ -52,7 +52,29 @@ let minigame_2110 player =
 
 
 let minigame_2800 player = 
-  print_endline "\nUnimplemented \n\n"
+  print_endline "Do you like regular expressions? \n";
+  print_endline "What string does the regular expressions a match to? \n"; 
+  print_string "> "; 
+  if (read_line () |> String.trim) = "a" 
+  then begin 
+    print_endline "Correct! Gain 5 points \n";
+    Playerstate.set_points player 5 
+  end
+  else 
+    print_endline "Nope! The answer is a. Lose 5 points >_< \n";
+  Playerstate.set_points player ~-5; 
+  print_endline "Another question, on functions \n"; 
+  print_endline "True or false, one-to-one functions are injective \n"; 
+  print_string "> "; 
+  if (read_line () |> String.trim) = "true" || (read_line () |> String.trim) = "True"
+  then begin 
+    print_endline "Correct! Gain 5 points \n";
+    Playerstate.set_points player 5 
+  end
+  else 
+    print_endline "Nope! The answer is true. Lose 5 points >_< \n";
+  Playerstate.set_points player ~-5; 
+  print_endline "Thanks for playing! Hope you liked 2800 ^^"
 
 let minigame_3110 player = 
   print_endline "Let's see how well you do on this 3110 quiz! The more you answer correctly, the more points you will gain.\n"
@@ -88,6 +110,23 @@ let rec minigame_debug_v1 player num =
       minigame_debug_v1 player (num+1)
     end
   end 
+
+let minigame_ta player = 
+  print_endline "You are hosting office hours for the class. \n"; 
+  print_endline "There are a lot of students waiting, waiting for you guidance 
+  in hopefully passing this class. \n"; 
+  print_endline "An hour passed where you answered lots of questions and corrected 
+  so much not great code your head hurts. \n";
+  print_endline "So, was it a good experience? (Yes or No) \n"; 
+  print_string "> "; 
+  if (read_line () |> String.trim) = "yes" || (read_line () |> String.trim) = "Yes"
+  then begin
+    print_endline "Nice! Glad you found being a TA rewarding :) Maybe be one again next semester?";
+    Playerstate.set_points player 20
+  end
+  else 
+    print_endline "Oops, sorry it wasn't that great for you. Is the pay worth it? (Probably yes)";
+  Playerstate.set_points player ~-5
 
 let choose_project player = 
   print_endline "Name your project: \n";

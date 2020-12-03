@@ -556,7 +556,7 @@
           "description": "You're now a TA for a CS class (3110 maybe? ;). Looking forward to helping others learn...",
           "effects": [
             "gain 100",
-            "minigame being_ta"
+            "minigame ta"
           ]
         },
         {
