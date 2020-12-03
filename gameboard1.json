@@ -34,7 +34,7 @@
           "id": "choose 1110 or 2110",
           "color": "Yellow",
           "event": "Choose to start with CS 1110 or CS 2110",
-          "description": "Welcome to Cornell! You have the choice to use your hard earned AP credit to skip CS 110",
+          "description": "Welcome to Cornell! You have the choice to use your hard earned AP credit to skip CS 1110",
           "effects": [
             "minigame choose_1110_2110"
           ]
@@ -457,6 +457,63 @@
     },
     {
       "id": "4820 final",
+      "next": [
+        {
+          "id": "start project"
+        }
+      ],
+      "tiles": [
+        {
+          "id": "filler2",
+          "color": "Black",
+          "event": "filler",
+          "description": "filler",
+          "effects": [
+            "gain 0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "start 4410",
+      "next": [
+        {
+          "id": "4410 path"
+        }
+      ],
+      "tiles": [
+        {
+          "id": "CS 4410",
+          "color": "Yellow",
+          "event": "Start OS",
+          "description": "In the beginning, there was hardware. The hardware was formless and empty, darkness covered the surface of silicon.\nAnd then the creator said “let there be operating systems,” and there were OSes. The creator saw that OSes were good.\nAnd the creator said “let there be processes, and threads.” OSes were teeming with processes and threads carrying out different tasks.\nThen the creator said “let the processes and threads synchronize with each other.” For this task, the creator appointed human-kind.\nBut humans were fallible, and weak, and they failed to get synchronization correct, and fallen angel BSOD, spawn of Beelzebub, ruled the day with great evil\n - Prof Sirer",
+          "effects": [
+            "gain 80"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "4410 path",
+      "next": [
+        {
+          "id": "4410 final"
+        }
+      ],
+      "tiles": [
+        {
+          "id": "filler1",
+          "color": "Black",
+          "event": "filler",
+          "description": "filler",
+          "effects": [
+            "gain 0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "4410 final",
       "next": [
         {
           "id": "start project"

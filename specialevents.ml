@@ -50,15 +50,18 @@ let minigame_2110 player =
     print_endline "Wrong answer :( Lose 10 points";
   Playerstate.set_points player ~-10
 
+
 let minigame_2800 player = 
   print_endline "\nUnimplemented \n\n"
 
 let minigame_3110 player = 
   print_endline "Let's see how well you do on this 3110 quiz! The more you answer correctly, the more points you will gain.\n"
 
+(* Putting assembly instructions in the right order? *)
 let minigame_3410 player = 
   print_endline "\nUnimplemented \n\n"
 
+(* *)
 let minigame_4410 player = 
   print_endline "\nUnimplemented \n\n"
 
