@@ -11,7 +11,7 @@ let rec academic_integrity player players =
     print_endline "Sorry, there is no one to accuse of academic integrity?\n"
   else 
     print_endline "Who would you like to accuse of academic integrity?\n";
-  print_endline "> ";
+  print_string  "> ";
   match read_line () |> String.lowercase_ascii |> String.trim with 
   | p -> 
     match find_player p players with 
@@ -22,10 +22,25 @@ let rec academic_integrity player players =
       Playerstate.set_points p2 (-1000);
       Playerstate.set_points player 1000
 
-let minigame_1110 player = failwith "unimplemented"
+let rec minigame_choose_1110_2110 player board = 
+  print_endline "\nDecide whether you would like to take CS 1110 or CS 2110 first.\nKeep in mind that once you take CS 2110, you cannot go back to take CS 1110. \nEnter [1110] or [2110]:\n";
+  print_string  "> ";
+  match read_line () |> String.trim with 
+  | "1110" -> 
+    let new_tile = Board.find_tile_by_id "1110 waiting spot" board in
+    Playerstate.set_current_tile player new_tile
+  | "2110" -> 
+    let new_tile = Board.find_tile_by_id "2110 waiting spot" board in
+    Playerstate.set_current_tile player new_tile
+  | _ -> print_endline "\nInvalid input. Please re-enter: \n\n";
+    minigame_choose_1110_2110 player board
+
+let minigame_1110 player = 
+  print_endline "\nUnimplemented \n\n"
 
 let minigame_2110 player = 
-  print_endline "How many loopy questions are there? \n>";
+  print_endline "How many loopy questions are there? \n";
+  print_string  "> ";
   if (read_line () |> String.trim) = "4" 
   then begin
     print_endline "Good job! Gain 10 points";
@@ -35,16 +50,20 @@ let minigame_2110 player =
     print_endline "Wrong answer :( Lose 10 points";
   Playerstate.set_points player ~-10
 
-let minigame_2800 player = failwith "unimplemented"
+let minigame_2800 player = 
+  print_endline "\nUnimplemented \n\n"
 
 let minigame_3110 player = 
   print_endline "Let's see how well you do on this 3110 quiz! The more you answer correctly, the more points you will gain.\n"
 
-let minigame_3410 player = failwith "unimplemented"
+let minigame_3410 player = 
+  print_endline "\nUnimplemented \n\n"
 
-let minigame_4410 player = failwith "unimplemented"
+let minigame_4410 player = 
+  print_endline "\nUnimplemented \n\n"
 
-let minigame_4820 player = failwith "unimplemented"
+let minigame_4820 player = 
+  print_endline "\nUnimplemented \n\n"
 
 (* I'm intending to make this one extremely annoying to simulate what it feels
    like to debug stuff. Multiple spaces will have this. *)
@@ -75,9 +94,11 @@ let choose_project player =
   let proj = Some (proj_name,cur_sal+2) in 
   Playerstate.set_project player proj
 
-let change_project player = failwith "unimplemented"
+let change_project player = 
+  print_endline "\nUnimplemented \n\n"
 
-let lose_project player = failwith "unimplemented"
+let lose_project player = 
+  print_endline "\nUnimplemented \n\n"
 
 let birthday (player : Playerstate.player) players = 
   let rec helper (player : Playerstate.player) players (acc : int) = 
@@ -111,8 +132,9 @@ let pay_raise player =
     have earned " ^ (string_of_int salary) ^ " points!\n");
     Playerstate.set_points player salary
 
-let find_special_event player players str = 
+let find_special_event player players board str = 
   match str with 
+  |"choose_1110_2110" -> minigame_choose_1110_2110 player board
   | "1110" -> minigame_1110 player 
   | "2110" -> minigame_2110 player 
   | "2800" -> minigame_2800 player

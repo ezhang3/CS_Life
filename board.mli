@@ -25,6 +25,8 @@ val end_tile : gameboard -> tile
 (* TODO: think about rep invariant and abstraction function*)
 val next_tiles : tile -> (tile-> tile -> bool) -> gameboard -> tile list
 
+val find_tile_by_id : Tile.tile_id -> gameboard -> tile 
+
 (** [compare_tiles_id t1 t2] is whether [t1] and [t2] have the same id.
     Ids should be unique to a tile. *)
 val compare_tiles_id : tile -> tile -> bool

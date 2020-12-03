@@ -32,7 +32,6 @@ let rec finish_player_round () =
   | _ -> print_endline "\nInvalid Input. Please try again.\n"; 
     finish_player_round ()
 
-
 (**[print_player_stats player] Prints player [player]'s stats *)
 let print_player_stats player = 
   let name = Playerstate.get_name player in 
@@ -46,7 +45,7 @@ let print_effect effect =
 (** [play_event player players tile_effect] plays out each effect in 
     [tile_effect] for [player]. Depending on the effect, other players in 
     [players] can be affected as well *)
-let play_event player players (tile_effect: Tile.effect list) =
+let play_event board player players (tile_effect: Tile.effect list)=
   let tile = get_current_tile player  in
   print_endline (Tile.get_tile_event_name tile ^ "!\n" ^ 
                  Tile.get_tile_description tile);
@@ -72,7 +71,7 @@ let play_event player players (tile_effect: Tile.effect list) =
       end
     | Minigame s as e :: t -> begin
         print_effect e;
-        Specialevents.find_special_event player players s
+        Specialevents.find_special_event player players board s
       end in
   helper player players tile_effect
 
@@ -98,7 +97,7 @@ let  play_round players board =
           Playerstate.go p board r; 
           Playerstate.get_current_tile p 
           |> Tile.get_tile_effects 
-          |> play_event p all_players;
+          |> play_event board p all_players;
 
           Playerstate.print_state p;
           divide (); divide ();

@@ -1,6 +1,12 @@
 {
   "stages": [
     {
+      "id": "start",
+      "next": [
+        {
+          "id": "choose 1110 or 2110"
+        }
+      ],
       "tiles": [
         {
           "id": "start",
@@ -10,20 +16,57 @@
           "effects": [
             "gain 0"
           ]
+        }
+      ]
+    },
+    {
+      "id": "choose 1110 or 2110",
+      "next": [
+        {
+          "id": "1110 waiting spot"
         },
         {
-          "id": "tile 1",
-          "color": "Green",
-          "event": "Freshman Orientation",
-          "description": "Welcome to Cornell University! Take your time to get accustomed to the campus and meet new people!",
+          "id": "2110 waiting spot"
+        }
+      ],
+      "tiles": [
+        {
+          "id": "choose 1110 or 2110",
+          "color": "Yellow",
+          "event": "Choose to start with CS 1110 or CS 2110",
+          "description": "Welcome to Cornell! You have the choice to use your hard earned AP credit to skip CS 110",
           "effects": [
-            "gain 20",
-            "study_partner 1"
+            "minigame choose_1110_2110"
           ]
         }
       ]
     },
-    {  
+    {
+      "id": "1110 waiting spot",
+      "next": [
+        {
+          "id": "start 1110"
+        }
+      ],
+      "tiles": [
+        {
+          "id": "1110 waiting spot",
+          "color": "Black",
+          "event": "filler",
+          "description": "filler",
+          "effects": [
+            "gain 0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "start 1110",
+      "next": [
+        {
+          "id": "1110 path"
+        }
+      ],
       "tiles": [
         {
           "id": "1110",
@@ -37,7 +80,61 @@
       ]
     },
     {
-      "tiles": [        
+      "id": "2110 waiting spot",
+      "next": [
+        {
+          "id": "start 2110"
+        }
+      ],
+      "tiles": [
+        {
+          "id": "2110 waiting spot",
+          "color": "Black",
+          "event": "filler",
+          "description": "filler",
+          "effects": [
+            "gain 0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "start 2110",
+      "next": [
+        {
+          "id": "2110 path"
+        }
+      ],
+      "tiles": [
+        {
+          "id": "Start 2110",
+          "color": "Yellow",
+          "event": "Start CS 2110",
+          "description": "CS 2110 is the class where you try to solve the mystery of the 5th loopy question and try to gain 59 years of programming experience",
+          "effects": [
+            "gain 200"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "1110 path",
+      "next": [
+        {
+          "id": "1110 final"
+        }
+      ],
+      "tiles": [
+        {
+          "id": "tile 1",
+          "color": "Green",
+          "event": "Freshman Orientation",
+          "description": "Welcome to Cornell University! Take your time to get accustomed to the campus and meet new people!",
+          "effects": [
+            "gain 20",
+            "study_partner 1"
+          ]
+        },
         {
           "id": "1110 Assignemnt",
           "color": "Green",
@@ -91,11 +188,21 @@
           "effects": [
             "minigame debug1"
           ]
-        },
+        }
+      ]
+    },
+    {
+      "id": "1110 final",
+      "next": [
         {
-          "id": "First final",
-          "color": "Blue",
-          "event": "Taking your first final!",
+          "id": "start 2800"
+        }
+      ],
+      "tiles": [
+        {
+          "id": "1110 final",
+          "color": "Yellow",
+          "event": "Taking your first final at Cornell!",
           "description": "Time for your first final! See if you can demonstrate you've learned something.",
           "effects": [
             "minigame 1110"
@@ -104,29 +211,13 @@
       ]
     },
     {
-      "tiles": [
+      "id": "2110 path",
+      "next": [
         {
-          "id": "Start 2110",
-          "color": "Yellow",
-          "event": "Start CS 2110",
-          "description": "CS 2110 is the class where you try to solve the mystery of the 5th loopy question and try to gain 59 years of programming experience",
-          "effects": [
-            "gain 200"
-          ]
+          "id": "2110 final"
         }
-      ]
-    },
-    {
-      "tiles": [ 
-        {
-          "id": "Start 2800",
-          "color": "Blue",
-          "event": "Start CS 2800",
-          "description": "CS 2800 is the class that introduces you to writing proofs. If you make it out alive, you are good to continue.",
-          "effects": [
-            "gain 150"
-          ]
-        },
+      ],
+      "tiles": [
         {
           "id": "2110 Piazza",
           "color": "Blue",
@@ -135,10 +226,77 @@
           "effects": [
             "lose 10"
           ]
-        },
+        }
+      ]
+    },
+    {
+      "id": "2110 final",
+      "next": [
+        {
+          "id": "start 2800"
+        }
+      ],
+      "tiles": [
+        {
+          "id": "2110 final",
+          "color": "Yellow",
+          "event": "2110 final",
+          "description": "",
+          "effects": [
+            "minigame 2110"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "start 2800",
+      "next": [
+        {
+          "id": "2800 path"
+        }
+      ],
+      "tiles": [
+        {
+          "id": "Start 2800",
+          "color": "Yellow",
+          "event": "Start CS 2800",
+          "description": "CS 2800 is the class that introduces you to writing proofs. If you make it out alive, you are good to continue.",
+          "effects": [
+            "gain 150"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2800 path",
+      "next": [
+        {
+          "id": "2800 final"
+        }
+      ],
+      "tiles": [
+        {
+          "id": "2800 path filler",
+          "color": "Black",
+          "event": "filler",
+          "description": "filler",
+          "effects": [
+            "gain 0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2800 final",
+      "next": [
+        {
+          "id": "start 3110"
+        }
+      ],
+      "tiles": [
         {
           "id": "CS 2800 final",
-          "color": "Blue",
+          "color": "Yellow",
           "event": "CS 2800 Final",
           "description": "You are a bit traumatized by regular expressions.",
           "effects": [
@@ -148,6 +306,12 @@
       ]
     },
     {
+      "id": "start 3110",
+      "next": [
+        {
+          "id": "3110 path"
+        }
+      ],
       "tiles": [
         {
           "id": "Start 3110",
@@ -161,6 +325,12 @@
       ]
     },
     {
+      "id": "3110 path",
+      "next": [
+        {
+          "id": "3110 final"
+        }
+      ],
       "tiles": [
         {
           "id": "CS 3110 A0",
@@ -210,19 +380,50 @@
       ]
     },
     {
-      "tiles":[
+      "id": "3110 final",
+      "next": [
         {
-          "id": "Affiliation",
+          "id": "affiliate"
+        }
+      ],
+      "tiles": [
+        {
+          "id": "CS 3110 final",
           "color": "Yellow",
-          "event": "Affiliated in CS",
-          "description":"Congratulations! You have officially declared your major as CS.",
+          "event": "CS 3110 Final",
+          "description": "Functors? Functions? WHAT IS FUNCTIONAL PROGRAMMING? It's time for your CS 3110 final! Good luck :)",
           "effects": [
-            "gain 10"
+            "minigame 3110"
           ]
         }
       ]
     },
     {
+      "id": "affiliate",
+      "next": [
+        {
+          "id": "start 4820"
+        }
+      ],
+      "tiles": [
+        {
+          "id": "Affiliation",
+          "color": "Yellow",
+          "event": "Affiliated in CS",
+          "description": "Congratulations! You have officially declared your major as CS. No, you don't have any other choice.",
+          "effects": [
+            "gain 100"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "start 4820",
+      "next": [
+        {
+          "id": "4820 path"
+        }
+      ],
       "tiles": [
         {
           "id": "CS 4820",
@@ -236,6 +437,50 @@
       ]
     },
     {
+      "id": "4820 path",
+      "next": [
+        {
+          "id": "4820 final"
+        }
+      ],
+      "tiles": [
+        {
+          "id": "filler1",
+          "color": "Black",
+          "event": "filler",
+          "description": "filler",
+          "effects": [
+            "gain 0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "4820 final",
+      "next": [
+        {
+          "id": "start project"
+        }
+      ],
+      "tiles": [
+        {
+          "id": "filler2",
+          "color": "Black",
+          "event": "filler",
+          "description": "filler",
+          "effects": [
+            "gain 0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "start project",
+      "next": [
+        {
+          "id": "graduation"
+        }
+      ],
       "tiles": [
         {
           "id": "Make a project",
@@ -304,10 +549,12 @@
       ]
     },
     {
+      "id": "graduation",
+      "next": [],
       "tiles": [
         {
           "id": "Graduation",
-          "color": "Green",
+          "color": "Yellow",
           "event": "Commencement",
           "description": "Congrats! You graduated!",
           "effects": [
