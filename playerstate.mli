@@ -33,7 +33,7 @@ val get_study_partners : player -> study_partners
 
 val set_project : player -> project -> unit
 val get_project : player -> project 
-
+val get_salary : player -> salary
 (** [go st board n] moves the player [st] [n] tiles forward. 
     Requires:
     [st] is a valid Playerstate.st
