@@ -9,6 +9,7 @@ exception No_Tile of string
 
 (** [create_board x] is a board created from a valid json [x], which
     consists of nonempty stages and tiles, randomized *)
+(* TODO: How to use json*)
 val create_board : Yojson.Basic.t -> gameboard
 
 (** [start_tile board] is the first tile of the board.

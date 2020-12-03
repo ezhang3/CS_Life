@@ -39,6 +39,7 @@ let rand_comp x y = let randn = (Random.int 3)
   in print_endline (string_of_int randn); randn - 1
 
 (* [randomize lst] is a randomized version of [lst] *)
+(* TODO: Add a field that determines whether randomized or not? *)
 let randomize lst = 
   let on = false in
   if not on then lst else List.sort rand_comp lst
