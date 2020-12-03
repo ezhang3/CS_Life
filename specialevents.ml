@@ -28,11 +28,11 @@ let minigame_2110 player =
   print_endline "How many loopy questions are there? \n>";
   if (read_line () |> String.trim) = "4" 
   then begin
-  print_endline "Good job! Gain 10 points";
-  Playerstate.set_points player 10
+    print_endline "Good job! Gain 10 points";
+    Playerstate.set_points player 10
   end
   else 
-  print_endline "Wrong answer :( Lose 10 points";
+    print_endline "Wrong answer :( Lose 10 points";
   Playerstate.set_points player ~-10
 
 let minigame_2800 player = failwith "unimplemented"
@@ -61,13 +61,19 @@ let rec minigame_debug_v1 player num =
     then 
       print_endline "You did it!"
     else begin
-      print_endline "Wrong answer. Lose 5 points.\nTry again."; 
+      print_endline "\n Wrong answer. Lose 5 points.\nTry again."; 
       Playerstate.set_points player (-5);
       minigame_debug_v1 player (num+1)
     end
   end 
 
-let choose_project player = failwith "unimplemented"
+let choose_project player = 
+  print_endline "Name your project: \n";
+  print_string "> ";
+  let proj_name = read_line() |> String.trim in 
+  let cur_sal = Playerstate.get_salary player in 
+  let proj = Some (proj_name,cur_sal+2) in 
+  Playerstate.set_project player proj
 
 let change_project player = failwith "unimplemented"
 

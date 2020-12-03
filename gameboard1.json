@@ -20,7 +20,11 @@
             "gain 20",
             "study_partner 1"
           ]
-        },
+        }
+      ]
+    },
+    {  
+      "tiles": [
         {
           "id": "1110",
           "color": "Yellow",
@@ -29,7 +33,11 @@
           "effects": [
             "gain 100"
           ]
-        },
+        }
+      ]
+    },
+    {
+      "tiles": [        
         {
           "id": "1110 Assignemnt",
           "color": "Green",
@@ -105,6 +113,19 @@
           "effects": [
             "gain 200"
           ]
+        }
+      ]
+    },
+    {
+      "tiles": [ 
+        {
+          "id": "Start 2800",
+          "color": "Blue",
+          "event": "Start CS 2800",
+          "description": "CS 2800 is the class that introduces you to writing proofs. If you make it out alive, you are good to continue.",
+          "effects": [
+            "gain 150"
+          ]
         },
         {
           "id": "2110 Piazza",
@@ -123,7 +144,11 @@
           "effects": [
             "gain 300"
           ]
-        },
+        }
+      ]
+    },
+    {
+      "tiles": [
         {
           "id": "Start 3110",
           "color": "Yellow",
@@ -132,7 +157,11 @@
           "effects": [
             "gain 300"
           ]
-        },
+        }
+      ]
+    },
+    {
+      "tiles": [
         {
           "id": "CS 3110 A0",
           "color": "Green",
@@ -148,7 +177,7 @@
           "event": "Pull an All-Nighter",
           "description": "Just had to get some work done. It was worth it. Right?",
           "effects": [
-            "lose 5"
+            "lose 7"
           ]
         },
         {
@@ -162,7 +191,7 @@
         },
         {
           "id": "CS 3410",
-          "color": "Yellow",
+          "color": "Blue",
           "event": "Start 3410",
           "description": "You're not really sure why you have to take a class on hardware if you're planning on just coding for a job. But hopefully it won't be too bad. . .",
           "effects": [
@@ -171,11 +200,24 @@
         },
         {
           "id": "BTRY 3080",
-          "color": "Yellow",
+          "color": "Blue",
           "event": "Start Stats",
           "description": "A requirement for the CS Major. If you're good, maybe it means you can do ML in the future. Otherwise will just do regular coding again.",
           "effects": [
             "gain 70"
+          ]
+        }
+      ]
+    },
+    {
+      "tiles":[
+        {
+          "id": "Affiliation",
+          "color": "Yellow",
+          "event": "Affiliated in CS",
+          "description":"Congratulations! You have officially declared your major as CS.",
+          "effects": [
+            "gain 10"
           ]
         }
       ]
@@ -186,15 +228,25 @@
           "id": "CS 4820",
           "color": "Yellow",
           "event": "Start algo",
-          "description": "Oh, it's algo. More like, Lgo. This is like 2800, but on crack. Expect to spend tons of time on assignments",
+          "description": "It's algo. More like, Lgo. This is like 2800, but on crack. Expect to spend tons of time on assignments and get some internship practice.",
           "effects": [
-            "gain 100"
+            "gain 80"
           ]
         }
       ]
     },
     {
       "tiles": [
+        {
+          "id": "Make a project",
+          "color": "Green",
+          "event": "Start your own project",
+          "description": "You have started making your own CS project. You plan to show it off in your resume and gain some good technical experience",
+          "effects": [
+            "gain 100",
+            "minigame choose_project"
+          ]
+        },
         {
           "id": "First intership interview bad",
           "color": "Red",
@@ -208,7 +260,7 @@
           "id": "intership interview pass",
           "color": "Green",
           "event": "You breezed through that technical interview!",
-          "description": "Your command of data structues was excellent, all thanks to leetcode and 2110. Hopefully you'll hear good news soon!",
+          "description": "Your command of data structues was excellent, all thanks to leetcode, 2110, and algo. Hopefully you'll hear good news soon!",
           "effects": [
             "gain 200"
           ]
@@ -248,7 +300,11 @@
           "effects": [
             "minigame debug1"
           ]
-        },
+        }
+      ]
+    },
+    {
+      "tiles": [
         {
           "id": "Graduation",
           "color": "Green",
