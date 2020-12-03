@@ -42,23 +42,24 @@ let check_valid_player player players = not (List.mem player players)
 (** current implementation of make_player_list does not account for different 
     starting points. All players will currently all start at the same tile. *)
 let make_player_list (n : int) (start : Tile.tile) = 
-  let rec make_list n acc = 
-    match n with 
-    | 0 -> acc
-    | _ ->
+  let rec make_list n count acc = 
+    if count = n then acc 
+    else begin
+      let num = count + 1 in
       print_endline ("\nPlease enter the name of Player " ^ 
-                     string_of_int n ^ "\n");
+                     string_of_int num ^ "\n");
       print_string  ("> ");
       match read_line ()|> String.lowercase_ascii |> String.trim with
       | name -> 
         let p = init_state name start in
         if check_valid_player p acc then 
-          p :: acc |> make_list (n - 1) 
+          p :: acc |> make_list n num
         else begin
           print_endline "\nPlayer name is already taken\n";
-          make_list n acc
-        end in
-  make_list n []
+          make_list n num acc
+        end 
+    end in
+  make_list n 0 [] |> List.rev
 
 let get_name st = 
   st.name
