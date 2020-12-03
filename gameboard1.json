@@ -300,7 +300,7 @@
           "event": "CS 2800 Final",
           "description": "You are a bit traumatized by regular expressions.",
           "effects": [
-            "gain 300"
+            "minigame 2800"
           ]
         }
       ]

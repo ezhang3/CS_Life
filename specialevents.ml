@@ -185,6 +185,7 @@ let find_special_event player players board str =
   | "4410" -> minigame_4410 player
   | "4820" -> minigame_4820 player
   | "debug1" -> minigame_debug_v1 player 1
+  | "ta" -> minigame_ta player
   | "choose_project" -> choose_project player
   | "change_project" -> change_project player
   | "lose project" -> lose_project player 
