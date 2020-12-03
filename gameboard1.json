@@ -550,6 +550,16 @@
           ]
         },
         {
+          "id": "TA",
+          "color": "Green",
+          "event": "Start TAing for a CS class",
+          "description": "You're now a TA for a CS class (3110 maybe? ;). Looking forward to helping others learn...",
+          "effects": [
+            "gain 100",
+            "minigame being_ta"
+          ]
+        },
+        {
           "id": "First intership interview bad",
           "color": "Red",
           "event": "You bombed your first technical interview!",
@@ -577,6 +587,33 @@
           ]
         },
         {
+          "id": "CS 4320",
+          "color": "Blue",
+          "event": "Start 4320",
+          "description": "Databases time! Sounds useful enough for the future.",
+          "effects": [
+            "gain 70"
+          ]
+        },
+        {
+          "id": "CS 4120",
+          "color": "Blue",
+          "event": "Start 4120",
+          "description": "Compilers. Enough said. Those posts on the Cornell subreddit did not scare you away.",
+          "effects": [
+            "gain 15"
+          ]
+        },
+        {
+          "id": "CS 4121",
+          "color": "Blue",
+          "event": "Compilers Prac",
+          "description": "So you really wanted to this semester to be a soul-crushing one, so it's time to take the compilers prac ^^",
+          "effects": [
+            "lose 10"
+          ]
+        },
+        {
           "id": "CS 4780",
           "color": "Yellow",
           "event": "Start 4780",
@@ -586,8 +623,17 @@
           ]
         },
         {
+          "id": "CS 4700",
+          "color": "Blue",
+          "event": "Start 4700",
+          "description": "Out of all the 4000+ CS electives out there, somehow you decided on AI. . . ",
+          "effects": [
+            "gain 15"
+          ]
+        },
+        {
           "id": "CS 4701",
-          "color": "Yellow",
+          "color": "Blue",
           "event": "Start 4701, AI Prac",
           "description": "You weren't really sure which Prac to take, but started this one since everyone said it was an easy A with not that much work.",
           "effects": [
@@ -601,6 +647,24 @@
           "description": "Error: Bug in your code. You need to debug.",
           "effects": [
             "minigame debug1"
+          ]
+        },
+        {
+          "id": "return offer",
+          "color": "Green",
+          "event": "You received a return offer for a full time job!",
+          "description": "You did so great at your internship the company offered you a job. Congrats! :)",
+          "effects": [
+            "gain 300"
+          ]
+        },
+        {
+          "id": "Full-time job interview",
+          "color": "Green",
+          "event": "You got a post-grad job!",
+          "description": "No return offer after that internship junior summer, but hey you still got a job!",
+          "effects": [
+            "gain 150"
           ]
         }
       ]
