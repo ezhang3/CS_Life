@@ -1,9 +1,10 @@
-MODULES= playerstate board authors tile main specialevents
+MODULES= playerstate board authors tile main specialevents gui
 OBJECTS=$(MODULES:=.cmo)
 MLS=$(MODULES:=.ml)
 MLIS=$(MODULES:=.mli)
 TEST=test.byte
 MAIN=main.byte
+GUI=gui.byte
 OCAMLBUILD=ocamlbuild -use-ocamlfind -pkg graphics
 
 default: build
@@ -17,6 +18,9 @@ test:
 
 play:
 	$(OCAMLBUILD) $(MAIN) && ./$(MAIN)
+
+gui:
+	$(OCAMLBUILD) $(GUI) && ./$(GUI)
 
 check:
 	bash checkenv.sh && bash checktypes.sh
