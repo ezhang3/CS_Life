@@ -9,7 +9,7 @@ type points = int
 type salary = int
 type project_name = string
 type project = (project_name * salary) option
-type study_partners
+type study_partners = int
 
 (** The abstract type representing the player state. *)
 type player 

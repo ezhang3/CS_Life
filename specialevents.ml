@@ -91,7 +91,10 @@ let minigame_4820 player =
   print_endline "\nUnimplemented \n\n"
 
 let mini_game_networking player = 
-  print_endline "\nUnimplemented \n\n"
+  print_endline "NOT DONE"; 
+  print_endline "Trying to make professional connections, whether to get to know a job better or for recruiting/referrals?/n";
+  print_endline "Well here is the place to try!"; 
+  print_endline "Would you like to . . . \n"
 
 (* I'm intending to make this one extremely annoying to simulate what it feels
    like to debug stuff. Multiple spaces will have this. *)
@@ -140,8 +143,9 @@ let choose_project player =
 let change_project player = 
   print_endline "\nUnimplemented \n\n"
 
-let lose_project player = 
-  print_endline "\nUnimplemented \n\n"
+let lose_project player =
+  print_endline "Oh no, for some reason you lost your project!\n";
+  Playerstate.set_project player None
 
 let birthday (player : Playerstate.player) players = 
   let rec helper (player : Playerstate.player) players (acc : int) = 

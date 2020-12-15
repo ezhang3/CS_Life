@@ -12,7 +12,7 @@ type player = {
   mutable project : project;
   mutable current_tile : Tile.tile;
   mutable visited_tiles : Tile.tile list;
-  mutable items : string list; (** not sure *)
+  mutable items : string list; 
 }
 
 let init_state name start = {
