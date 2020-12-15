@@ -90,6 +90,9 @@ let minigame_4410 player =
 let minigame_4820 player = 
   print_endline "\nUnimplemented \n\n"
 
+let mini_game_networking player = 
+  print_endline "\nUnimplemented \n\n"
+
 (* I'm intending to make this one extremely annoying to simulate what it feels
    like to debug stuff. Multiple spaces will have this. *)
 let rec minigame_debug_v1 player num = 
