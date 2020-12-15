@@ -17,7 +17,7 @@ type job = Jeff_Bezos | Google | Microsoft | Apple | Facebook | Intel | Tesla
 (** [roll player n] *)
 let rec roll n = 
   Random.self_init ();
-  let custom_roll = 4 in
+  let custom_roll = 0 in
   print_endline "\n\nType 'roll' to roll the dice or 'quit' to end the game: \n";
   print_string  "> ";
   match read_line () |> String.lowercase_ascii |> String.trim with 
@@ -38,7 +38,7 @@ let rec finish_player_round () =
 (**[print_player_stats player] Prints player [player]'s stats *)
 let print_player_stats player = 
   let name = Playerstate.get_name player in 
-  print_endline ("\n\n" ^ name ^ "'s current stats: ");
+  print_endline ("\n" ^ name ^ "'s current stats: ");
   Playerstate.print_state player
 
 
@@ -96,12 +96,13 @@ let  play_round players board =
           (**Roll dice *)
           let r = roll 6 in
           print_endline ("\n" ^ name ^ " rolled a " ^ string_of_int r ^ "\n");
+          divide ();
           (**Go to new tile and play event *)
           Playerstate.go p board r; 
           Playerstate.get_current_tile p 
           |> Tile.get_tile_effects 
           |> play_event board p all_players;
-          Playerstate.print_state p;
+          print_player_stats p;
           finish_player_round ();
           helper t board
       end in 
@@ -244,6 +245,10 @@ let rec print_jobs = function
     divide ();
     print_jobs t
 
+(**[play_game players board] plays the game.
+   Requires:
+   [players] is a valid list of players (in order)
+   [board] is a valid gameboard *)
 let play_game players board = 
   while finished_game board players do 
     play_round players board
@@ -255,7 +260,7 @@ let play_game players board =
   let assign_jobs = decide_jobs sorted_players max min in 
   print_endline ("\n\nCongratulations to " ^ (Playerstate.get_name winner) 
                  ^ " for winning with the most points!\n\n");
-  print_endline "\n\nEveryone has graduated! Here are the final results: \n\n";
+  print_endline "Everyone has graduated! Here are the final results: \n\n";
   print_jobs assign_jobs;
   divide ();
   print_endline "\nThanks for playing!"
