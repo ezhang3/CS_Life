@@ -2,7 +2,7 @@
 let allison = 9
 let enyu = 7
 let iris = 8
-let janice = 18
+let janice = 20
 
 let hours_worked = 
   allison + enyu + iris + janice
