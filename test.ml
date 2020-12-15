@@ -55,7 +55,6 @@ let tile_test = [
 let test_board = Board.create_board (Yojson.Basic.from_file "gameboard1.json")
 let start = start_tile test_board
 let last = end_tile test_board
-let test_player = init_state "Jason" start
 
 (* helper for comparing Tile.tile lists, get tile_id list for non-abstract 
    types,easier comparison *)
@@ -140,8 +139,9 @@ let get_current_tile_test
     (st: player)
     (expected_output: tile_id) : test = 
   name >:: (fun _ ->
-      assert_equal expected_output (st 
-                                    |> get_current_tile 
+      print_endline ("id from tile in test: " ^ (get_current_tile st 
+                                                 |> get_tile_id)); 
+      assert_equal expected_output (get_current_tile st 
                                     |> get_tile_id))
 
 let get_visited_tiles_test
@@ -171,17 +171,20 @@ let go_test (name : string) player board moves (expected: string) =
    let two_spaces_id = go test_player test_board 2; get_current_tile test_player 
                                                  |> get_tile_id *)
 
+let test_player = init_state "Jason" (start_tile test_board)
+
 let player_state_test = [
-  get_player_name_test "Works?" test_player "Jason";
+  get_player_name_test "player name" test_player "Jason";
   get_points_test "Just started, 0" test_player 0; 
-  get_current_tile_test "On start" test_player "start";
-  get_visited_tiles_test "visited start only" test_player ["start"];
   get_project_test "no proj yet" test_player None; 
   get_salary_test "0 salary rn" test_player 0; 
   get_items_test "no items yet" test_player [];
   get_study_partners_test "no study partners yet" test_player 0;
-  go_test "go test 1 move" test_player test_board 1 "choose 1110 or 2110";
-  (* get_current_tile_test "moved one to tile 1" test_player "choose 1110 or 2110"; *)
+  (* get_current_tile_test "On start" test_player "start"; *)
+  (* get_visited_tiles_test "visited start only" test_player ["start"];
+     go_test "go test 1 move" test_player test_board 1 "choose 1110 or 2110";
+     get_current_tile_test "moved one to tile 1" (go test_player test_board 1; test_player) 
+     "choose 1110 or 2110"; *)
   (* get_visited_tiles_test "start and tile1" test_player ["choose 1110 or 2110"; "start"]; *)
   (* go_test "go test 2 moves" test_player test_board 1 "1110"; *)
 ]

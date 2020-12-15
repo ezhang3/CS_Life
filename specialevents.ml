@@ -63,6 +63,16 @@ let minigame_2800 player =
   else 
     print_endline "Nope! The answer is a. Lose 5 points >_< \n";
   Playerstate.set_points player ~-5; 
+  print_endline "2800 psets are such a grind >_< Want a study partner? \n"; 
+  print_string "> ";
+  if (read_line () |> String.trim) = "yes" || (read_line () |> String.trim) = "Yes" 
+  then begin 
+    print_endline "Yay! You met a nice classmate in OH and 
+    decided to work together"; 
+    Playerstate.add_study_partners player 1
+  end 
+  else 
+    print_endline "No? Guess you're managing fine then"; 
   print_endline "Another question, on functions: \n"; 
   print_endline "True or false, one-to-one functions are injective \n"; 
   print_string "> "; 
