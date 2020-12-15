@@ -36,7 +36,17 @@ let rec minigame_choose_1110_2110 player board =
     minigame_choose_1110_2110 player board
 
 let minigame_1110 player = 
-  print_endline "\nUnimplemented \n\n"
+  print_endline "Do you like old arcade games like Invaders? \n"; 
+  print_string "> "; 
+  if (read_line () |> String.trim) = "yes" || (read_line () |> String.trim) = "Yes"
+  then begin 
+    print_endline "Your A7 was probably really great. You even implemented extra 
+  features! Excellent ^^"; 
+    Playerstate.set_points player 40
+  end 
+  else 
+    print_endline "No? That's a shame, since that's all the last assignment is 
+  goint to be about"
 
 let minigame_2110 player = 
   print_endline "How many loopy questions are there? \n";
@@ -46,8 +56,24 @@ let minigame_2110 player =
     print_endline "Good job! Gain 10 points";
     Playerstate.set_points player 10
   end
-  else 
+  else
     print_endline "Wrong answer :( Lose 10 points";
+  Playerstate.set_points player ~-10; 
+  print_endline "How many years of programming experience do you have? \n";
+  print_string  "> ";
+  if int_of_string (read_line () |> String.trim) < 59
+  then begin
+    print_endline "Too little. You will listen to what the great David Gries has
+    to say in the course. \n";
+    print_endline "YES, even when you think the four loopy questions are 
+    tedious. \n";
+    print_endline "Maybe you'll even figure out what the fifth loopy question is
+    one day ;) \n"; 
+  end
+  else 
+    print_endline "Hmmmm. \n";
+  print_endline "There's no way you could have more programming experience 
+    than the great David Gries himself. Don't lie \n";
   Playerstate.set_points player ~-10
 
 
@@ -151,7 +177,13 @@ let choose_project player =
   Playerstate.set_project player proj
 
 let change_project player = 
-  print_endline "\nUnimplemented \n\n"
+  print_endline "Changing your project? Cool. \n"; 
+  print_endline "Name your new project: \n"; 
+  print_string "> ";
+  let proj_name = read_line() |> String.trim in 
+  let cur_sal = Playerstate.get_salary player in 
+  let proj = Some (proj_name,cur_sal) in 
+  Playerstate.set_project player proj
 
 let lose_project player =
   print_endline "Oh no, for some reason you lost your project!\n";
@@ -189,6 +221,33 @@ let pay_raise player =
     have earned " ^ (string_of_int salary) ^ " points!\n");
     Playerstate.set_points player salary
 
+let internship player = 
+  print_endline "unimplemented \n"
+
+let job_interview player = 
+  print_endline "You're getting a job, but is it the one you want, or just some 
+  job you took because you needed one? \n"; 
+  print_endline "Enter a number from 1 to 10:\n";
+  print_string "> "; 
+  let correct = string_of_int (Random.int 10 + 1) in 
+  if (read_line () |> String.trim = correct) 
+  then begin
+    print_endline "Wow! Guess you got the job you wanted yayy"; 
+    Playerstate.set_points player 200; 
+    let cur_sal = Playerstate.get_salary player in 
+    let proj = Some ("Desired Job",cur_sal+2) in 
+    Playerstate.set_project player proj; 
+  end 
+  else begin 
+    print_endline "Oops, guess you just took a job because you needed to. \n"; 
+    print_endline "It's not a bad job, just not as interesting as you hoped. \n";
+    print_endline "Better luck next time!"; 
+    Playerstate.set_points player 20; 
+    let cur_sal = Playerstate.get_salary player in 
+    let proj = Some ("A Job",cur_sal+1) in 
+    Playerstate.set_project player proj
+  end
+
 let find_special_event player players board str = 
   match str with 
   |"choose_1110_2110" -> minigame_choose_1110_2110 player board
@@ -208,4 +267,6 @@ let find_special_event player players board str =
   | "pay_day" -> pay_day player 
   | "pay_raise" -> pay_raise player
   | "academic_integrity" -> academic_integrity player players
+  | "internship" -> internship player
+  | "job_interview" -> job_interview player
   | _ -> failwith "special event not found"
