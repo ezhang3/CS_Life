@@ -41,15 +41,24 @@ let tile_effects_test (name : string) tile (expected : effect list) =
 let tile_test = [
   tile_color_test "Red tile" tile1 Red;
   tile_color_test "Blue tile" tile2 Blue;
+  tile_color_test "proj green tile" tile_proj Green;
+  tile_color_test "start tile" tile_start Black;
   tile_event_name_test "career fair event" tile1 "Career Fair";
   tile_event_name_test "prelims event" tile2 "Prelims";
+  tile_event_name_test "proj event" tile_proj "Start your own project";
+  tile_event_name_test "start event" tile_start "Start Tile";
   tile_id_test "tile1 id" tile1 "Tile1";
   tile_id_test "tile12 id" tile2 "Tile2";
+  tile_id_test "proj tile" tile_proj "Make a project";
+  tile_id_test "start tile" tile_start "start";
   tile_description_test "tile1 description" tile1 "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff.";
   tile_description_test "tile2 description" tile2 "Prelims. A time to shut yourself in your room to study and hopefully pass all your classes.";
+  tile_description_test "proj tile desc" tile_proj "You have started making your own CS project. You plan to show it off in your resume and gain some good technical experience";
+  tile_description_test "start tile desc" tile_start "Start Tile";
   tile_effects_test "tile1 effects" tile1 [Points ("Gained", 10)]; 
   tile_effects_test "tile2 effects" tile2 [Points ("Lost", 15)]; 
-  tile_effects_test "project tile effects" tile_proj [Points ("Gained", 100); Minigame "choose_project"]
+  tile_effects_test "project tile effects" tile_proj [Points ("Gained", 100); Minigame "choose_project"];
+  tile_effects_test "start tile effects" tile_start [Points ("Gained", 0)]; 
 ]
 
 let test_board = Board.create_board (Yojson.Basic.from_file "gameboard1.json")
