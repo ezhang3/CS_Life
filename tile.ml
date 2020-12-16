@@ -9,6 +9,7 @@ type effect =
   | Points of (string * int) 
   | Minigame of string 
   | Study_Partner of int 
+  | Energy of int 
 
 type tile = {
   id : tile_id;
@@ -46,6 +47,7 @@ let get_effects str =
   | "gain" :: t :: [] -> Points ("Gained", int_of_string t)
   | "lose" :: t :: [] -> Points ("Lost", int_of_string t)
   | "study_partner" :: t :: [] -> Study_Partner (int_of_string t)
+  | "energy" :: t :: [] -> Energy (int_of_string t)
   | "minigame" :: t :: [] -> Minigame t
   | _ -> failwith "invalid effect for get_effects"
 
@@ -74,3 +76,4 @@ let get_effect_desc effect =
   | Points (s,n) -> s ^ " " ^ (string_of_int n) ^ " points\n" 
   | Study_Partner i -> "Gained 1 study partner!\n" 
   | Minigame s -> "Special Event!\n" 
+  | Energy e -> "Your energy level changed\n"

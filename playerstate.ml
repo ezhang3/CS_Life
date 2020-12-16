@@ -102,6 +102,10 @@ let get_current_tile st =
 let get_energy st = 
   st.energy
 
+let chg_energy st nrg = 
+  let cur_e = get_energy st in 
+  st.points <- cur_e + nrg
+
 (** moves the player n spaces forward.
     TODO: Cannot handle branching paths yet *)
 let go st board n = 

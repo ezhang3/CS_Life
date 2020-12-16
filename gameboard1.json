@@ -347,7 +347,8 @@
           "event": "Pull an All-Nighter",
           "description": "Just had to get some work done. It was worth it. Right? Wrong.",
           "effects": [
-            "lose 10"
+            "lose 10",
+            "energy -100"
           ]
         },
         {

@@ -152,6 +152,7 @@ let rec minigame_debug_v1 player num =
     else begin
       print_endline "\n Wrong answer. Lose 5 points.\nTry again."; 
       Playerstate.set_points player (-5);
+      Playerstate.chg_energy player ~-10;
       minigame_debug_v1 player (num+1)
     end
   end 

@@ -67,6 +67,11 @@ let play_event board player players (tile_effect: Tile.effect list)=
         helper player players t
       end
     | Points (_, _) :: t -> failwith "Invalid Points (_, _)"
+    | Energy n as e :: t -> begin 
+        chg_energy player n;
+        print_effect e;
+        helper player players t
+      end
     | Study_Partner n as e :: t -> begin
         add_study_partners player n; 
         print_effect e; 
