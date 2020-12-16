@@ -8,9 +8,9 @@ let rec find_player name = function
 
 let rec academic_integrity player players =
   if List.length players < 2 then 
-    print_endline "Sorry, there is no one to accuse of academic integrity?\n"
+    print_endline "Sorry, there is no one to accuse of an academic integrity violation?\n"
   else 
-    print_endline "Who would you like to accuse of academic integrity?\n";
+    print_endline "Who would you like to accuse of an academic integrity violation?\n";
   print_string  "> ";
   match read_line () |> String.lowercase_ascii |> String.trim with 
   | p -> 
@@ -36,9 +36,9 @@ let rec minigame_choose_1110_2110 player board =
     minigame_choose_1110_2110 player board
 
 let minigame_1110 player = 
-  print_endline "Do you like old arcade games like Invaders? \n"; 
+  print_endline "Do you like old arcade games like Invaders? \nEnter [yes] or [no]: \n"; 
   print_string "> "; 
-  if (read_line () |> String.trim) = "yes" || (read_line () |> String.trim) = "Yes"
+  if (read_line () |> String.trim |> String.lowercase_ascii) = "yes" 
   then begin 
     print_endline "Your A7 was probably really great. You even implemented extra 
   features! Excellent ^^"; 
@@ -51,7 +51,8 @@ let minigame_1110 player =
 let minigame_2110 player = 
   print_endline "How many loopy questions are there? \n";
   print_string  "> ";
-  if (read_line () |> String.trim) = "4" 
+  if (read_line () |> String.trim) = "4" || 
+     (read_line () |> String.trim |> String.lowercase_ascii) = "four"
   then begin
     print_endline "Good job! Gain 10 points";
     Playerstate.set_points player 10
@@ -102,7 +103,7 @@ let minigame_2800 player =
   print_endline "Another question, on functions: \n"; 
   print_endline "True or false, one-to-one functions are injective \n"; 
   print_string "> "; 
-  if (read_line () |> String.trim) = "true" || (read_line () |> String.trim) = "True"
+  if (read_line () |> String.trim |> String.lowercase_ascii) = "true" 
   then begin 
     print_endline "Correct! Gain 5 points \n";
     Playerstate.set_points player 5 
@@ -113,7 +114,8 @@ let minigame_2800 player =
   print_endline "Thanks for playing! Hope you liked 2800 ^^"
 
 let minigame_3110 player = 
-  print_endline "Let's see how well you do on this 3110 quiz! The more you answer correctly, the more points you will gain.\n"
+  print_endline "Let's see how well you do on this 3110 quiz! The more you answer correctly, the more points you will gain.\n";
+  print_endline "Thanks for playing! I hope you liked 3110 ^^"
 
 (* Putting assembly instructions in the right order? *)
 let minigame_3410 player = 
@@ -124,7 +126,8 @@ let minigame_4410 player =
   print_endline "\nUnimplemented \n\n"
 
 let minigame_4820 player = 
-  print_endline "\nUnimplemented \n\n"
+  print_endline "This minigame has no content \n";
+  print_endline ""
 
 let mini_game_networking player = 
   print_endline "NOT DONE"; 
@@ -187,7 +190,8 @@ let change_project player =
 
 let lose_project player =
   print_endline "Oh no, for some reason you lost your project!\n";
-  Playerstate.set_project player None
+  Playerstate.set_project player None;
+  Playerstate.set_points player ~-30
 
 let birthday (player : Playerstate.player) players = 
   let rec helper (player : Playerstate.player) players (acc : int) = 
@@ -248,9 +252,14 @@ let job_interview player =
     Playerstate.set_project player proj
   end
 
+(* trying to see if i can make a timing game *)
+let minigame_pre_enroll player = 
+  print_endline "Need to implement this minigame. WIP"
+
 let find_special_event player players board str = 
   match str with 
-  |"choose_1110_2110" -> minigame_choose_1110_2110 player board
+  | "choose_1110_2110" -> minigame_choose_1110_2110 player board
+  | "pre_enroll" -> minigame_pre_enroll player 
   | "1110" -> minigame_1110 player 
   | "2110" -> minigame_2110 player 
   | "2800" -> minigame_2800 player

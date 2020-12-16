@@ -345,9 +345,9 @@
           "id": "All-nighter",
           "color": "Red",
           "event": "Pull an All-Nighter",
-          "description": "Just had to get some work done. It was worth it. Right?",
+          "description": "Just had to get some work done. It was worth it. Right? Wrong.",
           "effects": [
-            "lose 7"
+            "lose 10"
           ]
         },
         {
@@ -375,6 +375,15 @@
           "description": "A requirement for the CS Major. If you're good, maybe it means you can do ML in the future. Otherwise will just do regular coding again.",
           "effects": [
             "gain 70"
+          ]
+        },
+        {
+          "id": "Pre-enroll",
+          "color": "Blue",
+          "event": "Pre-enroll",
+          "description": "Pre-enroll. Every students' favorite part of the semester. Every time it happens, you wonder if you can use your CS skills to make a better student center.",
+          "effects": [
+            "minigame pre_enroll"
           ]
         }
       ]
@@ -431,7 +440,7 @@
           "event": "Start algo",
           "description": "It's algo. More like, Lgo. This is like 2800, but on crack. Expect to spend tons of time on assignments and get some internship practice.",
           "effects": [
-            "gain 80"
+            "gain 30"
           ]
         }
       ]

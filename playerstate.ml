@@ -12,7 +12,8 @@ type player = {
   mutable project : project;
   mutable current_tile : Tile.tile;
   mutable visited_tiles : Tile.tile list;
-  mutable items : string list; 
+  mutable items : string list;
+  mutable energy : int 
 }
 
 let init_state name start = {
@@ -22,7 +23,8 @@ let init_state name start = {
   project = None;
   current_tile = start;
   visited_tiles = [start];
-  items = []
+  items = [];
+  energy = 500
 }
 
 let print_state player = 
@@ -96,6 +98,9 @@ let set_current_tile st tile =
 
 let get_current_tile st = 
   st.current_tile
+
+let get_energy st = 
+  st.energy
 
 (** moves the player n spaces forward.
     TODO: Cannot handle branching paths yet *)
