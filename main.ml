@@ -225,7 +225,8 @@ let decide_jobs players max min =
 let print_job_desc player job = 
   let name = Playerstate.get_name player in 
   match job with 
-  | Jeff_Bezos -> print_endline (name ^ " is too extrordinarily talented and intelligent to work for another company. " ^ "So, instead of applying for a job like fellow classmates, " ^ name ^ " decides to start their own humble tech company in Silicon Valley. In just two years, this company would rise above that of Amazon and Google. Above all its competitors. " ^ name ^ " will enter Forbes' list of wealthiest people alive in just 5 years after the company is created. What a feat. What an individual\n")
+  | Jeff_Bezos -> 
+    print_endline (name ^ " is too extrordinarily talented and intelligent to work for another company. " ^ "So, instead of applying for a job like fellow classmates, " ^ name ^ " decides to start their own humble tech company in Silicon Valley. In just two years, this company would rise above that of Amazon and Google. Above all its competitors. " ^ name ^ " will enter Forbes' list of wealthiest people alive in just 5 years after the company is created. What a feat. What an individual\n")
   | Google -> ()
   | Microsoft -> ()
   | Apple -> ()
@@ -237,9 +238,12 @@ let print_job_desc player job =
   | Web_Dev -> ()
   | Generic -> ()
   | IT -> ()
-  | Unknown -> print_endline (name ^ " could not be found after graduation. Ever since " ^ name ^ " failed to find a job after graduation, nobody knows where they went. No job, no location. Nobody could get in contact with them. It's almost as it they disappeared...\n")
-  | Unemployed -> print_endline (name ^ " unfortunately could not find a job after graduation. And could not find a job for the rest of their life. The End.")
-  | Married -> print_endline (name ^ " unfortunately fails to find a job after graduation. However, " ^ name ^ " instead decided to get married! They were lucky enough to have found their \"meant to be\" through their undergrad. The couple live happily ever after!\n")
+  | Unknown -> 
+    print_endline (name ^ " could not be found after graduation. Ever since " ^ name ^ " failed to find a job after graduation, nobody knows where they went. No job, no location. Nobody could get in contact with them. It's almost as it they disappeared...\n")
+  | Unemployed -> 
+    print_endline (name ^ " unfortunately could not find a job after graduation. And could not find a job for the rest of their life. The End.")
+  | Married -> 
+    print_endline (name ^ " unfortunately fails to find a job after graduation. However, " ^ name ^ " instead decided to get married! They were lucky enough to have found their \"meant to be\" through their undergrad. The couple live happily ever after!\n")
 
 let rec print_jobs = function 
   | [] -> ()
