@@ -41,12 +41,31 @@ let minigame_1110 player =
   if (read_line () |> String.trim |> String.lowercase_ascii) = "yes" 
   then begin 
     print_endline "Your A7 was probably really great. You even implemented extra 
-  features! Excellent ^^"; 
+  features! Excellent ^^\n"; 
     Playerstate.set_points player 40
   end 
   else 
     print_endline "No? That's a shame, since that's all the last assignment is 
-  goint to be about"
+  goint to be about \n"; 
+  print_endline "Did you actually attend all the discussion sections, or were 
+  you the type to just let the ta grade your finished lab, and then rush out the
+  moment it was graded?\n"; 
+  print_endline "So, yes or no?\n";
+  print_string "> "; 
+  if (read_line () |> String.trim) = "yes" || (read_line () |> String.trim) 
+                                              = "Yes"
+  then begin 
+    print_endline "Wow, you were a diligent student. Not all can relate. Not at
+    all. \n"; 
+    print_endline "We'll give you some good student points.\n";
+    Playerstate.set_points player 10
+  end 
+  else begin 
+    print_endline "Yeah, it really be like that. Why not just do the lab on your
+  own time, in the comfort of your room, instead of being stuck with everyone
+  else in the room at that time? \n"; 
+    print_endline "Smart, eh?" 
+  end
 
 let minigame_2110 player = 
   print_endline "How many loopy questions are there? \n";
@@ -71,11 +90,13 @@ let minigame_2110 player =
     print_endline "Maybe you'll even figure out what the fifth loopy question is
     one day ;) \n"; 
   end
-  else 
+  else begin 
     print_endline "Hmmmm. \n";
-  print_endline "There's no way you could have more programming experience 
+    print_endline "There's no way you could have more programming experience 
     than the great David Gries himself. Don't lie \n";
-  Playerstate.set_points player ~-10
+    Playerstate.set_points player ~-10
+  end; 
+  print_endline "That's it for 2110!\n"
 
 
 let minigame_2800 player = 
@@ -87,9 +108,10 @@ let minigame_2800 player =
     print_endline "Correct! Gain 5 points \n";
     Playerstate.set_points player 5 
   end
-  else 
+  else begin 
     print_endline "Nope! The answer is a. Lose 5 points >_< \n";
-  Playerstate.set_points player ~-5; 
+    Playerstate.set_points player ~-5
+  end; 
   print_endline "2800 psets are such a grind >_< Want a study partner? \n"; 
   print_string "> ";
   if (read_line () |> String.trim) = "yes" || (read_line () |> String.trim) = "Yes" 
@@ -108,9 +130,10 @@ let minigame_2800 player =
     print_endline "Correct! Gain 5 points \n";
     Playerstate.set_points player 5 
   end
-  else 
+  else begin 
     print_endline "Nope! The answer is true. Lose 5 points >_< \n";
-  Playerstate.set_points player ~-5; 
+    Playerstate.set_points player ~-5
+  end;
   print_endline "Thanks for playing! Hope you liked 2800 ^^"
 
 let minigame_3110 player = 
@@ -168,9 +191,10 @@ let minigame_ta player =
     print_endline "Nice! Glad you found being a TA rewarding :) Maybe be one again next semester?";
     Playerstate.set_points player 20
   end
-  else 
+  else begin 
     print_endline "Oops, sorry it wasn't that great for you. Is the pay worth it? (Probably yes)";
-  Playerstate.set_points player ~-5
+    Playerstate.set_points player ~-5
+  end 
 
 let choose_project player = 
   print_endline "Name your project: \n";
@@ -237,20 +261,19 @@ let job_interview player =
   let correct = string_of_int (Random.int 10 + 1) in 
   if (read_line () |> String.trim = correct) 
   then begin
-    print_endline "Wow! Guess you got the job you wanted yayy"; 
-    Playerstate.set_points player 200; 
-    let cur_sal = Playerstate.get_salary player in 
-    let proj = Some ("Desired Job",cur_sal+2) in 
-    Playerstate.set_project player proj; 
+    print_endline "Wow! You did great at your interview!";
+    print_endline "Actually, we don't know if you got the job or not. Haha\n"; 
+    print_endline "You'll know soon though!"; 
+    print_endline "Hopefully you did get a good one. ^^";  
+    Playerstate.set_points player 100; 
   end 
   else begin 
-    print_endline "Oops, guess you just took a job because you needed to. \n"; 
-    print_endline "It's not a bad job, just not as interesting as you hoped. \n";
-    print_endline "Better luck next time!"; 
-    Playerstate.set_points player 20; 
-    let cur_sal = Playerstate.get_salary player in 
-    let proj = Some ("A Job",cur_sal+1) in 
-    Playerstate.set_project player proj
+    print_endline "Oops, the job interview didn't go so great. \n"; 
+    print_endline "Just got to keep going then. \n"; 
+    print_endline "Who knows? You might still get a great job. It's just this 
+    one didn't go as great. \n";
+    print_endline "Don't give up!";
+    Playerstate.set_points player ~-20; 
   end
 
 (* trying to see if i can make a timing game *)
