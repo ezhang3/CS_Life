@@ -85,6 +85,8 @@ let play_event board player players (tile_effect: Tile.effect list)=
 
 (** [play_game players board] starts the game with players [players] and 
     board [board]. *)
+(* TODO: Implement energy bar here to make it skip your turn if your 
+   energy level is low. *)
 let  play_round players board =
   let all_players = players in
   let rec helper players_lst board = 
@@ -96,7 +98,7 @@ let  play_round players board =
         else
           let name = Playerstate.get_name p in
           divide ();
-          print_endline ("\nIt is " ^ name ^ "'s turn: ");
+          print_endline ("\nIt is " ^ name ^ "'s turn: "); (*check energy here*)
           print_player_stats p;
           (**Roll dice *)
           let r = roll 6 in
@@ -118,7 +120,8 @@ let  play_round players board =
 let rec finished_game board = function 
   | [] -> false 
   | h :: t -> begin
-      if compare_tiles_id (Playerstate.get_current_tile h) (Board.end_tile board) then 
+      if compare_tiles_id (Playerstate.get_current_tile h) 
+          (Board.end_tile board) then 
         finished_game board t 
       else true
     end

@@ -4,5 +4,7 @@ let enyu = 13
 let iris = 8
 let janice = 20
 
-let hours_worked = 
-  allison + enyu + iris + janice
+let hours_worked_individually = 
+  [allison; enyu; iris; janice]
+
+let hours_worked_total = allison + enyu + iris + janice

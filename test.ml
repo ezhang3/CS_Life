@@ -57,7 +57,8 @@ let tile_test = [
   tile_description_test "start tile desc" tile_start "Start Tile";
   tile_effects_test "tile1 effects" tile1 [Points ("Gained", 10)]; 
   tile_effects_test "tile2 effects" tile2 [Points ("Lost", 15)]; 
-  tile_effects_test "project tile effects" tile_proj [Points ("Gained", 100); Minigame "choose_project"];
+  tile_effects_test "project tile effects" tile_proj 
+    [Points ("Gained", 100); Minigame "choose_project"];
   tile_effects_test "start tile effects" tile_start [Points ("Gained", 0)]; 
 ]
 
@@ -189,9 +190,13 @@ let player_state_test = [
   get_salary_test "0 salary rn" test_player 0; 
   get_items_test "no items yet" test_player [];
   get_study_partners_test "no study partners yet" test_player 0;
-  (* get_current_tile_test "On start" test_player "start"; *)
-  (* get_visited_tiles_test "visited start only" test_player ["start"];
-     go_test "go test 1 move" test_player test_board 1 "choose 1110 or 2110";
+  get_current_tile_test "On start" test_player "start"; 
+  get_visited_tiles_test "visited start only" test_player ["start"];
+  go_test "go test 1 move" test_player test_board 1 "choose 1110 or 2110";
+
+  (* 
+get_current_tile_test "moved one to tile 1" 
+    (go test_player test_board 1; test_player) "choose 1110 or 2110";
      get_current_tile_test "moved one to tile 1" (go test_player test_board 1; test_player) 
      "choose 1110 or 2110"; *)
   (* get_visited_tiles_test "start and tile1" test_player ["choose 1110 or 2110"; "start"]; *)

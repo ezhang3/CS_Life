@@ -8,7 +8,7 @@ let rec find_player name = function
 
 let rec academic_integrity player players =
   if List.length players < 2 then 
-    print_endline "Sorry, there is no one to accuse of an academic integrity violation?\n"
+    print_endline "Sorry, there is no one to accuse of an academic integrity violation\n"
   else 
     print_endline "Who would you like to accuse of an academic integrity violation?\n";
   print_string  "> ";
@@ -34,6 +34,36 @@ let rec minigame_choose_1110_2110 player board =
     Playerstate.set_current_tile player new_tile
   | _ -> print_endline "\nInvalid input. Please re-enter: \n\n";
     minigame_choose_1110_2110 player board
+
+let rec get_study_buddy player players = 
+  if List.length players < 2 then 
+    print_endline "Sorry, there are no other players to study with you\n"
+  else begin 
+    let rec helper pl lst = 
+      let player_name_list = List.map Playerstate.get_name lst in 
+      print_endline "Who do you want to choose as a study buddy?\nType in their name\n"; 
+      print_string "> ";
+      let answer = read_line () |> String.trim in 
+      if (answer = Playerstate.get_name player) then begin
+        print_string "You chose to have yourself as a study buddy since you're weird"
+      end
+      else if List.mem answer player_name_list then begin
+        Playerstate.add_study_partners pl 1;
+        print_string ("Yay! " ^ answer ^ " is now your study buddy!");
+      end
+      else 
+        print_string ("Invalid input! "^answer^" is not a CS major.\n");
+      print_endline "Enter a different name";
+      helper pl lst;
+    in 
+    print_endline "Would you like a study buddy? Enter [yes] or [no]\n";
+    match read_line () |> String.trim |> String.lowercase_ascii with 
+    | "yes" -> helper player players
+    | "no" -> print_endline "You decided you're good on your own\n"
+    | _ -> print_endline "Invalid input! Try again!\n";
+      get_study_buddy player players 
+  end 
+
 
 let minigame_1110 player = 
   print_endline "Do you like old arcade games like Invaders? \nEnter [yes] or [no]: \n"; 
@@ -99,7 +129,7 @@ let minigame_2110 player =
   print_endline "That's it for 2110!\n"
 
 
-let minigame_2800 player = 
+let minigame_2800 player players = 
   print_endline "Do you like regular expressions? Hope you do ;)\n";
   print_endline "What string does the regular expressions a match to? \n"; 
   print_string "> "; 
@@ -112,16 +142,18 @@ let minigame_2800 player =
     print_endline "Nope! The answer is a. Lose 5 points >_< \n";
     Playerstate.set_points player ~-5
   end; 
-  print_endline "2800 psets are such a grind >_< Want a study partner? \n"; 
+  print_endline "2800 psets are such a grind >_<\nMaybe a study buddy can help";
+  (*
   print_string "> ";
-  if (read_line () |> String.trim) = "yes" || (read_line () |> String.trim) = "Yes" 
+  if (read_line () |> String.trim |> String.lowercase_ascii) = "yes"  
   then begin 
     print_endline "Yay! You met a nice classmate in OH and 
     decided to work together"; 
     Playerstate.add_study_partners player 1
   end 
   else 
-    print_endline "No? Guess you're managing fine then"; 
+    print_endline "No? Guess you're managing fine then"; *)
+  get_study_buddy player players;
   print_endline "Another question, on functions: \n"; 
   print_endline "True or false, one-to-one functions are injective \n"; 
   print_string "> "; 
@@ -134,7 +166,8 @@ let minigame_2800 player =
     print_endline "Nope! The answer is true. Lose 5 points >_< \n";
     Playerstate.set_points player ~-5
   end;
-  print_endline "Thanks for playing! Hope you liked 2800 ^^"
+  print_endline "Thanks for playing! Hope you liked 2800 ^^";
+  Playerstate.chg_energy player ~-20
 
 let minigame_3110 player = 
   print_endline "Let's see how well you do on this 3110 quiz! The more you answer correctly, the more points you will gain.\n";
@@ -186,7 +219,7 @@ let minigame_ta player =
   print_endline "An hour passed where you answered lots of questions and corrected so much not great code your head hurts. \n";
   print_endline "So, was it a good experience? (Yes or No) \n"; 
   print_string "> "; 
-  if (read_line () |> String.trim) = "yes" || (read_line () |> String.trim) = "Yes"
+  if (read_line () |> String.trim |> String.lowercase_ascii) = "yes" 
   then begin
     print_endline "Nice! Glad you found being a TA rewarding :) Maybe be one again next semester?";
     Playerstate.set_points player 20
@@ -276,9 +309,10 @@ let job_interview player =
     Playerstate.set_points player ~-20; 
   end
 
-(* trying to see if i can make a timing game *)
+(* trying to see if i can make a timing game. Gonna try some graphics *)
 let minigame_pre_enroll player = 
-  print_endline "Need to implement this minigame. WIP"
+  print_endline "It's time to pre enroll\n";
+  print_endline "Quick! Tap"
 
 let find_special_event player players board str = 
   match str with 
@@ -286,7 +320,7 @@ let find_special_event player players board str =
   | "pre_enroll" -> minigame_pre_enroll player 
   | "1110" -> minigame_1110 player 
   | "2110" -> minigame_2110 player 
-  | "2800" -> minigame_2800 player
+  | "2800" -> minigame_2800 player players
   | "3110" -> minigame_3110 player
   | "3410" -> minigame_3410 player
   | "4410" -> minigame_4410 player
