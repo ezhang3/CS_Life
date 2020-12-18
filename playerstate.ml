@@ -24,7 +24,7 @@ let init_state name start = {
   current_tile = start;
   visited_tiles = [start];
   items = [];
-  energy = 500
+  energy = 100
 }
 let extract_opt = function 
   | None -> "none"
@@ -113,7 +113,10 @@ let get_energy st =
 
 let chg_energy st nrg = 
   let cur_e = get_energy st in 
-  st.points <- cur_e + nrg
+  if nrg < 0 && cur_e < abs nrg then 
+    st.energy <- 0 
+  else 
+    st.energy <- cur_e + nrg
 
 (** moves the player n spaces forward.
     TODO: Cannot handle branching paths yet *)

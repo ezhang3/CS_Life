@@ -1,9 +1,11 @@
-MODULES= playerstate board authors tile main specialevents
-OBJECTS=$(MODULES:=.cmo)
-MLS=$(MODULES:=.ml)
+MODULES= playerstate board authors tile specialevents
+FILES= main gui
+OBJECTS=$(MODULES:=.cmo) $(FILES:=.cmo)
+MLS=$(MODULES:=.ml) $(FILES:=.ml)
 MLIS=$(MODULES:=.mli)
 TEST=test.byte
 MAIN=main.byte
+GUI=gui.byte
 OCAMLBUILD=ocamlbuild -use-ocamlfind -pkg graphics
 
 default: build
@@ -17,6 +19,9 @@ test:
 
 play:
 	$(OCAMLBUILD) $(MAIN) && ./$(MAIN)
+
+gui:
+	$(OCAMLBUILD) $(GUI) && ./$(GUI)
 
 check:
 	bash checkenv.sh && bash checktypes.sh
@@ -32,12 +37,12 @@ docs: docs-public docs-private
 	
 docs-public: build
 	mkdir -p doc.public
-	ocamlfind ocamldoc -I _build -package yojson,ANSITerminal \
+	ocamlfind ocamldoc -I _build -package yojson,ANSITerminal,graphics \
 		-html -stars -d doc.public $(MLIS)
 
 docs-private: build
 	mkdir -p doc.private
-	ocamlfind ocamldoc -I _build -package yojson,ANSITerminal \
+	ocamlfind ocamldoc -I _build -package yojson,ANSITerminal,graphics \
 		-html -stars -d doc.private \
 		-inv-merge-ml-mli -m A $(MLIS) $(MLS)
 
