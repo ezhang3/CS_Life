@@ -373,14 +373,17 @@ let main () =
   ANSITerminal.(print_string [red]
                   "\n\nWelcome to the Game of Life (Cornell CS Version).\n");
   instructions ();
-  print_endline "Please enter the number of players:\n";
+  print_endline "Please enter the number of players between 1 and 10:\n";
   print_string  "> ";
   match read_line () with
   | exception End_of_file -> ()
   | num -> begin 
-      let checked_num = check_valid_num num in
-      let players = Playerstate.make_player_list checked_num start_tile in
-      play_game players test_board
+      match check_valid_num num with 
+      | n when n <= 10 && n > 0 ->
+        let players = Playerstate.make_player_list n start_tile in
+        play_game players test_board
+      | _ -> print_endline "\nInvalid number. Please try again.\n\n"; 
+        exit 0
     end 
 
 (* Execute the game engine. *)

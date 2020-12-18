@@ -2,7 +2,8 @@ type player_name = string
 type points = int
 type salary = int
 type project_name = string
-type project = (project_name * salary) option
+type project = (project_name * string * salary) option
+type projects = project array
 type study_partners = int
 
 type player = {
@@ -28,7 +29,7 @@ let init_state name start = {
 }
 let extract_opt = function 
   | None -> "none"
-  | Some (p, _) -> p 
+  | Some (p, _, _) -> p 
 
 let rec string_list acc = function 
   | [] -> acc
@@ -89,8 +90,39 @@ let add_study_partners st n =
 let get_study_partners st = 
   st.study_partners
 
+let p : projects = [|
+  Some ("CS 1110 Head TA", "CS 1110 REQUIRED", 100);
+  Some ("DTI Developer", "A software developer for Cornell DTI", 80);
+  Some ("AppDev Developer", "A software developer for Cornell AppDev", 80);
+  Some ("Hack4Impact Developer", "A software developer for Cornell H4I", 60);
+  Some ("CS Research", "You're on a research team with a CS professor", 70);
+  Some ("Part-time barista", "Part-time barista at the CTown Starbucks", 30);
+  Some ("Olin Library Part-time", "Olin Library part timer", 40);
+  Some ("Rose Dining Part-time", "Rose Dining hall part timer", 0);
+  Some ("CS 1110 Consultant", "CS 1110 REQUIRED", 90);
+  Some ("Robotics Club", "Member of the robotics club", 70);
+  Some ("Sorority/Fraternity", "You're apart of Greek Life!", 50);
+  Some ("", "", 0)
+|]
+
+let three_rand_projects = 
+  Random.self_init ();
+  let rec helper acc count = 
+    if count = 3 then acc 
+    else
+      let i = ref (Random.int 10) in
+      while List.mem p.(!i) acc || p.(!i) = None do 
+        i := Random.int 10
+      done;
+      count + 1 |> helper (p.(!i) :: acc) in
+  helper [] 0
+
 let set_project st proj = 
-  st.project <- proj
+  st.project <- proj;
+  for i = 0 to Array.length p - 1 do 
+    if p.(i) = proj then p.(i) <- None
+    else ()
+  done
 
 let get_project st = 
   st.project
@@ -98,7 +130,7 @@ let get_project st =
 let get_salary st = 
   match st.project with
   | None -> 0
-  | Some (_, salary) -> salary
+  | Some (_, _, salary) -> salary
 
 let set_current_tile st tile = 
   let orig_visited = st.visited_tiles in 
@@ -118,8 +150,6 @@ let chg_energy st nrg =
   else 
     st.energy <- cur_e + nrg
 
-(** moves the player n spaces forward.
-    TODO: Cannot handle branching paths yet *)
 let go st board n = 
   let rec find_tile tile board n =
     match n with
