@@ -345,9 +345,10 @@
           "id": "All-nighter",
           "color": "Red",
           "event": "Pull an All-Nighter",
-          "description": "Just had to get some work done. It was worth it. Right?",
+          "description": "Just had to get some work done. It was worth it. Right? Wrong.",
           "effects": [
-            "lose 7"
+            "lose 10",
+            "energy -100"
           ]
         },
         {
@@ -375,6 +376,15 @@
           "description": "A requirement for the CS Major. If you're good, maybe it means you can do ML in the future. Otherwise will just do regular coding again.",
           "effects": [
             "gain 70"
+          ]
+        },
+        {
+          "id": "Pre-enroll",
+          "color": "Blue",
+          "event": "Pre-enroll",
+          "description": "Pre-enroll. Every students' favorite part of the semester. Every time it happens, you wonder if you can use your CS skills to make a better student center.",
+          "effects": [
+            "minigame pre_enroll"
           ]
         }
       ]
@@ -431,7 +441,7 @@
           "event": "Start algo",
           "description": "It's algo. More like, Lgo. This is like 2800, but on crack. Expect to spend tons of time on assignments and get some internship practice.",
           "effects": [
-            "gain 80"
+            "gain 30"
           ]
         }
       ]
@@ -579,11 +589,12 @@
         },
         {
           "id": "internship",
-          "color": "Green",
+          "color": "Yellow",
           "event": "First Internship!",
           "description": "The hours of grinding leetcode and CS training have paid off! You've earned a dose of the real world!",
           "effects": [
-            "gain 1000"
+            "gain 1000",
+            "minigame internship"
           ]
         },
         {
@@ -660,11 +671,12 @@
         },
         {
           "id": "Full-time job interview",
-          "color": "Green",
+          "color": "Yellow",
           "event": "You got a post-grad job!",
           "description": "No return offer after that internship junior summer, but hey you still got a job!",
           "effects": [
-            "gain 150"
+            "gain 150",
+            "minigame job_interview"
           ]
         }
       ]

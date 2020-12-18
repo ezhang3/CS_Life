@@ -1,5 +1,0 @@
-(executable
- (name example)
- (public_name boguex)
- (libraries bogue)
- (package bogue))
