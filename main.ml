@@ -14,16 +14,86 @@ type job = Jeff_Bezos | Google | Microsoft | Apple | Facebook | Intel | Tesla
          | StartUP | Non_Tech | Web_Dev | Generic | IT 
          | Unknown | Unemployed | Married | Overseas
 
+(**[instructions ()] prints the instructions for the game *)
+let instructions () = 
+  divide ();
+  print_endline "HOW TO PLAY\n\n";
+  print_endline "GAMEPLAY:\n
+  First, select the number of players who are playing the game. Then, type the 
+  names of each player in order. Careful! The order you type the names is the 
+  order the each player will go in during the game.\n";
+  print_endline "ON YOUR TURN:\n
+  When it is your turn, follow the instructions given and type \"roll\" to move 
+  forward. You will move forward automatically and end on a new tile that will 
+  trigger some sort of event that will play out. 
+  To finish your turn, type \"done\". At the start of your turn, you may end the 
+  game by typing \"quit\" or \"instructions\" to bring up the instructions 
+  again. 
+  You also have an energy bar. Some events will use up energy, so if you 
+  do not have enough energy, you may be unable to participate in some events and 
+  gain points that way. If you notice your energy is getting low, type \"skip\" 
+  at the beginning of your turn to earn back energy at the cost of one turn. 
+  Keep track of your energy! If you do not have enough energy for an exam, you 
+  may not do as well!\n";
+  print_endline "GETTING STARTED:\n
+  On your first turn, decide whether you would like to start with CS 1110 or 
+  CS 2110. Taking CS 1110 will allow you to choose better projects later on, but 
+  will deduct 100 points as it will take longer for you to graduate. If you 
+  start with CS 2110, you are unable to take CS 1110 and will progress through 
+  the board faster as a result. No point deductions will occur if you start with 
+  CS 2110 but you will be unable to obtain certain projects.\n";
+  print_endline "CHOOSING YOUR PROJECT:\n
+  You will receive the option to choose a project right before you start 
+  CS 2110. You will be given three random projects with set salaries, and you 
+  will be given the option to choose which one you would like. If you have not 
+  taken CS 1110, you may not choose a project that includes \"CS 1110 REQUIRED\" 
+  in the project description. Each project will have a designated salary with 
+  some more than others. Each time you pass a \"pay day\" tile (which you may or 
+  may not actually stop for), you will earn a number of points equivalent to 
+  your salary.\n";
+  print_endline "CHANGING YOUR PROJECT:\n
+  Later in the game, you will have the chance to change your project. You will 
+  either be given the option to change your project, be let go from your project 
+  and forced to choose a new one, or you or another player may swap projects 
+  during a special event.\n";
+  print_endline "TILES:\n
+  Each tile will have certain colors to them. 
+  YELLOW tiles force you to stop at them no matter what number you rolled. These 
+  tiles include exams, choosing path tiles, graduation, choosing projects, etc. 
+  RED tiles trigger events that cause you to lose points. 
+  GREEN tiles trigger events that cause you to gain points. GREEN tiles include 
+  PAYDAY tiles that will give you points depending on your salary. 
+  BLUE tiles trigger special events that may cause you to gain or lose points 
+  depending on the event. 
+  BLACK tiles do not contain events.\n";
+  print_endline "GRADUATION:\n
+  Once you reach the graduation tile, you have reached the end of the board and 
+  cannot roll anymore. The game ends when everyone has graduated. The winner is 
+  then decided by totaling the number of points of each player. Each player's 
+  study partners will also be converted to a certain number of points. So make 
+  sure to collect study partners along your journey! The placements of each 
+  player will be decided by the total number of points each player has once they 
+  have all graduated. Depending on where you stand in the rankings, you will 
+  receive a different occupation post-undergrad! 
+  \n\nGood luck!\n";
+  divide ()
+
 (** [roll player n] *)
 let rec roll n = 
   Random.self_init ();
   let custom_roll = 0 in
-  print_endline "\n\nType 'roll' to roll the dice or 'quit' to end the game: \n";
+  print_endline "\n\nEnter:\n
+  | \"roll\" to roll the dice
+  | \"skip\" to skip your turn and earn back 50 energy
+  | \"instructions\" to print the instructions again 
+  | \"quit\" to end the game: \n";
   print_string  "> ";
   match read_line () |> String.lowercase_ascii |> String.trim with 
   | "roll" -> 
     if custom_roll = 0 then (Random.int (n - 1)) + 1
     else custom_roll
+  | "instructions" -> instructions (); roll n
+  | "skip" -> print_endline "You have skipped your turn!\n"; 0
   | "quit" -> exit 0
   | _ -> print_endline "\nInvalid Input. Please try again.\n"; roll n
 
@@ -107,16 +177,19 @@ let  play_round players board =
           print_player_stats p;
           (**Roll dice *)
           let r = roll 6 in
-          print_endline ("\n" ^ name ^ " rolled a " ^ string_of_int r ^ "\n");
-          divide ();
-          (**Go to new tile and play event *)
-          Playerstate.go p board r; 
-          Playerstate.get_current_tile p 
-          |> Tile.get_tile_effects 
-          |> play_event board p all_players;
-          print_player_stats p;
-          finish_player_round ();
-          helper t board
+          if r != 0 then begin
+            print_endline ("\n" ^ name ^ " rolled a " ^ string_of_int r ^ "\n");
+            divide ();
+            (**Go to new tile and play event *)
+            Playerstate.go p board r; 
+            Playerstate.get_current_tile p 
+            |> Tile.get_tile_effects 
+            |> play_event board p all_players;
+            print_player_stats p;
+            finish_player_round ();
+            helper t board
+          end
+          else helper t board
       end in 
   helper players board
 
@@ -289,15 +362,17 @@ let play_game players board =
   divide ();
   print_endline "\nThanks for playing!"
 
+(**[check_valid_num num] is the string of int [num] if [num] is an integer.*)
 let check_valid_num num = 
   try int_of_string num with 
-  | _ -> print_endline "\nInvalid number. Please try again.\n\n";
+  | _ -> print_endline "\nInvalid number. Please try again.\n\n"; 
     exit 0
 
 (** [main ()] prompts for the game to play, then starts it. *)
 let main () =
   ANSITerminal.(print_string [red]
                   "\n\nWelcome to the Game of Life (Cornell CS Version).\n");
+  instructions ();
   print_endline "Please enter the number of players:\n";
   print_string  "> ";
   match read_line () with
@@ -307,5 +382,6 @@ let main () =
       let players = Playerstate.make_player_list checked_num start_tile in
       play_game players test_board
     end 
+
 (* Execute the game engine. *)
 let () = main ()
