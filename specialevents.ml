@@ -82,8 +82,7 @@ let minigame_1110 player =
   moment it was graded?\n"; 
   print_endline "So, yes or no?\n";
   print_string "> "; 
-  if (read_line () |> String.trim) = "yes" || (read_line () |> String.trim) 
-                                              = "Yes"
+  if (read_line () |> String.trim |> String.lowercase_ascii) = "yes"
   then begin 
     print_endline "Wow, you were a diligent student. Not all can relate. Not at
     all. \n"; 
@@ -98,12 +97,14 @@ let minigame_1110 player =
   end
 
 let minigame_2110 player = 
+  let score = ref 0 in 
   print_endline "How many loopy questions are there? \n";
   print_string  "> ";
   if (read_line () |> String.trim) = "4" || 
      (read_line () |> String.trim |> String.lowercase_ascii) = "four"
   then begin
     print_endline "Good job! Gain 10 points";
+    score := 1; 
     Playerstate.set_points player 10
   end
   else
@@ -119,6 +120,10 @@ let minigame_2110 player =
     tedious. \n";
     print_endline "Maybe you'll even figure out what the fifth loopy question is
     one day ;) \n"; 
+    if !score = 1 then 
+      score := 2
+    else 
+      score := 1
   end
   else begin 
     print_endline "Hmmmm. \n";
@@ -126,7 +131,14 @@ let minigame_2110 player =
     than the great David Gries himself. Don't lie \n";
     Playerstate.set_points player ~-10
   end; 
-  print_endline "That's it for 2110!\n"
+  if !score = 2 then begin 
+    print_endline "Great job! You did so well on the final, here's a little momento for you. \n";
+    print_endline "You received JavaHyperText! Added to your items\n";
+    Playerstate.add_items player "JavaHyperText";
+    print_endline "That's it for 2110!\n"
+  end 
+  else 
+    print_endline "That's it for 2110!\n"
 
 
 let minigame_2800 player players = 
@@ -142,17 +154,7 @@ let minigame_2800 player players =
     print_endline "Nope! The answer is a. Lose 5 points >_< \n";
     Playerstate.set_points player ~-5
   end; 
-  print_endline "2800 psets are such a grind >_<\nMaybe a study buddy can help";
-  (*
-  print_string "> ";
-  if (read_line () |> String.trim |> String.lowercase_ascii) = "yes"  
-  then begin 
-    print_endline "Yay! You met a nice classmate in OH and 
-    decided to work together"; 
-    Playerstate.add_study_partners player 1
-  end 
-  else 
-    print_endline "No? Guess you're managing fine then"; *)
+  print_endline "2800 psets are such a grind >_<\nMaybe a study buddy can help?";
   get_study_buddy player players;
   print_endline "Another question, on functions: \n"; 
   print_endline "True or false, one-to-one functions are injective \n"; 
@@ -185,11 +187,25 @@ let minigame_4820 player =
   print_endline "This minigame has no content \n";
   print_endline ""
 
+let minigame_4120 player = 
+  print_endline "Welcome to compliers.\n";
+  print_endline "Be prepared, you won't get a lot of sleep this semester.\n";
+  print_endline "Some of your energy will be taken away, in anticipation of the effort that lies ahead.\n"; 
+  Playerstate.chg_energy player ~-20
+
 let mini_game_networking player = 
-  print_endline "NOT DONE"; 
   print_endline "Trying to make professional connections, whether to get to know a job better or for recruiting/referrals?/n";
   print_endline "Well here is the place to try!"; 
-  print_endline "Would you like to . . . \n"
+  print_endline "Would you like to cold email an alum?\nEnter [yes] or [no].";
+  print_string "> "; 
+  if (read_line () |> String.trim |> String.lowercase_ascii = "yes") 
+  then begin 
+    print_endline "You cold emailed/linkedin connected with an alum.\n You had a good talk.\nIn the future, maybe you'll even get a referral from them.\n";
+    print_endline "You received referral (?)! Added to your items\n";
+    Playerstate.add_items player "referral(?)";
+  end 
+  else 
+    print_endline "No? Good luck on the continuing grind!"
 
 (* I'm intending to make this one extremely annoying to simulate what it feels
    like to debug stuff. Multiple spaces will have this. *)
@@ -325,6 +341,7 @@ let find_special_event player players board str =
   | "3410" -> minigame_3410 player
   | "4410" -> minigame_4410 player
   | "4820" -> minigame_4820 player
+  | "4120" -> minigame_4120 player
   | "debug1" -> minigame_debug_v1 player 1
   | "ta" -> minigame_ta player
   | "choose_project" -> choose_project player

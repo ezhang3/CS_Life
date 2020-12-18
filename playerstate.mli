@@ -65,7 +65,11 @@ val get_current_tile : player -> Tile.tile
 (** [get_visited_tiles st] is the list of tiles that player [st] has 
     crossed. *)
 val get_visited_tiles : player -> Tile.tile list
-(** [have_items st] is the list of items the player has on hand in state [st]*)
+(** [get_items st] is the list of items the player has on hand in state [st]*)
 val get_items: player -> string list
+
+(** [add_items st item] adds the new [item] to the player's current 
+    item list.  *)
+val add_items: player -> string -> unit 
 
 

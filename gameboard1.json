@@ -159,7 +159,8 @@
           "event": "Career Fair",
           "description": "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff.",
           "effects": [
-            "gain 10"
+            "gain 10",
+            "item free_merch"
           ]
         },
         {
@@ -550,6 +551,16 @@
       ],
       "tiles": [
         {
+          "id": "Leetcode",
+          "color": "Blue",
+          "event": "Grinding Leetcode",
+          "description": "Grinded Leetcode, what else more to say",
+          "effects": [
+            "lose 10",
+            "item CTCI"
+          ]
+        },
+        {
           "id": "Make a project",
           "color": "Green",
           "event": "Start your own project",
@@ -612,7 +623,9 @@
           "event": "Start 4120",
           "description": "Compilers. Enough said. Those posts on the Cornell subreddit did not scare you away.",
           "effects": [
-            "gain 15"
+            "gain 15",
+            "item self-written_compiler",
+            "minigame 4120"
           ]
         },
         {
@@ -691,7 +704,8 @@
           "event": "Commencement",
           "description": "Congrats! You graduated!",
           "effects": [
-            "gain 100"
+            "gain 100",
+            "item diploma"
           ]
         }
       ]

@@ -9,6 +9,7 @@ type effect =
   | Points of (string * int) 
   | Minigame of string 
   | Study_Partner of int 
+  | Item of string
   | Energy of int (* TODO: make energy have effect on performance *)
 
 type tile = {
@@ -46,6 +47,7 @@ let get_effects str =
   | "" :: [] -> None
   | "gain" :: t :: [] -> Points ("Gained", int_of_string t)
   | "lose" :: t :: [] -> Points ("Lost", int_of_string t)
+  | "item" :: t :: [] -> Item (t)
   | "study_partner" :: t :: [] -> Study_Partner (int_of_string t)
   | "energy" :: t :: [] -> Energy (int_of_string t)
   | "minigame" :: t :: [] -> Minigame t
@@ -77,3 +79,4 @@ let get_effect_desc effect =
   | Study_Partner i -> "Gained 1 study partner!\n" 
   | Minigame s -> "Special Event!\n" 
   | Energy e -> "Your energy level changed\n"
+  | Item i -> "You received " ^ i ^ "! Added to your items\n"
