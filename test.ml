@@ -94,6 +94,7 @@ let board_test = [
   start_tile_test "start tile is start" test_board "start";
   end_tile_test "end tile is graduation" test_board "Graduation";
   compare_tiles_id_test "start and end tile" start last false;
+  compare_tiles_id_test "start tile same id compare" start start true;
   next_tile_test "first to second 2 tile board" start compare_tiles_id 
     test_board ["choose 1110 or 2110"];
   next_tile_test "next tile for end tile" last compare_tiles_id 
@@ -105,10 +106,13 @@ let board_test = [
     "1110 waiting spot";
   find_tile_by_id_test "CS 2800 final find tile id" "CS 2800 final" test_board 
     "CS 2800 final";
+  find_tile_by_id_test "3110 find tile id" "CS 3110 A0" test_board 
+    "CS 3110 A0";
   "tile id not in board" >:: 
   (fun _ -> assert_raises (No_Tile "No such tile exists in the given board") 
       (fun () -> find_tile_by_id "hi there" test_board));
   compare_tiles_id_test "tile1, tile2 compare" tile1 tile2 false;
+  compare_tiles_id_test "proj, start" tile_proj tile_start false;
   compare_tiles_id_test "start in board, tile_start compare" start tile_start 
     true; 
 ]
@@ -127,11 +131,29 @@ let get_points_test
   name >:: (fun _ ->
       assert_equal expected_output (get_points st))
 
+let get_points_set_test 
+    (name: string)
+    (st: player)
+    (pt: int)
+    (expected_output: int) : test = 
+  name >:: (fun _ ->
+      Playerstate.set_points st pt; 
+      assert_equal expected_output (get_points st))
+
 let get_study_partners_test 
     (name: string)
     (st: player)
     (expected_output: study_partners) : test = 
   name >:: (fun _ ->
+      assert_equal expected_output (get_study_partners st))
+
+let get_study_partners_set_test 
+    (name: string)
+    (st: player)
+    (num : int)
+    (expected_output: study_partners) : test = 
+  name >:: (fun _ ->
+      Playerstate.add_study_partners st num;
       assert_equal expected_output (get_study_partners st))
 
 let get_project_test 
@@ -141,8 +163,22 @@ let get_project_test
   name >:: (fun _ ->
       assert_equal expected_output (get_project st))
 
-let get_salary_test (name: string) (st: player) (expected) = 
-  name >:: (fun _ -> assert_equal expected (get_salary st))
+let get_project_set_test 
+    (name: string)
+    (st: player)
+    (proj_name : string)
+    (salary : int)
+    (expected_output: project) : test = 
+  name >:: (fun _ ->
+      Playerstate.set_project st (Some(proj_name,salary)); 
+      assert_equal expected_output (get_project st))
+
+let get_salary_test
+    (name: string) 
+    (st: player) 
+    (expected) = 
+  name >:: (fun _ -> 
+      assert_equal expected (get_salary st))
 
 let get_current_tile_test 
     (name: string)
@@ -163,12 +199,32 @@ let get_visited_tiles_test
                                     |> get_visited_tiles
                                     |> tile_id_list []))
 
+let get_visited_tiles_after_go_test
+    (name: string)
+    (st: player)
+    (steps: int)
+    (expected_output: tile_id list) : test = 
+  name >:: (fun _ ->
+      go st test_board steps; 
+      assert_equal expected_output (st 
+                                    |> get_visited_tiles
+                                    |> tile_id_list []))
+
 let get_items_test 
     (name: string)
     (st: player)
     (expected_output: string list) : test = 
   name >:: (fun _ ->
-      assert_equal expected_output (get_items st))      
+      assert_equal expected_output (get_items st))     
+
+let get_items_set_test 
+    (name: string)
+    (st: player)
+    (item: string)
+    (expected_output: string list) : test = 
+  name >:: (fun _ ->
+      Playerstate.add_items st item;
+      assert_equal expected_output (get_items st))   
 
 let go_test (name : string) player board moves (expected: string) = 
   name >:: (fun _ -> go player board moves; 
@@ -176,12 +232,8 @@ let go_test (name : string) player board moves (expected: string) =
                                     |> get_current_tile 
                                     |> get_tile_id))
 
-(* let one_space_id = go test_player test_board 1; get_current_tile test_player 
-                                                |> get_tile_id
-   let two_spaces_id = go test_player test_board 2; get_current_tile test_player 
-                                                 |> get_tile_id *)
-
 let test_player = init_state "Jason" (start_tile test_board)
+let player_diff= init_state "Jenny" (start_tile test_board)
 
 let player_state_test = [
   get_player_name_test "player name" test_player "Jason";
@@ -190,17 +242,17 @@ let player_state_test = [
   get_salary_test "0 salary rn" test_player 0; 
   get_items_test "no items yet" test_player [];
   get_study_partners_test "no study partners yet" test_player 0;
+  get_points_set_test "1000 points" player_diff 1000 1000; 
+  get_project_set_test "game project, 10 sal" player_diff "game" 10 
+    (Some("game", 10)); 
+  get_items_set_test "textbook item" player_diff "textbook" ["textbook"]; 
+  get_study_partners_test "no study partners yet" test_player 0;
   get_current_tile_test "On start" test_player "start"; 
   get_visited_tiles_test "visited start only" test_player ["start"];
   go_test "go test 1 move" test_player test_board 1 "choose 1110 or 2110";
-
-  (* 
-get_current_tile_test "moved one to tile 1" 
-    (go test_player test_board 1; test_player) "choose 1110 or 2110";
-     get_current_tile_test "moved one to tile 1" (go test_player test_board 1; test_player) 
-     "choose 1110 or 2110"; *)
-  (* get_visited_tiles_test "start and tile1" test_player ["choose 1110 or 2110"; "start"]; *)
-  (* go_test "go test 2 moves" test_player test_board 1 "1110"; *)
+  get_visited_tiles_after_go_test "start and 1110/2110 waiting" test_player 1 
+    ["start"; "choose 1110 or 2110"];
+  (* some tests for go and visited tiles with branching paths *)
 ]
 
 let suite =

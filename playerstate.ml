@@ -26,12 +26,21 @@ let init_state name start = {
   items = [];
   energy = 500
 }
+let extract_opt = function 
+  | None -> "none"
+  | Some (p, _) -> p 
+
+let rec string_list acc = function 
+  | [] -> acc
+  | h :: t -> if t = [] then string_list (acc ^ h) t
+    else string_list (acc ^ h ^ ",") t
 
 let print_state player = 
   print_endline ("Name: " ^ player.name ^ 
                  "\nPoints: " ^ string_of_int player.points ^ 
                  "\nStudy Partners: " ^ string_of_int player.study_partners ^ 
-                 "\nProject: \nItems: ")
+                 "\nProject: " ^ extract_opt player.project^ 
+                 "\nItems: " ^ string_list "" player.items)
 
 let rec get_nth_player players n = 
   match players with 
@@ -127,3 +136,6 @@ let get_visited_tiles st =
 
 let get_items st = 
   st.items
+
+let add_items st i = 
+  st.items <- (i :: st.items)

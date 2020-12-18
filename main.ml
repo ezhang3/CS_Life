@@ -12,7 +12,7 @@ let divide () = print_endline "\n***********************************************
 
 type job = Jeff_Bezos | Google | Microsoft | Apple | Facebook | Intel | Tesla 
          | StartUP | Non_Tech | Web_Dev | Generic | IT 
-         | Unknown | Unemployed | Married 
+         | Unknown | Unemployed | Married | Overseas
 
 (** [roll player n] *)
 let rec roll n = 
@@ -72,6 +72,11 @@ let play_event board player players (tile_effect: Tile.effect list)=
         print_effect e;
         helper player players t
       end
+    | Item i as e :: t -> begin 
+        add_items player i; 
+        print_effect e;
+        helper player players t; 
+      end 
     | Study_Partner n as e :: t -> begin
         add_study_partners player n; 
         print_effect e; 
@@ -127,8 +132,12 @@ let rec finished_game board = function
     end
 
 let point_compare p1 p2 = 
-  let p1_points = Playerstate.get_points p1 in 
-  let p2_points = Playerstate.get_points p2 in 
+  let num_p1_items = Playerstate.get_items p1 |> List.length in 
+  let num_p2_items = Playerstate.get_items p2 |> List.length in 
+  let p1_points = Playerstate.get_points p1 
+                  |> ( + ) (num_p1_items * 10) in 
+  let p2_points = Playerstate.get_points p2
+                  |> ( + ) (num_p2_items * 10) in
   if p1_points < p2_points then 1 
   else if p1_points > p2_points then -1 
   else 0
@@ -182,7 +191,7 @@ let random_best_job p =
 
 let random_medium_job p = 
   Random.self_init ();
-  let n = roll 11 in
+  let n = roll 12 in
   match n with 
   | 1 -> StartUP
   | 2 -> Non_Tech
@@ -195,6 +204,7 @@ let random_medium_job p =
   | 9 -> Facebook 
   | 10 -> Intel 
   | 11 -> Tesla 
+  | 12 -> Overseas
   | _ -> failwith "not reached"
 
 let random_bad_job p = 
@@ -241,6 +251,8 @@ let print_job_desc player job =
   | Web_Dev -> ()
   | Generic -> ()
   | IT -> ()
+  | Overseas -> 
+    print_endline (name ^ " is somewhere overseas (was it Germany? Sweden? Japan?) Last time anyone heard, " ^ name ^ " is chilling in an ok swe position, enjoying the expat life and better health care.")
   | Unknown -> 
     print_endline (name ^ " could not be found after graduation. Ever since " ^ name ^ " failed to find a job after graduation, nobody knows where they went. No job, no location. Nobody could get in contact with them. It's almost as it they disappeared...\n")
   | Unemployed -> 
