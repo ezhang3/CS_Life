@@ -24,13 +24,14 @@ val print_state : player -> unit
 
 (** [make_player_list n start] creates a list of n players *)
 val make_player_list : int -> Tile.tile -> player list
-
+(** [get_nth_player players n] is the [n]th player in [players] *)
 val get_nth_player : player list -> int -> player
 
 (** [get_name st] is the name of player [st]
     Requires: [st] is a player in the game *)
 val get_name : player -> string
 
+(** [set_points st pts] changes [st]'s points by [pts] *)
 val set_points : player -> int -> unit
 
 (** [get_points st] is the current reputation points player has in state 
@@ -46,15 +47,19 @@ val set_project : player -> project -> unit
 val get_project : player -> project 
 
 val get_salary : player -> salary
+
 (** [get_energy st] is player [st]'s current energy level.
     [st] is a valid Playerstate.st
 *)
 val get_energy : player -> int
-(** [chg_energy st nrg] changes player [st]'s energy level by [nrg].
+
+(** [chg_energy st nrg] changes player [st]'s energy level by [nrg]. If the 
+    new energy level is negative, [st]'s energy is 0. 
     [st] is a valid Playerstate.st
     [nrg] is a valid integer
 *)
 val chg_energy : player -> int -> unit 
+
 (** [go st board n] moves the player [st] [n] tiles forward. 
     Requires:
     [st] is a valid Playerstate.st

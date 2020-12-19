@@ -68,6 +68,7 @@ let rec get_study_buddy player players =
   end 
 
 let minigame_1110 player = 
+  Playerstate.chg_energy player ~-5;
   print_endline "Do you like old arcade games like Invaders? \nEnter [yes] or [no]: \n"; 
   print_string "> "; 
   if (read_line () |> String.trim |> String.lowercase_ascii) = "yes" 
@@ -99,6 +100,7 @@ let minigame_1110 player =
   end
 
 let minigame_2110 player = 
+  Playerstate.chg_energy player ~-10;
   let score = ref 0 in 
   print_endline "How many loopy questions are there? \n";
   print_string  "> ";
@@ -192,9 +194,10 @@ let minigame_4120 player =
   print_endline "Welcome to compliers.\n";
   print_endline "Be prepared, you won't get a lot of sleep this semester.\n";
   print_endline "Some of your energy will be taken away, in anticipation of the effort that lies ahead.\n"; 
-  Playerstate.chg_energy player ~-20
+  Playerstate.chg_energy player ~-15
 
 let mini_game_networking player = 
+  Playerstate.chg_energy player ~-8;
   print_endline "Trying to make professional connections, whether to get to know a job better or for recruiting/referrals?/n";
   print_endline "Well here is the place to try!"; 
   print_endline "Would you like to cold email an alum?\nEnter [yes] or [no].";
@@ -233,6 +236,7 @@ let rec minigame_debug_v1 player num =
   end 
 
 let minigame_ta player = 
+  Playerstate.chg_energy player ~-10;
   print_endline "You were invited to become a TA. Do you accept?";
   print_endline "Type [yes] or [no] > ";
   match read_line () |> String.trim |> String.lowercase_ascii with 
@@ -314,6 +318,7 @@ let internship player =
   print_endline "unimplemented \n"
 
 let job_interview player = 
+  Playerstate.chg_energy player ~-12;
   print_endline "You're getting a job, but is it the one you want, or just some 
   job you took because you needed one? \n"; 
   print_endline "Enter a number from 1 to 10:\n";
@@ -325,7 +330,7 @@ let job_interview player =
     print_endline "Actually, we don't know if you got the job or not. Haha\n"; 
     print_endline "You'll know soon though!"; 
     print_endline "Hopefully you did get a good one. ^^";  
-    Playerstate.set_points player 100; 
+    Playerstate.set_points player 25; 
   end 
   else begin 
     print_endline "Oops, the job interview didn't go so great. \n"; 
@@ -333,7 +338,7 @@ let job_interview player =
     print_endline "Who knows? You might still get a great job. It's just this 
     one didn't go as great. \n";
     print_endline "Don't give up!";
-    Playerstate.set_points player ~-20; 
+    Playerstate.set_points player ~-8; 
   end
 
 (* trying to see if i can make a timing game. Gonna try some graphics *)
