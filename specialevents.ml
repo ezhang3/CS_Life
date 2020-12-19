@@ -54,17 +54,20 @@ let rec get_study_buddy player players =
         Playerstate.add_study_partners pl 1;
         print_string ("Yay! " ^ answer ^ " is now your study buddy!")
       end
-      else 
+      else begin
         print_string ("Invalid input! "^answer^" is not a CS major.\n");
-      print_endline "Try again\n";
-      helper pl lst;
+        print_endline "Try again\n";
+        helper pl lst;
+      end
     in 
     print_endline "Would you like a study buddy? Enter [yes] or [no]\n";
     match read_line () |> String.trim |> String.lowercase_ascii with 
     | "yes" -> helper player players
     | "no" -> print_endline "You decided you're good on your own\n"
-    | _ -> print_endline "Invalid input! Try again!\n";
-      get_study_buddy player players 
+    | _ -> begin
+        print_endline "Invalid input! Try again!\n";
+        get_study_buddy player players 
+      end
   end 
 
 let minigame_1110 player = 
@@ -177,7 +180,12 @@ let minigame_2800 player players =
 
 let minigame_3110 player = 
   print_endline "Let's see how well you do on this 3110 quiz! The more you answer correctly, the more points you will gain.\n";
-  print_endline "Thanks for playing! I hope you liked 3110 ^^"
+  print_endline "1. What does the follwing expression evaluate to?\n";
+  print_endline "\"let x = 1 in x + 1";
+  match read_line () |> String.trim with 
+  | "2" -> print_endline "Correct!";
+  | _ -> print_endline "Wrong answer.";  
+    print_endline "Thanks for playing! I hope you liked 3110 ^^"
 
 (* Putting assembly instructions in the right order? *)
 let minigame_3410 player = 
@@ -406,11 +414,6 @@ let job_interview player =
     Playerstate.set_points player ~-8; 
   end
 
-(* trying to see if i can make a timing game. Gonna try some graphics *)
-let minigame_pre_enroll player = 
-  print_endline "It's time to pre enroll\n";
-  print_endline "Quick! Tap"
-
 let find_special_event player players board str = 
   let nrg = Playerstate.get_energy player in 
   if nrg < 10 then begin
@@ -420,7 +423,6 @@ let find_special_event player players board str =
   else begin
     match str with 
     | "choose_1110_2110" -> minigame_choose_1110_2110 player board
-    | "pre_enroll" -> minigame_pre_enroll player 
     | "1110" -> minigame_1110 player 
     | "2110" -> minigame_2110 player 
     | "2800" -> minigame_2800 player players
@@ -439,6 +441,6 @@ let find_special_event player players board str =
     | "pay_raise" -> pay_raise player
     | "academic_integrity" -> academic_integrity player players
     | "internship" -> internship player
-    | "job_interview" -> job_interview player
+    | "job_interview1" -> job_interview player
     | _ -> failwith "special event not found"
   end

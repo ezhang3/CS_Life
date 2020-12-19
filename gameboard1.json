@@ -422,7 +422,8 @@
           "event": "Pre-enroll",
           "description": "Pre-enroll. Every students' favorite part of the semester. Every time it happens, you wonder if you can use your CS skills to make a better student center.",
           "effects": [
-            "minigame pre_enroll"
+            "minigame pre_enroll",
+            "energy -20"
           ]
         }
       ]
@@ -800,7 +801,7 @@
           "description": "No return offer after that internship junior summer, but hey you still got a job!",
           "effects": [
             "gain 150",
-            "minigame job_interview"
+            "minigame job_interview1"
           ]
         }
       ]
