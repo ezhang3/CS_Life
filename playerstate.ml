@@ -103,10 +103,7 @@ let p : projects = [|
   Some ("CS 1110 Consultant", "CS 1110 REQUIRED", 90);
   Some ("Robotics Club", "Member of the robotics club", 70);
   Some ("Sorority/Fraternity", "You're apart of Greek Life!", 50);
-  Some ("Business Club", "Maybe minor in business? It's good to step outside of STEM to broaden your skills!", 60);
-  Some ("", "", 0);
-  Some ("", "", 0);
-  Some ("", "", 0)
+  Some ("Business Club", "Maybe minor in business? It's good to step outside of STEM to broaden your skills!", 60)
 |]
 
 let three_rand_projects = 
