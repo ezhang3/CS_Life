@@ -52,8 +52,6 @@ let rec get_nth_player players n =
 
 let check_valid_player player players = not (List.mem player players)
 
-(** current implementation of make_player_list does not account for different 
-    starting points. All players will currently all start at the same tile. *)
 let make_player_list (n : int) (start : Tile.tile) = 
   let rec make_list n count acc = 
     if count = n then acc 
@@ -99,14 +97,14 @@ let p : projects = [|
   Some ("CS Research", "You're on a research team with a CS professor", 70);
   Some ("Part-time barista", "Part-time barista at the CTown Starbucks", 30);
   Some ("Olin Library Part-time", "Olin Library part timer", 40);
-  Some ("Rose Dining Part-time", "Rose Dining hall part timer", 0);
+  Some ("Rose Dining Part-time", "Rose Dining hall part timer", 40);
   Some ("CS 1110 Consultant", "CS 1110 REQUIRED", 90);
   Some ("Robotics Club", "Member of the robotics club", 70);
   Some ("Sorority/Fraternity", "You're apart of Greek Life!", 50);
   Some ("Business Club", "Maybe minor in business? It's good to step outside of STEM to broaden your skills!", 60)
 |]
 
-let three_rand_projects = 
+let three_rand_projects () = 
   Random.self_init ();
   let rec helper acc count = 
     if count = 3 then acc 
@@ -118,7 +116,7 @@ let three_rand_projects =
       count + 1 |> helper (p.(!i) :: acc) in
   helper [] 0
 
-let rand_project = 
+let rand_project () = 
   Random.self_init ();
   let i = ref (Random.int 10) in
   while p.(!i) = None do 

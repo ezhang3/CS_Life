@@ -78,7 +78,12 @@ let instructions () =
   \n\nGood luck!\n";
   divide ()
 
-(** [roll player n] *)
+(** [roll player n] prompts the player to:
+    'roll' -> a number that the player moves forward
+    'skip' -> returns 0 so the player skips their turn
+    'instructions' -> prints the instructions then prompts user again
+    'quit' -> quit the game
+*)
 let rec roll n = 
   Random.self_init ();
   let custom_roll = 0 in
@@ -93,10 +98,12 @@ let rec roll n =
     if custom_roll = 0 then (Random.int (n - 1)) + 1
     else custom_roll
   | "instructions" -> instructions (); roll n
-  | "skip" -> print_endline "\nYou have skipped your turn!\n"; 0
+  | "skip" -> 
+    print_endline "\nYou have skipped your turn! Gained 50 energy.\n"; 0
   | "quit" -> exit 0
   | _ -> print_endline "\nInvalid Input. Please try again.\n"; roll n
 
+(**[finish_player_round ()] prompts the player to end their turn *)
 let rec finish_player_round () = 
   print_endline "\n\nType 'done' to finish your turn: \n";
   print_string  "> ";
@@ -111,7 +118,7 @@ let print_player_stats player =
   print_endline ("\n" ^ name ^ "'s current stats: ");
   Playerstate.print_state player
 
-
+(**[print_effect effect] prints the effect description *)
 let print_effect effect = 
   print_endline ("\n" ^ Tile.get_effect_desc effect ^ "\n")
 
@@ -206,6 +213,8 @@ let rec finished_game board = function
       else true
     end
 
+(**[point_compare p1 p2] is [1] if [p1] has more points than [p2]. [0] if they 
+   have the same points. [-1] if [pi] has less points than [p2]. *)
 let point_compare p1 p2 = 
   let num_p1_items = Playerstate.get_items p1 |> List.length in 
   let num_p2_items = Playerstate.get_items p2 |> List.length in 
@@ -233,6 +242,8 @@ let find_winner players =
       else helper max t in 
   helper (List.hd players) players
 
+(**[max_points players] is the maximum number of points out of all the players 
+   in [players]*)
 let max_points players = 
   let rec helper max = function
     | [] -> max 
@@ -243,6 +254,8 @@ let max_points players =
       else helper max t in 
   helper 0 players
 
+(**[min_points players] is the minimum number of points out of all the players 
+   in [players]*)
 let min_points players = 
   let rec helper min = function
     | [] -> min 
@@ -253,6 +266,7 @@ let min_points players =
       else helper min t in 
   helper max_int players
 
+(**[random_best_job p] is a random best job *)
 let random_best_job p = 
   let n = roll 6 in
   match n with 
@@ -264,6 +278,7 @@ let random_best_job p =
   | 6 -> Tesla 
   | _ -> failwith "not reached"
 
+(**[random_medium_job p] is a random medium job *)
 let random_medium_job p = 
   Random.self_init ();
   let n = roll 12 in
@@ -282,6 +297,7 @@ let random_medium_job p =
   | 12 -> Overseas
   | _ -> failwith "not reached"
 
+(**[random_bad_job p] is a random bad job *)
 let random_bad_job p = 
   Random.self_init ();
   let n = roll 3 in
@@ -291,6 +307,8 @@ let random_bad_job p =
   | 3 -> Married
   | _ -> failwith "not reached"
 
+(**[decide_jobs players max min] assigns all players in [players] a job 
+   depending on their standing*)
 let decide_jobs players max min = 
   let rec helper lst acc = 
     match lst with 
@@ -310,6 +328,7 @@ let decide_jobs players max min =
       end in 
   helper players []
 
+(**[print_job_desc player job] prints the description of [player]'s job *)
 let print_job_desc player job = 
   let name = Playerstate.get_name player in 
   match job with 
@@ -335,6 +354,8 @@ let print_job_desc player job =
   | Married -> 
     print_endline (name ^ " unfortunately fails to find a job after graduation. However, " ^ name ^ " instead decided to get married! They were lucky enough to have found their \"meant to be\" through their undergrad. The couple live happily ever after!\n")
 
+(**[print_jobs [(p1, job1);...;(pn, jobn)]] prints the jobs [job1,...jobn] of 
+   players [p1,...pn]*)
 let rec print_jobs = function 
   | [] -> ()
   | (p, job) :: t -> 

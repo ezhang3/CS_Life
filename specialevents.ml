@@ -311,7 +311,7 @@ let prompt_project player (lst : Playerstate.project list) =
 
 let choose_project player = 
   print_endline "Generating three random projects. . . \n";
-  let projects = Playerstate.three_rand_projects in
+  let projects = Playerstate.three_rand_projects () in
   print_endline "Your project choices are: \n";
   print_project_lst projects;
   prompt_project player projects |> Playerstate.set_project player
@@ -322,7 +322,7 @@ let change_project player =
   print_endline "Unfortunately, it's time for a new project.\n"; 
   (**check if CS1110 is required *)
   let rec helper () = 
-    match Playerstate.rand_project with 
+    match Playerstate.rand_project () with 
     | None -> failwith "not reached"
     | Some (name, desc, salary) as p -> 
       if desc = "CS 1110 REQUIRED" && not (cs1110) then

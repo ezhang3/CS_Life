@@ -43,9 +43,9 @@ val add_study_partners : player -> int -> unit
 
 val get_study_partners : player -> study_partners
 
-val three_rand_projects : project list 
+val three_rand_projects : unit -> project list 
 
-val rand_project : project
+val rand_project : unit -> project
 
 val set_project : player -> project -> unit
 
