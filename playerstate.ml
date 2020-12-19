@@ -40,7 +40,8 @@ let print_state player =
                  "\nPoints: " ^ string_of_int player.points ^ 
                  "\nStudy Partners: " ^ string_of_int player.study_partners ^ 
                  "\nProject: " ^ extract_opt player.project^ 
-                 "\nItems: " ^ string_list "" player.items)
+                 "\nItems: " ^ string_list "" player.items ^
+                 "\nEnergy: "^string_of_int player.energy)
 
 let rec get_nth_player players n = 
   match players with 
@@ -113,7 +114,7 @@ let get_energy st =
 
 let chg_energy st nrg = 
   let cur_e = get_energy st in 
-  if nrg < 0 && cur_e < abs nrg then 
+  if cur_e + nrg < 0 then 
     st.energy <- 0 
   else 
     st.energy <- cur_e + nrg
