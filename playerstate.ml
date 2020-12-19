@@ -176,10 +176,17 @@ let go st board n =
         | [] -> set_current_tile st tile
         | tile :: [] -> set_current_tile st tile; 
           if Tile.get_tile_color tile = Yellow then ()
+          else if Tile.get_tile_event_name tile = "Pay Day!" then 
+            begin
+              print_endline "\nYou passed a pay day...\n";
+              get_salary st |> set_points st;
+              find_tile tile board (n - 1)
+            end
           else
             find_tile tile board (n - 1)
         | h :: t -> set_current_tile st h
-      end in find_tile st.current_tile board n
+      end in 
+  find_tile st.current_tile board n
 
 let get_visited_tiles st = 
   st.visited_tiles 
