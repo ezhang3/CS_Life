@@ -28,7 +28,7 @@ let rec minigame_choose_1110_2110 player board =
   match read_line () |> String.trim with 
   | "1110" -> 
     let new_tile = Board.find_tile_by_id "1110 waiting spot" board in
-    Playerstate.set_points player ~-20;
+    Playerstate.set_points player ~-100;
     Playerstate.set_current_tile player new_tile
   | "2110" -> 
     let new_tile = Board.find_tile_by_id "2110 waiting spot" board in
@@ -111,38 +111,39 @@ let minigame_2110 player =
     score := 1; 
     Playerstate.set_points player 10
   end
-  else
+  else begin
     print_endline "Wrong answer :( Lose 10 points";
-  Playerstate.set_points player ~-10; 
-  print_endline "How many years of programming experience do you have? \n";
-  print_string  "> ";
-  if int_of_string (read_line () |> String.trim) < 59
-  then begin
-    print_endline "Too little. You will listen to what the great David Gries has
+    Playerstate.set_points player ~-10; 
+    print_endline "How many years of programming experience do you have? \n";
+    print_string  "> ";
+    if int_of_string (read_line () |> String.trim) < 59
+    then begin
+      print_endline "Too little. You will listen to what the great David Gries has
     to say in the course. \n";
-    print_endline "YES, even when you think the four loopy questions are 
+      print_endline "YES, even when you think the four loopy questions are 
     tedious. \n";
-    print_endline "Maybe you'll even figure out what the fifth loopy question is
+      print_endline "Maybe you'll even figure out what the fifth loopy question is
     one day ;) \n"; 
-    if !score = 1 then 
-      score := 2
-    else 
-      score := 1
-  end
-  else begin 
-    print_endline "Hmmmm. \n";
-    print_endline "There's no way you could have more programming experience 
+      if !score = 1 then 
+        score := 2
+      else 
+        score := 1
+    end
+    else begin 
+      print_endline "Hmmmm. \n";
+      print_endline "There's no way you could have more programming experience 
     than the great David Gries himself. Don't lie \n";
-    Playerstate.set_points player ~-10
-  end; 
-  if !score = 2 then begin 
-    print_endline "Great job! You did so well on the final, here's a little momento for you. \n";
-    print_endline "You received JavaHyperText! Added to your items\n";
-    Playerstate.add_items player "JavaHyperText";
-    print_endline "That's it for 2110!\n"
-  end 
-  else 
-    print_endline "That's it for 2110!\n"
+      Playerstate.set_points player ~-10
+    end; 
+    if !score = 2 then begin 
+      print_endline "Great job! You did so well on the final, here's a little momento for you. \n";
+      print_endline "You received JavaHyperText! Added to your items\n";
+      Playerstate.add_items player "JavaHyperText";
+      print_endline "That's it for 2110!\n"
+    end 
+    else 
+      print_endline "That's it for 2110!\n"
+  end
 
 let minigame_2800 player players = 
   print_endline "Do you like regular expressions? Hope you do ;)\n";
@@ -262,27 +263,91 @@ let minigame_ta player =
     print_endline "The game is taking points away for typing in something weird";
     Playerstate.set_points player ~-5
 
+(**[print_project_lst lst] prints the projects in [lst]*)
+let print_project_lst (lst : Playerstate.project list) = 
+  match lst with 
+  | Some (n1, d1, s1) :: Some (n2, d2, s2) :: Some (n3, d3, s3) :: t -> 
+    print_endline ("1. Name: " ^ n1 ^ "\n   Description: " ^ d1 ^ "\n   Salary: " ^ (string_of_int s1) ^ "\n");
+    print_endline ("2. Name: " ^ n2 ^ "\n   Description: " ^ d2 ^ "\n   Salary: " ^ (string_of_int s2) ^ "\n");
+    print_endline ("3. Name: " ^ n3 ^ "\n   Description: " ^ d3 ^ "\n   Salary: " ^ (string_of_int s3) ^ "\n")
+  | _ -> failwith "invalid list of projects"
+
+(**[prompt_project player lst] prompts the [player] to choose a project out of 
+   [lst]*)
+let prompt_project player (lst : Playerstate.project list) = 
+  let cs1110 = Playerstate.get_visited_tiles player |> List.mem "1110" in
+  let rec helper = function 
+    | Some (n1, d1, s1) :: Some (n2, d2, s2) :: Some (n3, d3, s3) :: t -> begin
+        print_endline "Please type the number of the project you would like: \n";
+        print_string "> ";
+        begin
+          match read_line () |> String.trim with 
+          | "1" -> 
+            if d1 = "CS 1110 REQUIRED" && not (cs1110) then begin
+              print_endline "\nYou have not taken CS 1110. You are not qualified for this project. Please choose again.\n";
+              helper lst end
+            else begin
+              print_endline ("Congrats! Your new project is " ^ n1 ^ " with a salary of " ^ (string_of_int s1) ^ " points.\n");
+              Some (n1, d1, s1) end
+          | "2" -> 
+            if d2 = "CS 1110 REQUIRED" && not (cs1110) then begin
+              print_endline "\nYou have not taken CS 1110. You are not qualified for this project. Please choose again.\n";
+              helper lst end
+            else begin
+              print_endline ("Congrats! Your new project is " ^ n2 ^ " with a salary of " ^ (string_of_int s2) ^ " points.\n");
+              Some (n2, d2, s2) end
+          | "3" -> 
+            if d3 = "CS 1110 REQUIRED" && not (cs1110) then begin
+              print_endline "\nYou have not taken CS 1110. You are not qualified for this project. Please choose again.\n";
+              helper lst end
+            else begin
+              print_endline ("Congrats! Your new project is " ^ n3 ^ " with a salary of " ^ (string_of_int s3) ^ " points.\n");
+              Some (n3, d3, s3) end
+          | _ -> print_endline "\nInvalid input. Please retry.\n"; helper lst
+        end
+      end
+    | _ -> failwith "invalid list of projects" in 
+  helper lst
+
 let choose_project player = 
-  print_endline "Name your project: \n";
-  print_string "> "; ()
-(* let proj_name = read_line() |> String.trim in 
-   let cur_sal = Playerstate.get_salary player in 
-   let proj = Some (proj_name,cur_sal+2) in 
-   Playerstate.set_project player proj *)
+  print_endline "Generating three random projects. . . \n";
+  let projects = Playerstate.three_rand_projects in
+  print_endline "Your project choices are: \n";
+  print_project_lst projects;
+  prompt_project player projects |> Playerstate.set_project player
 
 let change_project player = 
-  print_endline "Changing your project? Cool. \n"; 
-  print_endline "Name your new project: \n"; 
-  print_string "> "; ()
-(* let proj_name = read_line() |> String.trim in 
-   let cur_sal = Playerstate.get_salary player in 
-   let proj = Some (proj_name,cur_sal) in 
-   Playerstate.set_project player proj *)
+  let cs1110 = Playerstate.get_visited_tiles player |> List.mem "1110" in
+  print_endline "Oh no, for some reason you lost your project!\n"; 
+  print_endline "Unfortunately, it's time for a new project.\n"; 
+  (**check if CS1110 is required *)
+  let rec helper () = 
+    match Playerstate.rand_project with 
+    | None -> failwith "not reached"
+    | Some (name, desc, salary) as p -> 
+      if desc = "CS 1110 REQUIRED" && not (cs1110) then
+        helper ()
+      else begin
+        print_endline ("Your new project is: " ^ name);
+        Playerstate.set_project player p 
+      end in 
+  helper ()
 
-let swap_project player =
-  print_endline "Oh no, for some reason you lost your project!\n";
-  Playerstate.set_project player None;
-  Playerstate.set_points player ~-30
+let rec swap_salary player players =
+  print_endline "Please type the name of the player you would like to swap salaries with:\n";
+  print_string ">";
+  match read_line () |> String.lowercase_ascii |> String.trim with 
+  | p -> 
+    match find_player p players with 
+    | None -> 
+      print_endline "\nNot a valid player. Please re-enter: \n\n"; 
+      swap_salary player players 
+    | Some p2 -> 
+      let s1 = Playerstate.get_salary player in 
+      let s2 = Playerstate.get_salary p2 in
+      Playerstate.set_salary player s2;
+      Playerstate.set_salary p2 s1;
+      print_endline "\nSalaries have been swapped.\n"
 
 let birthday (player : Playerstate.player) players = 
   let rec helper (player : Playerstate.player) players (acc : int) = 
@@ -311,7 +376,7 @@ let pay_raise player =
     Some(name, desc, salary + 10) 
     |> Playerstate.set_project player;
     print_endline ("Thanks to all of your contributions to " ^ name ^ ", you 
-    have earned " ^ (string_of_int salary) ^ " points!\n");
+    have earned an extra " ^ (string_of_int salary) ^ " points to your salary!\n");
     Playerstate.set_points player salary
 
 let internship player = 
@@ -368,7 +433,7 @@ let find_special_event player players board str =
     | "ta" -> minigame_ta player
     | "choose_project" -> choose_project player
     | "change_project" -> change_project player
-    | "swap_project" -> swap_project player 
+    | "swap_project" -> swap_salary player players
     | "birthday" -> birthday player players
     | "pay_day" -> pay_day player 
     | "pay_raise" -> pay_raise player

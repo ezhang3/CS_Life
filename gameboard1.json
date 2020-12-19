@@ -372,7 +372,7 @@
           ]
         },
         {
-          "id": "payday",
+          "id": "payday5",
           "color": "Green",
           "event": "Pay Day!",
           "description": "It's Pay Day!",
@@ -399,7 +399,7 @@
           ]
         },
         {
-          "id": "payraise",
+          "id": "payraise4",
           "color": "Green",
           "event": "Pay Day!",
           "description": "It's Pay Day! Even better!, you get a 10 point pay raise!",
@@ -616,7 +616,7 @@
           ]
         },
         {
-          "id": "payraise",
+          "id": "payraise5",
           "color": "Green",
           "event": "Pay Day!",
           "description": "It's Pay Day! Even better!, you get a 10 point pay raise!",
@@ -749,7 +749,7 @@
           ]
         },
         {
-          "id": "payraise",
+          "id": "payraise6",
           "color": "Green",
           "event": "Pay Day!",
           "description": "It's Pay Day! Even better!, you get a 10 point pay raise!",
@@ -785,7 +785,7 @@
           ]
         },
         {
-          "id": "payday",
+          "id": "payday7",
           "color": "Green",
           "event": "Pay Day!",
           "description": "It's Pay Day!",

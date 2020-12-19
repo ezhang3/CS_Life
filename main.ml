@@ -170,26 +170,28 @@ let  play_round players board =
     | p :: t -> begin
         if compare_tiles_id (Playerstate.get_current_tile p) 
             (Board.end_tile board) then helper t board 
-        else
+        else begin
           let name = Playerstate.get_name p in
           divide ();
           print_endline ("\nIt is " ^ name ^ "'s turn: "); (*check energy here*)
           print_player_stats p;
           (**Roll dice *)
           let r = roll 6 in
-          if r != 0 then begin
-            print_endline ("\n" ^ name ^ " rolled a " ^ string_of_int r ^ "\n");
-            divide ();
-            (**Go to new tile and play event *)
-            Playerstate.go p board r; 
-            Playerstate.get_current_tile p 
-            |> Tile.get_tile_effects 
-            |> play_event board p all_players;
-            print_player_stats p;
-            finish_player_round ();
-            helper t board
-          end
-          else finish_player_round (); helper t board
+          if r != 0 then 
+            begin
+              print_endline ("\n" ^ name ^ " rolled a " ^ string_of_int r ^ "\n");
+              divide ();
+              (**Go to new tile and play event *)
+              Playerstate.go p board r; 
+              Playerstate.get_current_tile p 
+              |> Tile.get_tile_effects 
+              |> play_event board p all_players;
+              print_player_stats p;
+              finish_player_round ();
+              helper t board
+            end
+          else begin finish_player_round (); helper t board end
+        end
       end in 
   helper players board
 

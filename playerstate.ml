@@ -12,7 +12,7 @@ type player = {
   mutable study_partners : study_partners;
   mutable project : project;
   mutable current_tile : Tile.tile;
-  mutable visited_tiles : Tile.tile list;
+  mutable visited_tiles : Tile.tile_id list;
   mutable items : string list;
   mutable energy : int 
 }
@@ -23,7 +23,7 @@ let init_state name start = {
   study_partners = 0;
   project = None;
   current_tile = start;
-  visited_tiles = [start];
+  visited_tiles = [Tile.get_tile_id start];
   items = [];
   energy = 100
 }
@@ -103,6 +103,9 @@ let p : projects = [|
   Some ("CS 1110 Consultant", "CS 1110 REQUIRED", 90);
   Some ("Robotics Club", "Member of the robotics club", 70);
   Some ("Sorority/Fraternity", "You're apart of Greek Life!", 50);
+  Some ("Business Club", "Maybe minor in business? It's good to step outside of STEM to broaden your skills!", 60);
+  Some ("", "", 0);
+  Some ("", "", 0);
   Some ("", "", 0)
 |]
 
@@ -117,6 +120,14 @@ let three_rand_projects =
       done;
       count + 1 |> helper (p.(!i) :: acc) in
   helper [] 0
+
+let rand_project = 
+  Random.self_init ();
+  let i = ref (Random.int 10) in
+  while p.(!i) = None do 
+    i := Random.int 10
+  done;
+  p.(!i)
 
 let set_project st proj = 
   st.project <- proj;
@@ -133,10 +144,15 @@ let get_salary st =
   | None -> 0
   | Some (_, _, salary) -> salary
 
+let set_salary st salary = 
+  match st.project with 
+  | None -> ()
+  | Some (n, d, s) -> set_project st (Some (n, d, salary))
+
 let set_current_tile st tile = 
   let orig_visited = st.visited_tiles in 
   st.current_tile <- tile; 
-  st.visited_tiles <- tile :: orig_visited
+  st.visited_tiles <- Tile.get_tile_id tile :: orig_visited
 
 let get_current_tile st = 
   st.current_tile

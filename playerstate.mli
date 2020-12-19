@@ -24,6 +24,7 @@ val print_state : player -> unit
 
 (** [make_player_list n start] creates a list of n players *)
 val make_player_list : int -> Tile.tile -> player list
+
 (** [get_nth_player players n] is the [n]th player in [players] *)
 val get_nth_player : player list -> int -> player
 
@@ -42,9 +43,15 @@ val add_study_partners : player -> int -> unit
 
 val get_study_partners : player -> study_partners
 
+val three_rand_projects : project list 
+
+val rand_project : project
+
 val set_project : player -> project -> unit
 
 val get_project : player -> project 
+
+val set_salary : player -> salary -> unit
 
 val get_salary : player -> salary
 
@@ -80,7 +87,7 @@ val get_current_tile : player -> Tile.tile
 
 (** [get_visited_tiles st] is the list of tiles that player [st] has 
     crossed. *)
-val get_visited_tiles : player -> Tile.tile list
+val get_visited_tiles : player -> Tile.tile_id list
 
 (** [get_items st] is the list of items the player has on hand in state [st]*)
 val get_items: player -> string list
