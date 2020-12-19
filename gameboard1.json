@@ -83,7 +83,7 @@
       "id": "2110 waiting spot",
       "next": [
         {
-          "id": "start 2110"
+          "id": "choose project"
         }
       ],
       "tiles": [
@@ -94,6 +94,21 @@
           "description": "filler",
           "effects": [
             "gain 0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "choose project",
+      "next": "start 2110",
+      "tiles": [
+        {
+          "id": "Choose Project",
+          "color": "Yellow",
+          "event": "Choose your Project",
+          "description": "It's time to choose your project!",
+          "effects": [
+            "minigame choose_project"
           ]
         }
       ]
@@ -196,7 +211,7 @@
       "id": "1110 final",
       "next": [
         {
-          "id": "start 2110"
+          "id": "choose project"
         }
       ],
       "tiles": [
@@ -277,12 +292,12 @@
       ],
       "tiles": [
         {
-          "id": "2800 path filler",
-          "color": "Black",
-          "event": "filler",
-          "description": "filler",
+          "id": "payday1",
+          "color": "Green",
+          "event": "Pay Day!",
+          "description": "It's Pay Day!",
           "effects": [
-            "gain 0"
+            "minigame pay_day"
           ]
         }
       ]
@@ -353,6 +368,15 @@
           ]
         },
         {
+          "id": "payday",
+          "color": "Green",
+          "event": "Pay Day!",
+          "description": "It's Pay Day!",
+          "effects": [
+            "minigame pay_day"
+          ]
+        },
+        {
           "id": "Bug 2",
           "color": "Red",
           "event": "ERROR",
@@ -368,6 +392,15 @@
           "description": "You're not really sure why you have to take a class on hardware if you're planning on just coding for a job. But hopefully it won't be too bad. . .",
           "effects": [
             "gain 10"
+          ]
+        },
+        {
+          "id": "payraise",
+          "color": "Green",
+          "event": "Pay Day!",
+          "description": "It's Pay Day! Even better!, you get a 10 point pay raise!",
+          "effects": [
+            "minigame pay_raise"
           ]
         },
         {
@@ -413,7 +446,7 @@
       "id": "affiliate",
       "next": [
         {
-          "id": "start 4820"
+          "id": "start 3410"
         }
       ],
       "tiles": [
@@ -424,6 +457,63 @@
           "description": "Congratulations! You have officially declared your major as CS. No, you don't have any other choice.",
           "effects": [
             "gain 100"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "start 3410",
+      "next": [
+        {
+          "id": "3410 path"
+        }
+      ],
+      "tiles": [
+        {
+          "id": "Start CS 3410",
+          "color": "Blue",
+          "event": "Start 3410",
+          "description": "You're not really sure why you have to take a class on hardware if you're planning on just coding for a job. But hopefully it won't be too bad. . .",
+          "effects": [
+            "gain 10"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3410 path",
+      "next": [
+        {
+          "id": "3410 final"
+        }
+      ],
+      "tiles": [
+        {
+          "id": "Start CS 3410",
+          "color": "Blue",
+          "event": "Start 3410",
+          "description": "You're not really sure why you have to take a class on hardware if you're planning on just coding for a job. But hopefully it won't be too bad. . .",
+          "effects": [
+            "gain 10"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3410 final",
+      "next": [
+        {
+          "id": "start 4820"
+        }
+      ],
+      "tiles": [
+        {
+          "id": "3410 final",
+          "color": "Blue",
+          "event": "Take the 3410 Final",
+          "description": "It's time to take the 3410 final...good luck...You'll need it.",
+          "effects": [
+            "minigame 3410"
           ]
         }
       ]
@@ -520,6 +610,15 @@
           "effects": [
             "gain 0"
           ]
+        },
+        {
+          "id": "payraise",
+          "color": "Green",
+          "event": "Pay Day!",
+          "description": "It's Pay Day! Even better!, you get a 10 point pay raise!",
+          "effects": [
+            "minigame pay_raise"
+          ]
         }
       ]
     },
@@ -558,16 +657,6 @@
           "effects": [
             "lose 10",
             "item CTCI"
-          ]
-        },
-        {
-          "id": "Make a project",
-          "color": "Green",
-          "event": "Start your own project",
-          "description": "You have started making your own CS project. You plan to show it off in your resume and gain some good technical experience",
-          "effects": [
-            "gain 100",
-            "minigame choose_project"
           ]
         },
         {
@@ -656,6 +745,15 @@
           ]
         },
         {
+          "id": "payraise",
+          "color": "Green",
+          "event": "Pay Day!",
+          "description": "It's Pay Day! Even better!, you get a 10 point pay raise!",
+          "effects": [
+            "minigame pay_raise"
+          ]
+        },
+        {
           "id": "CS 4701",
           "color": "Blue",
           "event": "Start 4701, AI Prac",
@@ -680,6 +778,15 @@
           "description": "You did so great at your internship the company offered you a job. Congrats! :)",
           "effects": [
             "gain 300"
+          ]
+        },
+        {
+          "id": "payday",
+          "color": "Green",
+          "event": "Pay Day!",
+          "description": "It's Pay Day!",
+          "effects": [
+            "minigame pay_day"
           ]
         },
         {

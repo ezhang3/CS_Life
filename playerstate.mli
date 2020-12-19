@@ -8,7 +8,8 @@ type player_name = string
 type points = int
 type salary = int
 type project_name = string
-type project = (project_name * salary) option
+type project = (project_name * string * salary) option
+type projects = project array
 type study_partners = int
 
 (** The abstract type representing the player state. *)
@@ -24,14 +25,20 @@ val print_state : player -> unit
 (** [make_player_list n start] creates a list of n players *)
 val make_player_list : int -> Tile.tile -> player list
 
+<<<<<<< HEAD
 (** [get_nth_player players n] is the [n]th player in [players] *)
+=======
+>>>>>>> 772f123717084f9b0d79ae239963a36bfdb13977
 val get_nth_player : player list -> int -> player
 
 (** [get_name st] is the name of player [st]
     Requires: [st] is a player in the game *)
 val get_name : player -> string
 
+<<<<<<< HEAD
 (** [set_points st pts] changes [st]'s points by [pts] *)
+=======
+>>>>>>> 772f123717084f9b0d79ae239963a36bfdb13977
 val set_points : player -> int -> unit
 
 (** [get_points st] is the current reputation points player has in state 
@@ -39,10 +46,13 @@ val set_points : player -> int -> unit
 val get_points : player -> points
 
 val add_study_partners : player -> int -> unit
+
 val get_study_partners : player -> study_partners
 
 val set_project : player -> project -> unit
+
 val get_project : player -> project 
+
 val get_salary : player -> salary
 
 (** [get_energy st] is player [st]'s current energy level.
@@ -71,11 +81,14 @@ val go : player -> Board.gameboard -> int -> unit
     [tile] is a valid Tile.tile 
 *)
 val set_current_tile : player -> Tile.tile -> unit
-(** [get_current_tile st] is the tile the player is currently on in state [st] *)
+(** [get_current_tile st] is the tile the player is currently on in state [st]*)
+
 val get_current_tile : player -> Tile.tile
+
 (** [get_visited_tiles st] is the list of tiles that player [st] has 
     crossed. *)
 val get_visited_tiles : player -> Tile.tile list
+
 (** [get_items st] is the list of items the player has on hand in state [st]*)
 val get_items: player -> string list
 

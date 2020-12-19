@@ -275,7 +275,7 @@ let change_project player =
   let proj = Some (proj_name,cur_sal) in 
   Playerstate.set_project player proj
 
-let lose_project player =
+let swap_project player =
   print_endline "Oh no, for some reason you lost your project!\n";
   Playerstate.set_project player None;
   Playerstate.set_points player ~-30
@@ -294,7 +294,6 @@ let birthday (player : Playerstate.player) players =
   helper player players 0
 
 let pay_day player = 
-  print_endline "\nIt's pay day!\n";
   match Playerstate.get_project player with 
   | None -> print_endline "\nSorry, you don't have a project right now\n"
   | Some (name, salary) -> print_endline ("Thanks to all of your contributions 
@@ -302,7 +301,6 @@ let pay_day player =
     Playerstate.set_points player salary
 
 let pay_raise player = 
-  print_endline "\nIt's pay day! Even better, you get a 10 point pay raise!\n";
   match Playerstate.get_project player with 
   | None -> print_endline "\nSorry, you don't have a project right now\n"
   | Some (name, salary) -> 
@@ -347,7 +345,7 @@ let find_special_event player players board str =
   let nrg = Playerstate.get_energy player in 
   if nrg < 10 then begin
     print_endline "You do not have enough energy to do special events\n";
-    print_endline "Take a break\n"
+    print_endline "Please do yourself a favor and take a break\n"
   end
   else begin
     match str with 
@@ -365,7 +363,7 @@ let find_special_event player players board str =
     | "ta" -> minigame_ta player
     | "choose_project" -> choose_project player
     | "change_project" -> change_project player
-    | "lose project" -> lose_project player 
+    | "swap_project" -> swap_project player 
     | "birthday" -> birthday player players
     | "pay_day" -> pay_day player 
     | "pay_raise" -> pay_raise player
