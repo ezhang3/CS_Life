@@ -260,20 +260,20 @@ let minigame_ta player =
 
 let choose_project player = 
   print_endline "Name your project: \n";
-  print_string "> ";
-  let proj_name = read_line() |> String.trim in 
-  let cur_sal = Playerstate.get_salary player in 
-  let proj = Some (proj_name,cur_sal+2) in 
-  Playerstate.set_project player proj
+  print_string "> "; ()
+(* let proj_name = read_line() |> String.trim in 
+   let cur_sal = Playerstate.get_salary player in 
+   let proj = Some (proj_name,cur_sal+2) in 
+   Playerstate.set_project player proj *)
 
 let change_project player = 
   print_endline "Changing your project? Cool. \n"; 
   print_endline "Name your new project: \n"; 
-  print_string "> ";
-  let proj_name = read_line() |> String.trim in 
-  let cur_sal = Playerstate.get_salary player in 
-  let proj = Some (proj_name,cur_sal) in 
-  Playerstate.set_project player proj
+  print_string "> "; ()
+(* let proj_name = read_line() |> String.trim in 
+   let cur_sal = Playerstate.get_salary player in 
+   let proj = Some (proj_name,cur_sal) in 
+   Playerstate.set_project player proj *)
 
 let swap_project player =
   print_endline "Oh no, for some reason you lost your project!\n";
@@ -296,15 +296,15 @@ let birthday (player : Playerstate.player) players =
 let pay_day player = 
   match Playerstate.get_project player with 
   | None -> print_endline "\nSorry, you don't have a project right now\n"
-  | Some (name, salary) -> print_endline ("Thanks to all of your contributions 
+  | Some (name, desc, salary) -> print_endline ("Thanks to all of your contributions 
    to " ^ name ^ ", you have earned " ^ (string_of_int salary) ^ " points!\n");
     Playerstate.set_points player salary
 
 let pay_raise player = 
   match Playerstate.get_project player with 
   | None -> print_endline "\nSorry, you don't have a project right now\n"
-  | Some (name, salary) -> 
-    Some(name, salary + 10) 
+  | Some (name, desc, salary) -> 
+    Some(name, desc, salary + 10) 
     |> Playerstate.set_project player;
     print_endline ("Thanks to all of your contributions to " ^ name ^ ", you 
     have earned " ^ (string_of_int salary) ^ " points!\n");

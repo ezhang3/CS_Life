@@ -100,7 +100,11 @@
     },
     {
       "id": "choose project",
-      "next": "start 2110",
+      "next": [
+        {
+          "id": "start 2110"
+        }
+      ],
       "tiles": [
         {
           "id": "Choose Project",

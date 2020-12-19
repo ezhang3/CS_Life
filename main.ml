@@ -93,7 +93,7 @@ let rec roll n =
     if custom_roll = 0 then (Random.int (n - 1)) + 1
     else custom_roll
   | "instructions" -> instructions (); roll n
-  | "skip" -> print_endline "You have skipped your turn!\n"; 0
+  | "skip" -> print_endline "\nYou have skipped your turn!\n"; 0
   | "quit" -> exit 0
   | _ -> print_endline "\nInvalid Input. Please try again.\n"; roll n
 
@@ -189,7 +189,7 @@ let  play_round players board =
             finish_player_round ();
             helper t board
           end
-          else helper t board
+          else finish_player_round (); helper t board
       end in 
   helper players board
 
