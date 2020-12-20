@@ -1,7 +1,29 @@
 open OUnit2
 open Board
 open Playerstate
-open Tile 
+open Tile
+(**---------TEST PLAN--------------- 
+   what you tested, anything you omitted testing, and why you believe 
+   that your test suite demonstrates the correctness of your system.
+
+   -1: The test plan does not explain which parts of the system were 
+   automatically tested by OUnit vs. manually tested.
+   -1: The test plan does not explain what modules were tested by OUnit 
+   and how test cases were developed (black box, glass box, randomized, etc.).
+   -1: The test plan does not provide an argument for why the testing 
+   approach demonstrates the correctness of the system.
+
+   All functions documented in the mli files of modules tile, board, and 
+   playerstate are tested here using OUnit, with the exception of print_state 
+   and make_player_list from playerstate.mli . Those two and some more 
+   complicated cases of functions, such as branching paths for go, were tested 
+   manually as well, since they often required input from the terminal.
+
+   How test cases developed (Black box, glass box, etc) 
+
+   Why does testing approach demonstrate correctness of system?
+
+   -------------------------------------*)
 
 (** [pp_string s] pretty-prints string [s]. *)
 let pp_string s = "\"" ^ s ^ "\""
@@ -51,8 +73,14 @@ let tile_event_name_test (name : string) tile (expected: string) =
 let tile_description_test (name : string) tile (expected : string) = 
   name >:: (fun _ -> assert_equal expected (get_tile_description tile))
 
+let get_effects_test (name: string) (str : string) (expected : effect) = 
+  name >:: (fun _ -> assert_equal expected (get_effects str))
+
 let tile_effects_test (name : string) tile (expected : effect list) =
   name >:: (fun _ -> assert_equal expected (get_tile_effects tile))
+
+let get_effect_desc_test name effect (expected: string) = 
+  name >:: (fun _ -> assert_equal expected (get_effect_desc effect))
 
 let tile_test = [
   tile_color_test "Red tile" tile1 Red;
@@ -71,14 +99,27 @@ let tile_test = [
   tile_description_test "tile2 description" tile2 "Prelims. A time to shut yourself in your room to study and hopefully pass all your classes.";
   tile_description_test "proj tile desc" tile_proj "You have started making your own CS project. You plan to show it off in your resume and gain some good technical experience";
   tile_description_test "start tile desc" tile_start "Start Tile";
+  get_effects_test "gain 55 points effect" "gain 55" (Points ("Gained", 55)); 
+  get_effects_test "lose 2 points effect" "lose 2" (Points ("Lost", 2));
+  get_effects_test "1110 minigame" "minigame 1110" (Minigame "1110");
+  get_effects_test "3 study partners" "study_partner 3" (Study_Partner 3);
+  get_effects_test "item" "item laptop" (Item "laptop");
+  get_effects_test "energy" "energy -29" (Energy ~-29);
   tile_effects_test "tile1 effects" tile1 [Points ("Gained", 10)]; 
   tile_effects_test "tile2 effects" tile2 [Points ("Lost", 15)]; 
   tile_effects_test "project tile effects" tile_proj 
     [Points ("Gained", 100); Minigame "choose_project"];
   tile_effects_test "start tile effects" tile_start [Points ("Gained", 0)]; 
+  get_effect_desc_test "gain 55 points" (Points ("Gained", 55)) 
+    "Gained 55 points\n";
+  get_effect_desc_test "minigame event" (Minigame "3410") "Special Event!\n" ;
+  get_effect_desc_test "lose 1 point" (Points ("Lost", 10)) "Lost 10 points\n";
+  get_effect_desc_test "none" None "";
+  get_effect_desc_test "energy" (Energy 10) "Your energy level changed\n";
+  get_effect_desc_test "item" (Item "hi") 
+    "You received hi! Added to your items\n";
 ]
-
-let test_board = Board.create_board (Yojson.Basic.from_file "gameboard1.json")
+let test_board = create_board (Yojson.Basic.from_file "gameboard1.json")
 let start = start_tile test_board
 let last = end_tile test_board
 
@@ -115,9 +156,6 @@ let board_test = [
     test_board ["choose 1110 or 2110"];
   next_tile_test "next tile for end tile" last compare_tiles_id 
     test_board [];  
-  (* when branching paths implemented *)                              
-  (* next_tile_test "multiple next tiles" start compare_tiles_id test_board 
-     [stuff] *)
   find_tile_by_id_test "1110 waiting in board" "1110 waiting spot" test_board 
     "1110 waiting spot";
   find_tile_by_id_test "CS 2800 final find tile id" "CS 2800 final" test_board 
@@ -138,7 +176,15 @@ let get_player_name_test
     (st: player)
     (expected_output : string) : test = 
   name >:: (fun _ -> 
-      assert_equal expected_output (get_name st))     
+      assert_equal expected_output (get_name st)) 
+
+let get_nth_player_test 
+    (name: string)
+    (players: player list)
+    (n : int)
+    (expected : player) : test = 
+  name >:: (fun _ -> 
+      assert_equal expected (get_nth_player players n)) 
 
 let get_points_test 
     (name: string)
@@ -239,7 +285,23 @@ let get_items_set_test
     (expected_output: string list) : test = 
   name >:: (fun _ ->
       Playerstate.add_items st item;
-      assert_equal expected_output (get_items st))   
+      assert_equal expected_output (get_items st))  
+
+let get_energy_test 
+    (name: string)
+    (st: player)
+    (expected_output: int) : test = 
+  name >:: (fun _ ->
+      assert_equal expected_output (get_energy st)) 
+
+let get_energy_change_test 
+    (name: string)
+    (st: player)
+    (num: int)
+    (expected_output: int) : test = 
+  name >:: (fun _ ->
+      Playerstate.chg_energy st num;
+      assert_equal expected_output (get_energy st))    
 
 let go_test (name : string) player board moves (expected: string) = 
   name >:: (fun _ -> go player board moves; 
@@ -248,26 +310,35 @@ let go_test (name : string) player board moves (expected: string) =
                                     |> get_tile_id))
 
 let test_player = init_state "Jason" (start_tile test_board)
-let player_diff= init_state "Jenny" (start_tile test_board)
+let diff_player = init_state "Jenny" (start_tile test_board)
 
 let player_state_test = [
   get_player_name_test "player name" test_player "Jason";
+  get_nth_player_test "1st player" [test_player; diff_player] 0 test_player;
   get_points_test "Just started, 0" test_player 0; 
   get_project_test "no proj yet" test_player None; 
   get_salary_test "0 salary rn" test_player 0; 
   get_items_test "no items yet" test_player [];
   get_study_partners_test "no study partners yet" test_player 0;
-  get_points_set_test "1000 points" player_diff 1000 1000; 
-  get_project_set_test "game project, desc, 10 sal" player_diff "game" "desc" 10 
+  get_energy_test "full energy" test_player 100; 
+  get_points_set_test "1000 points" test_player 1000 1000; 
+  get_project_set_test "game project, desc, 10 sal" test_player "game" "desc" 10 
     (Some("game", "desc" ,10)); 
-  get_items_set_test "textbook item" player_diff "textbook" ["textbook"]; 
+  get_items_set_test "textbook item" test_player "textbook" ["textbook"]; 
+  get_energy_change_test "-10 energy" test_player ~-10 90;  
   get_study_partners_test "no study partners yet" test_player 0;
   get_current_tile_test "On start" test_player "start"; 
   get_visited_tiles_test "visited start only" test_player ["start"];
   go_test "go test 1 move" test_player test_board 1 "choose 1110 or 2110";
-  get_visited_tiles_after_go_test "start and 1110/2110 waiting" test_player 1 
-    ["choose 1110 or 2110"; "start"];
-  (* some tests for go and visited tiles with branching paths *)
+  (* get_visited_tiles_after_go_test "start and 1110/2110 waiting" test_player 1 
+     ["choose 1110 or 2110"; "start"]; *)
+
+  (* get_current_tile_test "on start" diff_player "start"; *)
+  (* go_test "go test 1 move" diff_player go_board 1 "1110"; *)
+  (* go_test "go test 2 move" diff_player go_board 2 "Start 2110";
+     go_test "go test 7 move" diff_player go_board 7 "CS 3410"; *)
+  (* get_visited_tiles_after_go_test "start and 1110/2110 waiting" diff_player 2 
+     ["1110 waiting spot"; "choose 1110 or 2110"; "start"]; *)
 ]
 
 let suite =
