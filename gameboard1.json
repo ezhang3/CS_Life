@@ -255,6 +255,15 @@
           "effects": [
             "lose 10"
           ]
+        },
+        {
+          "id": "coffee break",
+          "color": "Green",
+          "event": "Coffee break.",
+          "description": "Time for a quick break.",
+          "effects": [
+            "minigame coffee_break"
+          ]
         }
       ]
     },

@@ -147,7 +147,7 @@ let coffee_break st = gui (coffee_init st) (loop 0 st) coffee_close
 let coffee_break_gui () =
   coffee_break coffee_ist
 
-let points = coffee_break_gui ()
+(*let points = coffee_break_gui ()*)
 
 (* Potentially useful functions for GUI:
    draw_string
