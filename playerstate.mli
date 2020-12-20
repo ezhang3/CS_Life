@@ -9,7 +9,8 @@ type player_name = string
 type points = int
 type salary = int
 type project_name = string
-type project = (project_name * salary) option
+type project = (project_name * string * salary) option
+type projects = project array
 type study_partners = int
 
 (** The abstract type representing the player state. *)
@@ -25,14 +26,14 @@ val print_state : player -> unit
 (** [make_player_list n start] creates a list of n players *)
 val make_player_list : int -> Tile.tile -> player list
 
-(** [get_nth_player players x] gets the [x]th player of [players] *)
+(** [get_nth_player players n] is the [n]th player in [players] *)
 val get_nth_player : player list -> int -> player
 
 (** [get_name st] is the name of player [st]
     Requires: [st] is a player in the game *)
 val get_name : player -> string
 
-(** [set_points player x] sets [player]'s points to [x] *)
+(** [set_points st pts] changes [st]'s points by [pts] *)
 val set_points : player -> int -> unit
 
 (** [get_points st] is the current reputation points player has in state 
@@ -45,11 +46,17 @@ val add_study_partners : player -> int -> unit
 (** [get_study_partners player] is the study partner of [player] *)
 val get_study_partners : player -> study_partners
 
+val three_rand_projects : unit -> project list 
+
+val rand_project : unit -> project
+
 (** [set_project player project] sets [player]'s project to [project] *)
 val set_project : player -> project -> unit
 
 (** [get_project player] is the project of [player] *)
 val get_project : player -> project 
+
+val set_salary : player -> salary -> unit
 
 (** [get_salary player] is the salary of [player] *)
 val get_salary : player -> salary
@@ -59,7 +66,8 @@ val get_salary : player -> salary
 *)
 val get_energy : player -> int
 
-(** [chg_energy st nrg] changes player [st]'s energy level by [nrg].
+(** [chg_energy st nrg] changes player [st]'s energy level by [nrg]. If the 
+    new energy level is negative, [st]'s energy is 0. 
     [st] is a valid Playerstate.st
     [nrg] is a valid integer
 *)
@@ -80,12 +88,12 @@ val go : player -> Board.gameboard -> int -> unit
 *)
 val set_current_tile : player -> Tile.tile -> unit
 
-(** [get_current_tile st] is the tile the player is currently on in state [st] *)
+(** [get_current_tile st] is the tile the player is currently on in state [st]*)
 val get_current_tile : player -> Tile.tile
 
 (** [get_visited_tiles st] is the list of tiles that player [st] has 
     crossed. *)
-val get_visited_tiles : player -> Tile.tile list
+val get_visited_tiles : player -> Tile.tile_id list
 
 (** [get_items st] is the list of items the player has on hand in state [st]*)
 val get_items: player -> string list

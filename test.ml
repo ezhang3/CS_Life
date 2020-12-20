@@ -3,6 +3,22 @@ open Board
 open Playerstate
 open Tile 
 
+(** [pp_string s] pretty-prints string [s]. *)
+let pp_string s = "\"" ^ s ^ "\""
+
+(** [pp_list pp_elt lst] pretty-prints list [lst], using [pp_elt]
+    to pretty-print each element of [lst]. *)
+let pp_list pp_elt lst =
+  let pp_elts lst =
+    let rec loop n acc = function
+      | [] -> acc
+      | [h] -> acc ^ pp_elt h
+      | h1 :: (h2 :: t as t') ->
+        if n = 100 then acc ^ "..."  (* stop printing long list *)
+        else loop (n + 1) (acc ^ (pp_elt h1) ^ "; ") t'
+    in loop 0 "" lst
+  in "[" ^ pp_elts lst ^ "]"
+
 let tile1 = Tile.create_tile 
     "Tile1" 
     "Red" "Career Fair" 
@@ -167,10 +183,11 @@ let get_project_set_test
     (name: string)
     (st: player)
     (proj_name : string)
+    (desc : string)
     (salary : int)
     (expected_output: project) : test = 
   name >:: (fun _ ->
-      Playerstate.set_project st (Some(proj_name,salary)); 
+      Playerstate.set_project st (Some(proj_name, desc, salary)); 
       assert_equal expected_output (get_project st))
 
 let get_salary_test
@@ -196,8 +213,7 @@ let get_visited_tiles_test
     (expected_output: tile_id list) : test = 
   name >:: (fun _ ->
       assert_equal expected_output (st 
-                                    |> get_visited_tiles
-                                    |> tile_id_list []))
+                                    |> get_visited_tiles))
 
 let get_visited_tiles_after_go_test
     (name: string)
@@ -206,9 +222,8 @@ let get_visited_tiles_after_go_test
     (expected_output: tile_id list) : test = 
   name >:: (fun _ ->
       go st test_board steps; 
-      assert_equal expected_output (st 
-                                    |> get_visited_tiles
-                                    |> tile_id_list []))
+      assert_equal expected_output (st |> get_visited_tiles) 
+        ~printer:(pp_list pp_string))
 
 let get_items_test 
     (name: string)
@@ -243,15 +258,15 @@ let player_state_test = [
   get_items_test "no items yet" test_player [];
   get_study_partners_test "no study partners yet" test_player 0;
   get_points_set_test "1000 points" player_diff 1000 1000; 
-  get_project_set_test "game project, 10 sal" player_diff "game" 10 
-    (Some("game", 10)); 
+  get_project_set_test "game project, desc, 10 sal" player_diff "game" "desc" 10 
+    (Some("game", "desc" ,10)); 
   get_items_set_test "textbook item" player_diff "textbook" ["textbook"]; 
   get_study_partners_test "no study partners yet" test_player 0;
   get_current_tile_test "On start" test_player "start"; 
   get_visited_tiles_test "visited start only" test_player ["start"];
   go_test "go test 1 move" test_player test_board 1 "choose 1110 or 2110";
   get_visited_tiles_after_go_test "start and 1110/2110 waiting" test_player 1 
-    ["start"; "choose 1110 or 2110"];
+    ["choose 1110 or 2110"; "start"];
   (* some tests for go and visited tiles with branching paths *)
 ]
 
