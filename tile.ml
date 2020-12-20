@@ -76,7 +76,7 @@ let get_effect_desc effect =
   match effect with 
   | None -> ""
   | Points (s,n) -> s ^ " " ^ (string_of_int n) ^ " points\n" 
-  | Study_Partner i -> "Gained 1 study partner!\n" 
+  | Study_Partner i -> "Gained" ^ (string_of_int i) ^ " study partner(s)!\n" 
   | Minigame s -> "Special Event!\n" 
   | Energy e -> "Your energy level changed\n"
   | Item i -> "You received " ^ i ^ "! Added to your items\n"
