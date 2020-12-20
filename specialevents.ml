@@ -420,7 +420,7 @@ let minigame_pre_enroll player =
   print_endline "Quick! Tap"
 
 let minigame_coffee_break player =
-  Playerstate.chg_energy player (Gui.coffee_break_gui ())
+  (fun () -> Playerstate.chg_energy player (Gui.coffee_break_gui ()))
 
 let find_special_event player players board str = 
   let nrg = Playerstate.get_energy player in 
@@ -451,6 +451,6 @@ let find_special_event player players board str =
     | "academic_integrity" -> academic_integrity player players
     | "internship" -> internship player
     | "job_interview1" -> job_interview player
-    | "coffee_break" -> minigame_coffee_break player
+    | "coffee_break" -> minigame_coffee_break player ()
     | _ -> failwith "special event not found"
   end
