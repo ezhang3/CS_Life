@@ -330,6 +330,9 @@ let minigame_pre_enroll player =
   print_endline "It's time to pre enroll\n";
   print_endline "Quick! Tap"
 
+let minigame_coffee_break player =
+  Playerstate.chg_energy player (Gui.coffee_break_gui ())
+
 let find_special_event player players board str = 
   match str with 
   | "choose_1110_2110" -> minigame_choose_1110_2110 player board
@@ -353,4 +356,5 @@ let find_special_event player players board str =
   | "academic_integrity" -> academic_integrity player players
   | "internship" -> internship player
   | "job_interview" -> job_interview player
+  | "coffee_break" -> minigame_coffee_break player
   | _ -> failwith "special event not found"
