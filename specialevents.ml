@@ -70,11 +70,8 @@ let rec get_study_buddy player players =
       end
   end 
 
-let minigame_1110 player = 
-  Playerstate.chg_energy player ~-5;
-  print_endline "Do you like old arcade games like Invaders? \nEnter [yes] or [no]: \n"; 
-  print_string "> "; 
-  if (read_line () |> String.trim |> String.lowercase_ascii) = "yes" 
+and firstq_1110 input player = 
+  if input = "yes" 
   then begin 
     print_endline "Your A7 was probably really great. You even implemented extra 
   features! Excellent ^^\n"; 
@@ -82,14 +79,10 @@ let minigame_1110 player =
   end 
   else 
     print_endline "No? That's a shame, since that's all the last assignment is 
-  goint to be about \n"; 
-  print_endline "Did you actually attend all the discussion sections, or were 
-  you the type to just let the ta grade your finished lab, and then rush out the
-  moment it was graded?\n"; 
-  print_endline "So, yes or no?\n";
-  print_string "> "; 
-  if (read_line () |> String.trim |> String.lowercase_ascii) = "yes"
-  then begin 
+  goint to be about \n"
+
+and secondq_1110 input player = 
+  if input = "yes" then begin 
     print_endline "Wow, you were a diligent student. Not all can relate. Not at
     all. \n"; 
     print_endline "We'll give you some good student points.\n";
@@ -102,13 +95,23 @@ let minigame_1110 player =
     print_endline "Smart, eh?" 
   end
 
-let minigame_2110 player = 
-  Playerstate.chg_energy player ~-10;
-  let score = ref 0 in 
+let minigame_1110 player = 
+  Playerstate.chg_energy player ~-5;
+  print_endline "Do you like old arcade games like Invaders? \nEnter [yes] or [no]: \n"; 
+  print_string "> "; 
+  firstq_1110 (read_line () |> String.trim |> String.lowercase_ascii) player;
+  print_endline "Did you actually attend all the discussion sections, or were 
+  you the type to just let the ta grade your finished lab, and then rush out the
+  moment it was graded?\n"; 
+  print_endline "So, yes or no?\n";
+  print_string "> "; 
+  secondq_1110 (read_line () |> String.trim |> String.lowercase_ascii) player
+
+and loopy_q player score =  
   print_endline "How many loopy questions are there? \n";
   print_string  "> ";
-  if (read_line () |> String.trim) = "4" || 
-     (read_line () |> String.trim |> String.lowercase_ascii) = "four"
+  if (read_line () |> String.trim) = "4" 
+  || (read_line () |> String.trim |> String.lowercase_ascii) = "four"
   then begin
     print_endline "Good job! Gain 10 points";
     score := 1; 
@@ -117,39 +120,48 @@ let minigame_2110 player =
   else begin
     print_endline "Wrong answer :( Lose 10 points";
     Playerstate.set_points player ~-10; 
-    print_endline "How many years of programming experience do you have? \n";
-    print_string  "> ";
-    if int_of_string (read_line () |> String.trim) < 59
-    then begin
-      print_endline "Too little. You will listen to what the great David Gries has
+  end 
+
+and program_exp player score = 
+  print_endline "How many years of programming experience do you have? \n";
+  print_endline "Please type in numbers. \n";
+  print_string  "> ";
+  if int_of_string (read_line () |> String.trim) < 59
+  then begin
+    print_endline "Too little. You will listen to what the great David Gries has
     to say in the course. \n";
-      print_endline "YES, even when you think the four loopy questions are 
+    print_endline "YES, even when you think the four loopy questions are 
     tedious. \n";
-      print_endline "Maybe you'll even figure out what the fifth loopy question is
+    print_endline "Maybe you'll even figure out what the fifth loopy question is
     one day ;) \n"; 
-      if !score = 1 then 
-        score := 2
-      else 
-        score := 1
-    end
-    else begin 
-      print_endline "Hmmmm. \n";
-      print_endline "There's no way you could have more programming experience 
-    than the great David Gries himself. Don't lie \n";
-      Playerstate.set_points player ~-10
-    end; 
-    if !score = 2 then begin 
-      print_endline "Great job! You did so well on the final, here's a little momento for you. \n";
-      print_endline "You received JavaHyperText! Added to your items\n";
-      Playerstate.add_items player "JavaHyperText";
-      print_endline "That's it for 2110!\n"
-    end 
+    if !score = 1 then 
+      score := 2
     else 
-      print_endline "That's it for 2110!\n"
+      score := 1
+  end
+  else begin 
+    print_endline "Hmmmm. \n";
+    print_endline "There's no way you could have more programming experience 
+    than the great David Gries himself. Don't lie \n";
+    Playerstate.set_points player ~-10
   end
 
-let minigame_2800 player players = 
-  print_endline "Do you like regular expressions? Hope you do ;)\n";
+let minigame_2110 player = 
+  Playerstate.chg_energy player ~-10;
+  let score = ref 0 in 
+  loopy_q player score;
+  program_exp player score; 
+  if !score = 2 then begin 
+    print_endline 
+      "Great job! You did so well on the final, here's a gift for you. \n";
+    print_endline "You received JavaHyperText! Added to your items\n";
+    Playerstate.add_items player "JavaHyperText";
+    print_endline "That's it for 2110!\n"
+  end 
+  else 
+    print_endline "That's it for 2110!\n"
+
+and firstq_2800 player = 
   print_endline "What string does the regular expressions a match to? \n"; 
   print_string "> "; 
   if (read_line () |> String.trim) = "a" 
@@ -160,9 +172,9 @@ let minigame_2800 player players =
   else begin 
     print_endline "Nope! The answer is a. Lose 5 points >_< \n";
     Playerstate.set_points player ~-5
-  end; 
-  print_endline "2800 psets are such a grind >_<\nMaybe a study buddy can help?";
-  get_study_buddy player players;
+  end
+
+and secondq_2800 player = 
   print_endline "Another question, on functions: \n"; 
   print_endline "True or false, one-to-one functions are injective \n"; 
   print_string "> "; 
@@ -174,7 +186,14 @@ let minigame_2800 player players =
   else begin 
     print_endline "Nope! The answer is true. Lose 5 points >_< \n";
     Playerstate.set_points player ~-5
-  end;
+  end
+
+let minigame_2800 player players = 
+  print_endline "Do you like regular expressions? Hope you do ;)\n";
+  firstq_2800 player;
+  print_endline "2800 psets are such a grind >_<\nMaybe a study buddy can help?";
+  get_study_buddy player players;
+  secondq_2800 player;
   print_endline "Thanks for playing! Hope you liked 2800 ^^";
   Playerstate.chg_energy player ~-8
 
@@ -188,19 +207,21 @@ let minigame_3110 player =
   | _ -> print_endline "Wrong answer.";  
     print_endline "Thanks for playing! I hope you liked 3110 ^^"
 
-(* Putting assembly instructions in the right order? *)
-let minigame_3410 player = 
+and firstq_3410 player score = 
   print_endline "Which programming language is used in CS 3410?\n";
   print_string "> ";
   if (read_line () |> String.trim) = "C" 
   then begin  
     print_endline "C for Correct!\n";
+    score := 1;
     Playerstate.set_points player 3
   end
   else begin
     print_endline "Incorrect. Lose 5 points\n";
     Playerstate.set_points player ~-3
-  end;
+  end
+
+let secondq_3410 player score = 
   print_endline "Now you have to do some work with logism and circuits\n";
   print_endline "Name one of the basic logic gates\n";
   print_string "> ";
@@ -208,21 +229,87 @@ let minigame_3410 player =
   let correct_ans = ["and";"or";"nand";"nor";"xor";"xand"] in 
   if List.mem ans correct_ans then begin
     print_endline "Nice! You know some gates\n";
-    Playerstate.set_points player 3
+    Playerstate.set_points player 3;
+    if !score = 1 then 
+      score := 2
+    else 
+      score := 1
   end
   else begin 
     print_endline "Nope. That's not a gate\n";
     Playerstate.set_points player ~-3
-  end;
-  print_endline "Thanks for taking 3410! I hope you've learned about how computers work";
+  end
+
+let minigame_3410 player = 
+  let score = ref 0 in 
+  firstq_3410 player score; 
+  secondq_3410 player score;
+  if !score = 2 then begin 
+    print_endline "Great job! You did well, here's a little momento for you.\n";
+    print_endline "You received MIPS processor! Added to your items\n";
+    Playerstate.add_items player "MIPS_processor";
+    print_endline 
+      "Thanks for taking 3410! I hope you've learned about how computers work";
+  end 
+  else 
+    print_endline 
+      "Thanks for taking 3410! I hope you've learned about how computers work";
   Playerstate.chg_energy player ~-10
 
-let minigame_4410 player = 
-  print_endline "\nUnimplemented \n\n"
+let story_4410 = 
+  print_endline "In the beginning, there was hardware. Now the hardware was 
+    formless and empty, darkness was over the surface of silicon.\n";
+  Main.next () 0; 
+  print_endline "And then the creator said “let there be operating systems,” 
+  and there were OSes. The creator saw that OSes were good.\n";
+  Main.next () 0;
+  print_endline "And the creator said “let there be processes, and threads.” 
+  OSes were teeming with processes and threads carrying out different tasks.\n";
+  Main.next () 0; 
+  print_endline "Then the creator said “let
+   the processes and threads synchronize with each other.” For this task, the 
+   creator appointed human-kind.\n";
+  print_endline "But humans were fallible, and weak, and they failed to get
+   synchronization correct, and fallen angel BSOD (pronounced beesod), spawn of
+   Beelzebub, ruled the day with great evil.\n"; 
+  print_endline "From a handout \"12 Commandments of Synchronization\" by Emin 
+  Sirer.\n"
+
+
+let minigame_4410 player =
+  Playerstate.chg_energy player ~-10;
+  print_endline "Do you want to hear a story?\n";
+  print_endline "Enter [yes] or [no]"; 
+  print_string "> "; 
+  match read_line () |> String.trim |> String.lowercase_ascii with 
+  | "no" -> print_endline "No? Meh, move along then"
+  | "yes" -> story_4410;
+    print_endline "That was long, so here's a reward: 10 points and a copy of
+    the 12 Commandments of Synchronization"; 
+    Playerstate.set_points player 10; 
+    print_endline 
+      "You received 12 Commandments of Synchronization! Added to your items\n";
+    Playerstate.add_items player "12Commandments";
+  | _ -> print_endline 
+           "You typed in something weird in response to a yes or no question\n";
+    print_endline "You lose points for typing in something weird";
+    Playerstate.set_points player ~-5
 
 let minigame_4820 player = 
-  print_endline "This minigame has no content \n";
-  print_endline ""
+  print_endline "How many hours did you spend in OH a week?\n";
+  print_string "> "; 
+  if int_of_string (read_line () |> String.trim) > 4
+  then begin 
+    print_endline "Seems like you suffered a lot\n"; 
+    print_endline "Going to take away some of your energy anyways so you can be 
+  even more dead on the inside :)\n"; 
+    Playerstate.chg_energy player ~-5
+  end 
+  else 
+    print_endline "Wow, you did all the work without have to camp OH? Nice\n";
+  Playerstate.set_points player 10; 
+  print_endline "Time to make homeworks and exams harder next semester. . .\n"
+
 
 let minigame_4120 player = 
   print_endline "Welcome to compliers.\n";
@@ -412,8 +499,20 @@ let pay_raise player =
     have earned an extra " ^ (string_of_int salary) ^ " points to your salary!\n");
     Playerstate.set_points player salary
 
-let internship player = 
-  print_endline "unimplemented \n"
+let good_interview player= 
+  print_endline "Wow! You did great at your interview!";
+  print_endline "Actually, we don't know if you got the job or not. Haha\n"; 
+  print_endline "You'll know soon though!"; 
+  print_endline "Hopefully you did get a good one. ^^";  
+  Playerstate.set_points player 25
+
+let bad_interview player = 
+  print_endline "Oops, the job interview didn't go so great. \n"; 
+  print_endline "Just got to keep going then. \n"; 
+  print_endline "Who knows? You might still get a great job. It's just this 
+    one didn't go as great. \n";
+  print_endline "Don't give up!";
+  Playerstate.set_points player ~-10
 
 let job_interview player = 
   Playerstate.chg_energy player ~-12;
@@ -423,24 +522,21 @@ let job_interview player =
   print_string "> "; 
   let correct = string_of_int (Random.int 10 + 1) in 
   if (read_line () |> String.trim = correct) 
-  then begin
-    print_endline "Wow! You did great at your interview!";
-    print_endline "Actually, we don't know if you got the job or not. Haha\n"; 
-    print_endline "You'll know soon though!"; 
-    print_endline "Hopefully you did get a good one. ^^";  
-    Playerstate.set_points player 25; 
-  end 
-  else begin 
-    print_endline "Oops, the job interview didn't go so great. \n"; 
-    print_endline "Just got to keep going then. \n"; 
-    print_endline "Who knows? You might still get a great job. It's just this 
-    one didn't go as great. \n";
-    print_endline "Don't give up!";
-    Playerstate.set_points player ~-8; 
-  end
+  then good_interview player
+  else bad_interview player
 
 let minigame_coffee_break player =
   (fun () -> Playerstate.chg_energy player (Gui.coffee_break_gui ()))
+
+let minigame_party player = 
+  print_endline "Stressed out by all the assignments and psets, you decide to let 
+loose for one night.\n";
+  print_endline "So you went to your first (and only?) party here at Cornell.\n";
+  print_endline 
+    "You didn't find it too fun, so left early to wake Netflix on your bed.\n";
+  print_endline "So even though you didn't party, you wake up late the next day, 
+exhausted, with no motivation to finish the work you put off.\n";
+  Playerstate.chg_energy player ~-5
 
 let find_special_event player players board str = 
   let nrg = Playerstate.get_energy player in 
@@ -468,8 +564,8 @@ let find_special_event player players board str =
     | "pay_day" -> pay_day player 
     | "pay_raise" -> pay_raise player
     | "academic_integrity" -> academic_integrity player players
-    | "internship" -> internship player
     | "job_interview1" -> job_interview player
     | "coffee_break" -> minigame_coffee_break player ()
+    | "party" -> minigame_party player
     | _ -> failwith "special event not found"
   end

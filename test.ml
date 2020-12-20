@@ -119,7 +119,7 @@ let tile_test = [
   get_effect_desc_test "item" (Item "hi") 
     "You received hi! Added to your items\n";
 ]
-let test_board = create_board (Yojson.Basic.from_file "gameboard1.json")
+let test_board = create_board (Yojson.Basic.from_file "gameboard1.json") false
 let start = start_tile test_board
 let last = end_tile test_board
 

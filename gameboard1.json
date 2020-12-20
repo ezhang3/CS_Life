@@ -408,6 +408,15 @@
           ]
         },
         {
+          "id": "Party",
+          "color": "Blue",
+          "event": "Party somewhere",
+          "description": "You went to your first (and only?) party at Cornell.",
+          "effects": [
+            "minigame party"
+          ]
+        },
+        {
           "id": "CS 3410",
           "color": "Blue",
           "event": "Start 3410",
@@ -716,8 +725,7 @@
           "event": "First Internship!",
           "description": "The hours of grinding leetcode and CS training have paid off! You've earned a dose of the real world!",
           "effects": [
-            "gain 1000",
-            "minigame internship"
+            "gain 1000"
           ]
         },
         {
