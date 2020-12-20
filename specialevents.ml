@@ -184,14 +184,39 @@ let minigame_3110 player =
   print_endline "\"let x = 1 in x + 1";
   match read_line () |> String.trim with 
   | "2" -> print_endline "Correct!";
+    print_endline "Thanks for playing! I hope you liked 3110 ^^"
   | _ -> print_endline "Wrong answer.";  
     print_endline "Thanks for playing! I hope you liked 3110 ^^"
 
 (* Putting assembly instructions in the right order? *)
 let minigame_3410 player = 
-  print_endline "\nUnimplemented \n\n"
+  print_endline "Which programming language is used in CS 3410?\n";
+  print_string "> ";
+  if (read_line () |> String.trim) = "C" 
+  then begin  
+    print_endline "C for Correct!\n";
+    Playerstate.set_points player 3
+  end
+  else begin
+    print_endline "Incorrect. Lose 5 points\n";
+    Playerstate.set_points player ~-3
+  end;
+  print_endline "Now you have to do some work with logism and circuits\n";
+  print_endline "Name one of the basic logic gates\n";
+  print_string "> ";
+  let ans = read_line () |> String.trim |> String.lowercase_ascii in 
+  let correct_ans = ["and";"or";"nand";"nor";"xor";"xand"] in 
+  if List.mem ans correct_ans then begin
+    print_endline "Nice! You know some gates\n";
+    Playerstate.set_points player 3
+  end
+  else begin 
+    print_endline "Nope. That's not a gate\n";
+    Playerstate.set_points player ~-3
+  end;
+  print_endline "Thanks for taking 3410! I hope you've learned about how computers work";
+  Playerstate.chg_energy player ~-10
 
-(* *)
 let minigame_4410 player = 
   print_endline "\nUnimplemented \n\n"
 
@@ -414,11 +439,6 @@ let job_interview player =
     Playerstate.set_points player ~-8; 
   end
 
-(* trying to see if i can make a timing game. Gonna try some graphics *)
-let minigame_pre_enroll player = 
-  print_endline "It's time to pre enroll\n";
-  print_endline "Quick! Tap"
-
 let minigame_coffee_break player =
   (fun () -> Playerstate.chg_energy player (Gui.coffee_break_gui ()))
 
@@ -431,7 +451,6 @@ let find_special_event player players board str =
   else begin
     match str with 
     | "choose_1110_2110" -> minigame_choose_1110_2110 player board
-    | "pre_enroll" -> minigame_pre_enroll player 
     | "1110" -> minigame_1110 player 
     | "2110" -> minigame_2110 player 
     | "2800" -> minigame_2800 player players

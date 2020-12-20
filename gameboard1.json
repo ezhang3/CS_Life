@@ -413,7 +413,8 @@
           "event": "Start 3410",
           "description": "You're not really sure why you have to take a class on hardware if you're planning on just coding for a job. But hopefully it won't be too bad. . .",
           "effects": [
-            "gain 10"
+            "gain 10",
+            "minigame 3410"
           ]
         },
         {
@@ -440,7 +441,6 @@
           "event": "Pre-enroll",
           "description": "Pre-enroll. Every students' favorite part of the semester. Every time it happens, you wonder if you can use your CS skills to make a better student center.",
           "effects": [
-            "minigame pre_enroll",
             "energy -20"
           ]
         }

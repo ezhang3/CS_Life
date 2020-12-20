@@ -14,6 +14,14 @@ type job = Jeff_Bezos | Google | Microsoft | Apple | Facebook | Intel | Tesla
          | StartUP | Non_Tech | Web_Dev | Generic | IT 
          | Unknown | Unemployed | Married | Overseas
 
+let rec next () iterations = 
+  print_endline "Type \"next\" to continue";
+  print_string "> ";
+  if read_line() |> String.trim |> String.lowercase_ascii = "next" || 
+     iterations > 2
+  then () 
+  else next () (iterations + 1)
+
 (**[instructions ()] prints the instructions for the game *)
 let instructions () = 
   divide ();
@@ -22,19 +30,23 @@ let instructions () =
   First, select the number of players who are playing the game. Then, type the 
   names of each player in order. Careful! The order you type the names is the 
   order the each player will go in during the game.\n";
+  next () 0;
   print_endline "ON YOUR TURN:\n
   When it is your turn, follow the instructions given and type \"roll\" to move 
   forward. You will move forward automatically and end on a new tile that will 
-  trigger some sort of event that will play out. 
-  To finish your turn, type \"done\". At the start of your turn, you may end the 
+  trigger some sort of event that will play out.\n";
+  next() 0;
+  print_endline "\nTo finish your turn, type \"done\". At the start of your turn, you may end the 
   game by typing \"quit\" or \"instructions\" to bring up the instructions 
-  again. 
-  You also have an energy bar. Some events will use up energy, so if you 
+  again.";
+  next () 0;
+  print_endline "\nYou also have an energy bar. Some events will use up energy, so if you 
   do not have enough energy, you may be unable to participate in some events and 
   gain points that way. If you notice your energy is getting low, type \"skip\" 
   at the beginning of your turn to earn back energy at the cost of one turn. 
   Keep track of your energy! If you do not have enough energy for an exam, you 
   may not do as well!\n";
+  next () 0;
   print_endline "GETTING STARTED:\n
   On your first turn, decide whether you would like to start with CS 1110 or 
   CS 2110. Taking CS 1110 will allow you to choose better projects later on, but 
@@ -42,6 +54,7 @@ let instructions () =
   start with CS 2110, you are unable to take CS 1110 and will progress through 
   the board faster as a result. No point deductions will occur if you start with 
   CS 2110 but you will be unable to obtain certain projects.\n";
+  next () 0;
   print_endline "CHOOSING YOUR PROJECT:\n
   You will receive the option to choose a project right before you start 
   CS 2110. You will be given three random projects with set salaries, and you 
@@ -51,11 +64,13 @@ let instructions () =
   some more than others. Each time you pass a \"pay day\" tile (which you may or 
   may not actually stop for), you will earn a number of points equivalent to 
   your salary.\n";
+  next() 0;
   print_endline "CHANGING YOUR PROJECT:\n
   Later in the game, you will have the chance to change your project. You will 
   either be given the option to change your project, be let go from your project 
   and forced to choose a new one, or you or another player may swap projects 
   during a special event.\n";
+  next() 0;
   print_endline "TILES:\n
   Each tile will have certain colors to them. 
   YELLOW tiles force you to stop at them no matter what number you rolled. These 
@@ -66,6 +81,7 @@ let instructions () =
   BLUE tiles trigger special events that may cause you to gain or lose points 
   depending on the event. 
   BLACK tiles do not contain events.\n";
+  next() 0;
   print_endline "GRADUATION:\n
   Once you reach the graduation tile, you have reached the end of the board and 
   cannot roll anymore. The game ends when everyone has graduated. The winner is 
@@ -362,6 +378,7 @@ let rec print_jobs = function
     let name = Playerstate.get_name p in 
     print_endline (name ^ ":\n");
     print_job_desc p job;
+    next () 0;
     divide ();
     print_jobs t
 
@@ -380,7 +397,9 @@ let play_game players board =
   let assign_jobs = decide_jobs sorted_players max min in 
   print_endline ("\n\nCongratulations to " ^ (Playerstate.get_name winner) 
                  ^ " for winning with the most points!\n\n");
+  next () 0;
   print_endline "Everyone has graduated! Here are the final results: \n\n";
+  next () 0;
   print_jobs assign_jobs;
   divide ();
   print_endline "\nThanks for playing!"
