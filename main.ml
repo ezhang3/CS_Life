@@ -3,10 +3,10 @@ open Tile
 open Playerstate
 open Board
 
-let (test_board : Board.gameboard) = Board.create_board 
-    (Yojson.Basic.from_file "gameboard1.json")
+let test_board (rand : bool) = Board.create_board 
+    (Yojson.Basic.from_file "gameboard1.json") rand
 
-let start_tile = Board.start_tile test_board
+let start_tile rand = test_board rand |> Board.start_tile
 
 let divide () = print_endline "\n********************************************************\n"
 
@@ -36,16 +36,16 @@ let instructions () =
   forward. You will move forward automatically and end on a new tile that will 
   trigger some sort of event that will play out.\n";
   next() 0;
-  print_endline "\nTo finish your turn, type \"done\". At the start of your turn, you may end the 
-  game by typing \"quit\" or \"instructions\" to bring up the instructions 
-  again.";
+  print_endline "\nTo finish your turn, type \"done\". At the start of your 
+  turn, you may end the game by typing \"quit\" or \"instructions\" to bring up 
+  the instructions again.";
   next () 0;
-  print_endline "\nYou also have an energy bar. Some events will use up energy, so if you 
-  do not have enough energy, you may be unable to participate in some events and 
-  gain points that way. If you notice your energy is getting low, type \"skip\" 
-  at the beginning of your turn to earn back energy at the cost of one turn. 
-  Keep track of your energy! If you do not have enough energy for an exam, you 
-  may not do as well!\n";
+  print_endline "\nYou also have an energy bar. Some events will use up energy, 
+  so if you do not have enough energy, you may be unable to participate in some 
+  events and gain points that way. If you notice your energy is getting low, 
+  type \"skip\" at the beginning of your turn to earn back energy at the cost 
+  of one turn. Keep track of your energy! If you do not have enough energy for 
+  an exam, you may not do as well!\n";
   next () 0;
   print_endline "GETTING STARTED:\n
   On your first turn, decide whether you would like to start with CS 1110 or 
@@ -349,7 +349,15 @@ let print_job_desc player job =
   let name = Playerstate.get_name player in 
   match job with 
   | Jeff_Bezos -> 
-    print_endline (name ^ " is too extrordinarily talented and intelligent to work for another company. " ^ "So, instead of applying for a job like fellow classmates, " ^ name ^ " decides to start their own humble tech company in Silicon Valley. In just two years, this company would rise above that of Amazon and Google. Above all its competitors. " ^ name ^ " will enter Forbes' list of wealthiest people alive in just 5 years after the company is created. What a feat. What an individual\n")
+    print_endline 
+      ("Literally Jeff Bezos:\n" ^  
+       name ^ " is too extrordinarily talented and intelligent to work for 
+       another company. " ^ "So, instead of applying for a job like fellow 
+       classmates, " ^ name ^ " decides to start their own humble tech company 
+       in Silicon Valley. In just two years, this company would rise above that 
+       of Amazon and Google. Above all its competitors. " ^ name ^ " will enter 
+       Forbes' list of wealthiest people alive in just 5 years after the company 
+       was created. What a feat. What an individual\n")
   | Google -> ()
   | Microsoft -> ()
   | Apple -> ()
@@ -362,13 +370,30 @@ let print_job_desc player job =
   | Generic -> ()
   | IT -> ()
   | Overseas -> 
-    print_endline (name ^ " is somewhere overseas (was it Germany? Sweden? Japan?) Last time anyone heard, " ^ name ^ " is chilling in an ok swe position, enjoying the expat life and better health care.")
+    print_endline 
+      ("Overseas:\n" ^
+       name ^ " is somewhere overseas (was it Germany? Sweden? Japan?) Last 
+       time anyone heard, " ^ name ^ " is chilling in an ok swe position, 
+       enjoying the expat life and better health care.")
   | Unknown -> 
-    print_endline (name ^ " could not be found after graduation. Ever since " ^ name ^ " failed to find a job after graduation, nobody knows where they went. No job, no location. Nobody could get in contact with them. It's almost as it they disappeared...\n")
+    print_endline 
+      ("Unknown:\n" ^
+       name ^ " could not be found after graduation. Ever since " ^ name ^ 
+       " failed to find a job after graduation, nobody knows where they went. No 
+       job, no location. Nobody could get in contact with them. It's almost as 
+       if they just disappeared...\n")
   | Unemployed -> 
-    print_endline (name ^ " unfortunately could not find a job after graduation. And could not find a job for the rest of their life. The End.")
+    print_endline 
+      ("Unemployed:\n" ^
+       name ^ " unfortunately could not find a job after graduation. And could 
+       not find a job for the rest of their life. The End.")
   | Married -> 
-    print_endline (name ^ " unfortunately fails to find a job after graduation. However, " ^ name ^ " instead decided to get married! They were lucky enough to have found their \"meant to be\" through their undergrad. The couple live happily ever after!\n")
+    print_endline 
+      ("Get Married!:\n" 
+       ^ name ^ " unfortunately fails to find a job after graduation. However, " 
+       ^ name ^ " instead decided to get married! They were lucky enough to 
+       have found their \"meant to be\" through their undergrad. The couple 
+       live happily ever after!\n")
 
 (**[print_jobs [(p1, job1);...;(pn, jobn)]] prints the jobs [job1,...jobn] of 
    players [p1,...pn]*)
@@ -410,6 +435,15 @@ let check_valid_num num =
   | _ -> print_endline "\nInvalid number. Please try again.\n\n"; 
     exit 0
 
+let rec prompt_randomize () = 
+  print_endline "Would you like to randomize the board?\n[Y/N]";
+  print_string ">";
+  match read_line () |> String.trim |> String.lowercase_ascii with 
+  | "y" -> true 
+  | "n" -> false 
+  | _ -> print_endline "\nInvalid input. Please re-enter:\n";
+    prompt_randomize ()
+
 (** [main ()] prompts for the game to play, then starts it. *)
 let main () =
   ANSITerminal.(print_string [red]
@@ -421,9 +455,10 @@ let main () =
   | exception End_of_file -> ()
   | num -> begin 
       match check_valid_num num with 
-      | n when n <= 5 && n > 0 ->
-        let players = Playerstate.make_player_list n start_tile in
-        play_game players test_board
+      | n when n <= 6 && n > 0 ->
+        let rand = prompt_randomize () in
+        let players = start_tile rand |> Playerstate.make_player_list n in
+        test_board rand |> play_game players
       | _ -> print_endline "\nInvalid number. Please try again.\n\n"; 
         exit 0
     end 
