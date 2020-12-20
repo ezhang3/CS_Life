@@ -256,24 +256,13 @@ let minigame_3410 player =
       "Thanks for taking 3410! I hope you've learned about how computers work";
   Playerstate.chg_energy player ~-10
 
-let rec next () iterations = 
-  print_endline "Type \"next\" to continue";
-  print_string "> ";
-  if read_line() |> String.trim |> String.lowercase_ascii = "next" || 
-     iterations > 2
-  then () 
-  else next () (iterations + 1)
-
 let story_4410 = 
   print_endline "In the beginning, there was hardware. Now the hardware was 
     formless and empty, darkness was over the surface of silicon.\n";
-  next () 0; 
   print_endline "And then the creator said “let there be operating systems,” 
   and there were OSes. The creator saw that OSes were good.\n";
-  next () 0;
   print_endline "And the creator said “let there be processes, and threads.” 
   OSes were teeming with processes and threads carrying out different tasks.\n";
-  next () 0; 
   print_endline "Then the creator said “let
    the processes and threads synchronize with each other.” For this task, the 
    creator appointed human-kind.\n";
