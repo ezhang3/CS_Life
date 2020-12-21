@@ -325,6 +325,22 @@ let minigame_4120 player =
   effort that lies ahead.\n"; 
   Playerstate.chg_energy player ~-15
 
+let minigame_4740 player = 
+  print_endline "Natural Language Processing!\n";
+  print_endline "Identify the verb in this sentence: \n";
+  print_endline "A quick red fox jumped over a lazy brown dog\n";
+  print_string ">";
+  if read_line () |> String.trim |> String.lowercase_ascii = "jumped" 
+  || read_line () |> String.trim |> String.lowercase_ascii = "jump" 
+  then begin 
+    print_endline "Good job! You know what a verb is!\n";
+    Playerstate.set_points player 10
+  end 
+  else begin 
+    print_endline "Oops, that's too bad for you."
+  end;
+  print_endline "That's all for NLP!"
+
 let mini_game_networking player = 
   Playerstate.chg_energy player ~-8;
   print_endline "Trying to make professional connections, whether to get to know 
@@ -614,6 +630,7 @@ let find_special_event player players board str =
     | "4410" -> minigame_4410 player
     | "4820" -> minigame_4820 player
     | "4120" -> minigame_4120 player
+    | "4740" -> minigame_4740 player
     | "debug1" -> minigame_debug_v1 player 1
     | "debug2" -> minigame_debug_v2 player 
     | "ta" -> minigame_ta player
