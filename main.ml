@@ -15,7 +15,7 @@ type job = Jeff_Bezos | Google | Microsoft | Apple | Facebook | Intel | Tesla
          | Unknown | Unemployed | Married | Overseas
 
 let rec next () iterations = 
-  print_endline "Type \"next\" to continue";
+  print_endline "\nType \"next\" to continue";
   print_string "> ";
   if read_line() |> String.trim |> String.lowercase_ascii = "next" || 
      iterations > 2
@@ -31,7 +31,7 @@ let instructions () =
   names of each player in order. Careful! The order you type the names is the 
   order the each player will go in during the game.\n";
   next () 0;
-  print_endline "ON YOUR TURN:\n
+  print_endline "\nON YOUR TURN:\n
   When it is your turn, follow the instructions given and type \"roll\" to move 
   forward. You will move forward automatically and end on a new tile that will 
   trigger some sort of event that will play out.\n";
@@ -47,7 +47,7 @@ let instructions () =
   of one turn. Keep track of your energy! If you do not have enough energy for 
   an exam, you may not do as well!\n";
   next () 0;
-  print_endline "GETTING STARTED:\n
+  print_endline "\nGETTING STARTED:\n
   On your first turn, decide whether you would like to start with CS 1110 or 
   CS 2110. Taking CS 1110 will allow you to choose better projects later on, but 
   will deduct 100 points as it will take longer for you to graduate. If you 
@@ -55,7 +55,7 @@ let instructions () =
   the board faster as a result. No point deductions will occur if you start with 
   CS 2110 but you will be unable to obtain certain projects.\n";
   next () 0;
-  print_endline "CHOOSING YOUR PROJECT:\n
+  print_endline "\nCHOOSING YOUR PROJECT:\n
   You will receive the option to choose a project right before you start 
   CS 2110. You will be given three random projects with set salaries, and you 
   will be given the option to choose which one you would like. If you have not 
@@ -65,13 +65,13 @@ let instructions () =
   may not actually stop for), you will earn a number of points equivalent to 
   your salary.\n";
   next() 0;
-  print_endline "CHANGING YOUR PROJECT:\n
+  print_endline "\nCHANGING YOUR PROJECT:\n
   Later in the game, you will have the chance to change your project. You will 
   either be given the option to change your project, be let go from your project 
   and forced to choose a new one, or you or another player may swap projects 
   during a special event.\n";
   next() 0;
-  print_endline "TILES:\n
+  print_endline "\nTILES:\n
   Each tile will have certain colors to them. 
   YELLOW tiles force you to stop at them no matter what number you rolled. These 
   tiles include exams, choosing path tiles, graduation, choosing projects, etc. 
@@ -82,7 +82,7 @@ let instructions () =
   depending on the event. 
   BLACK tiles do not contain events.\n";
   next() 0;
-  print_endline "GRADUATION:\n
+  print_endline "\nGRADUATION:\n
   Once you reach the graduation tile, you have reached the end of the board and 
   cannot roll anymore. The game ends when everyone has graduated. The winner is 
   then decided by totaling the number of points of each player. Each player's 
@@ -409,7 +409,7 @@ let print_job_desc player job =
        Enjoy it while it lasts and keep working hard!")
   | Tesla -> 
     print_endline 
-      ("Intel!\n" ^
+      ("Tesla!\n" ^
        name ^ " is now a software engineer at Tesla! Congrats! You now work at 
        the most memeable company ever. Elon Musk never fails does he. The man 
        is just the source for a plethora of memes on Reddit. But who can blame 
@@ -536,11 +536,11 @@ let check_valid_num num =
     exit 0
 
 let rec prompt_randomize () = 
-  print_endline "Would you like to randomize the board?\n[Y/N]";
-  print_string ">";
+  print_endline "\nWould you like to randomize the board?\n[Y/N]";
+  print_string "> ";
   match read_line () |> String.trim |> String.lowercase_ascii with 
-  | "y" -> true 
-  | "n" -> false 
+  | "y" | "yes" -> true 
+  | "n" | "no" -> false 
   | _ -> print_endline "\nInvalid input. Please re-enter:\n";
     prompt_randomize ()
 

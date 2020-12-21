@@ -23,8 +23,9 @@ let get_mem json str =
   json |> member str
 
 (* Random compare function to use with List.sort *)
-let rand_comp x y = let randn = (Random.int 3) 
-  in print_endline (string_of_int randn); randn - 1
+let rand_comp x y = let randn = (Random.int 3) in 
+  (* print_endline (string_of_int randn);  *)
+  randn - 1
 
 (* [randomize lst] is a randomized version of [lst] *)
 (* TODO: Add a field that determines whether randomized or not? *)
