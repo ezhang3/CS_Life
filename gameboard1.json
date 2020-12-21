@@ -408,12 +408,22 @@
           ]
         },
         {
+          "id": "Party",
+          "color": "Blue",
+          "event": "Party somewhere",
+          "description": "You went to your first (and only?) party at Cornell.",
+          "effects": [
+            "minigame party"
+          ]
+        },
+        {
           "id": "CS 3410",
           "color": "Blue",
           "event": "Start 3410",
           "description": "You're not really sure why you have to take a class on hardware if you're planning on just coding for a job. But hopefully it won't be too bad. . .",
           "effects": [
-            "gain 10"
+            "gain 10",
+            "minigame 3410"
           ]
         },
         {
@@ -440,7 +450,6 @@
           "event": "Pre-enroll",
           "description": "Pre-enroll. Every students' favorite part of the semester. Every time it happens, you wonder if you can use your CS skills to make a better student center.",
           "effects": [
-            "minigame pre_enroll",
             "energy -20"
           ]
         }
@@ -716,8 +725,7 @@
           "event": "First Internship!",
           "description": "The hours of grinding leetcode and CS training have paid off! You've earned a dose of the real world!",
           "effects": [
-            "gain 1000",
-            "minigame internship"
+            "gain 1000"
           ]
         },
         {

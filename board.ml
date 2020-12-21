@@ -29,9 +29,9 @@ let rand_comp x y =
 
 (* [randomize lst] is a randomized version of [lst] *)
 (* TODO: Add a field that determines whether randomized or not? *)
-let randomize lst = 
+let randomize rand lst = 
   let on = false in
-  if not on then lst else List.sort rand_comp lst
+  if not on && not (rand) then lst else List.sort rand_comp lst
 
 (** gets the last element of a list *)
 let rec last_of_list = function
@@ -46,16 +46,10 @@ let first_of_list = function
 (** [build_tile json] creates an individual tile as specified by
     json information *)
 let build_tile json = 
-  print_endline "Building tile...";
-  print_endline "Getting id...";
   let id = get_mem json "id" |> to_string in
-  print_endline "Getting color...";
   let color = get_mem json "color" |> to_string in
-  print_endline "Getting event...";
   let event_name = get_mem json "event" |> to_string in
-  print_endline "Getting description...";
   let description = get_mem json "description" |> to_string in
-  print_endline "Getting effects...";
   let effects = get_mem json "effects" |> to_list |> List.map to_string in
   create_tile id color event_name description effects
 
@@ -72,12 +66,12 @@ type stage = {
 
 (** [build_stage json] builds a stage. Each stage contains a list of tiles that 
     can be randomized *)
-let build_stage json =
+let build_stage rand json =
   let id = get_mem json "id" |> to_string in
   let next_stages = get_mem json "next" |> to_list 
                     |> List.map build_next_tiles in
   let tiles = get_mem json "tiles" |> to_list |> List.map build_tile 
-              |> randomize in 
+              |> randomize rand in 
   {
     id = id;
     next_stages = next_stages;
@@ -134,17 +128,19 @@ let assign_next_tiles stages =
 
 (** [build_stages json] builds a list of randomized stages, flattens them,
     and assigns pointers *)
-let build_board json =
-  get_mem json "stages"|> to_list |> List.map build_stage |> assign_next_tiles
+(* TODO: Implement branching paths *)
+let build_board json rand =
+  get_mem json "stages"|> to_list |> List.map (build_stage rand)
+  |> assign_next_tiles
 
 (** [from_json json] parses a valid json into game_board*)
-let from_json json =
-  try build_board json
+let from_json json rand =
+  try build_board json rand
   with Type_error (s, _) -> failwith ("Failed to build board from json: " ^ s)
 
 (* ------------------------- INTERFACE FUNCTIONS -------------------------*)
 
-let create_board json = from_json json
+let create_board json rand = from_json json rand
 (* test_board *)
 
 let start_tile (board : gameboard) = match board with

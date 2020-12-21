@@ -13,7 +13,7 @@ exception No_Tile of string
     Stages have an id and a next field (which goes to the next sequence).
     Each stage has a list of tiles which have an id, color, event,
     description, and effect.  *)
-val create_board : Yojson.Basic.t -> gameboard
+val create_board : Yojson.Basic.t -> bool -> gameboard
 
 (** [start_tile board] is the first tile of the board.
     Raises: No_Tile if [board] has no starting tile *)

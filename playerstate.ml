@@ -166,12 +166,12 @@ let go st board n =
   let rec find_tile tile board n =
     match n with
     | 0 -> set_current_tile st tile
-    | _ -> begin
+    | other -> begin
         match Board.next_tiles st.current_tile Board.compare_tiles_id board with
         | [] -> set_current_tile st tile
         | tile :: [] -> set_current_tile st tile; 
           if Tile.get_tile_color tile = Yellow then ()
-          else if Tile.get_tile_event_name tile = "Pay Day!" then 
+          else if Tile.get_tile_event_name tile = "Pay Day!" && other > 1 then 
             begin
               print_endline "\nYou passed a pay day...\n";
               get_salary st |> set_points st;
