@@ -314,7 +314,8 @@ let minigame_4820 player =
     Playerstate.chg_energy player ~-5
   end 
   else 
-    print_endline "Wow, you did all the work without have to camp OH? Nice\n";
+    print_endline 
+      "Wow, you did all the work without have to camp at OH? Nice\n";
   Playerstate.set_points player 10; 
   print_endline "Time to make homeworks and exams harder next semester. . .\n"
 
