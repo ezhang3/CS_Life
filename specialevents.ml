@@ -627,7 +627,7 @@ let minigame_party player =
   let loose for one night.\n";
   print_endline "So you went to your first (and only?) party at Cornell.\n";
   print_endline 
-    "You didn't find it too fun, so left early to wake Netflix on your bed.\n";
+    "You didn't find it too fun, so left early to watch Netflix on your bed.\n";
   print_endline "So even though you didn't party, you wake up late the next day, 
 exhausted, with no motivation to finish the work you put off.\n";
   Playerstate.chg_energy player ~-5
