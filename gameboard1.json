@@ -418,25 +418,6 @@
           ]
         },
         {
-          "id": "CS 3410",
-          "color": "Blue",
-          "event": "Start 3410",
-          "description": "You're not really sure why you have to take a class on hardware if you're planning on just coding for a job. But hopefully it won't be too bad. . .",
-          "effects": [
-            "gain 10",
-            "minigame 3410"
-          ]
-        },
-        {
-          "id": "debug",
-          "color": "Red",
-          "event": "Bug",
-          "description": "ERROR: You have a bug in your code.",
-          "effects": [
-            "minigame debug2"
-          ]
-        },
-        {
           "id": "payraise4",
           "color": "Green",
           "event": "Pay Day!",
