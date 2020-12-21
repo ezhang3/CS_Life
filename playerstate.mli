@@ -5,6 +5,10 @@
    location, any items owned, skill/reputation level, and energy level.
 *) 
 
+(** The abstract type representing the player state. *)
+type player 
+
+(** Types for fields relating to playerstate *)
 type player_name = string
 type points = int
 type salary = int
@@ -12,9 +16,6 @@ type project_name = string
 type project = (project_name * string * salary) option
 type projects = project array
 type study_partners = int
-
-(** The abstract type representing the player state. *)
-type player 
 
 (** [init_state name start] is the initial state of a player with name [name] 
     and current_tile [start] at the start of a game *)
@@ -46,8 +47,11 @@ val add_study_partners : player -> int -> unit
 (** [get_study_partners player] is the study partner of [player] *)
 val get_study_partners : player -> study_partners
 
+(** [three_rand_projects ()] generates a list of three randomly chosen
+    projects.  *)
 val three_rand_projects : unit -> project list 
 
+(**[rand_project ()] is a random project.  *)
 val rand_project : unit -> project
 
 (** [set_project player project] sets [player]'s project to [project] *)

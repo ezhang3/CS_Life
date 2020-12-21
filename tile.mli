@@ -34,7 +34,6 @@ type tile = {
   description: string; 
   effects: effect list; 
 }
-(* MIGHT HAVE TO CHANGE SIGNATURES AND SPECS *)
 
 (** [create_tile id color event_name desc effects] creates a tile of 
     color [color] with id [id], description [desc], associated event 
