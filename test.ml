@@ -1,3 +1,33 @@
+
+(** Test Plan:
+    Modules tested with OUnit:
+    These tests where developed with a combination of black box and glass box
+    testing.
+    Tile - using tile info getter functions
+    Board - using board functions
+    Playerstate - by modifying player state and checking with getters
+    Specialevents - Tested the events that changed player state and didn't
+    involve much user input.
+
+    Tested manually
+    Specialevents - the events that involved complex user input.
+    GUI - the GUI is difficult to test with OUnit, since the outputs are
+    shown on a new window and don't necessarily return a value. We verified
+    that our code works by testing manually. For example, making sure the
+    keyboard and mouse inputs of interest were handled correctly, and also
+    making sure other inputs did not do anything unexpected.
+    Main - We ran this several times to ensure that no infinite loops
+    or exceptions arose.
+
+    Why the testing approach demonstrates the correctness of the system:
+    By testing each function under different cases, and thanks to functional
+    programming paradigms like pattern matching, we are able to show our system
+    has a high degree of correctness.
+    Running Bisect, we have achieved _ code coverage.
+
+*)
+
+
 open OUnit2
 open Board
 open Playerstate
@@ -145,7 +175,8 @@ let get_points_test
     (st: player)
     (expected_output: int) : test = 
   name >:: (fun _ ->
-      assert_equal expected_output (get_points st))
+      assert_equal expected_output (get_points st)
+        ~printer:string_of_int)
 
 let get_points_set_test 
     (name: string)
@@ -154,7 +185,8 @@ let get_points_set_test
     (expected_output: int) : test = 
   name >:: (fun _ ->
       Playerstate.set_points st pt; 
-      assert_equal expected_output (get_points st))
+      assert_equal expected_output (get_points st)
+        ~printer:string_of_int)
 
 let get_study_partners_test 
     (name: string)
@@ -247,7 +279,16 @@ let go_test (name : string) player board moves (expected: string) =
                                     |> get_current_tile 
                                     |> get_tile_id))
 
+let get_energy_test 
+    (name: string)
+    (st: player)
+    (expected_output: int) : test = 
+  name >:: (fun _ ->
+      assert_equal expected_output (get_energy st)
+        ~printer:string_of_int)  
+
 let test_player = init_state "Jason" (start_tile test_board)
+let test_player2 = init_state "Jason" (start_tile test_board)
 let player_diff= init_state "Jenny" (start_tile test_board)
 
 let player_state_test = [
@@ -265,9 +306,71 @@ let player_state_test = [
   get_current_tile_test "On start" test_player "start"; 
   get_visited_tiles_test "visited start only" test_player ["start"];
   go_test "go test 1 move" test_player test_board 1 "choose 1110 or 2110";
-  get_visited_tiles_after_go_test "start and 1110/2110 waiting" test_player 1 
+  (* passed after making new test player*)
+  get_visited_tiles_after_go_test "start and 1110/2110 waiting" test_player2 1 
     ["choose 1110 or 2110"; "start"];
   (* some tests for go and visited tiles with branching paths *)
+
+  get_energy_test "initial energy is 100" test_player 100;
+]
+
+let iris = init_state "Iris" (start_tile test_board)
+let bday = init_state "person" (start_tile test_board)
+let playerwproj = set_project iris 
+    (Some ("Potato farming", "hehe potato", 10000)); iris
+
+let frog = init_state "Frog" (start_tile test_board)
+(* energy should be 150 *)
+let playerwenergy = chg_energy frog 50; frog
+let dummy = init_state "dummy" (start_tile test_board)
+
+let event_test
+    testerfunc
+    (name : string) (player : player) (plst : player list)
+    (board : gameboard) (event : string) expected =
+  name >:: (fun _ ->
+      Specialevents.find_special_event player plst board event; 
+      assert_equal expected (player |> testerfunc)
+        ~printer:string_of_int)
+
+let event_test_points = event_test get_points
+let event_test_energy = event_test get_energy
+let event_test_salary = event_test get_salary
+
+let birthday_colateral_test
+    (name : string) (player1 : player) (player2 : player)
+    (board : gameboard) (expected : int) =
+  name >:: (fun _ ->
+      Specialevents.find_special_event player1 [player1; player2] board "birthday"; 
+      assert_equal expected (player2 |> get_points)
+        ~printer:string_of_int)
+
+let event_not_found_test
+    (name : string) (player : player) (plst : player list)
+    (board : gameboard) (event : string) =
+  name >:: (fun _ ->
+      assert_raises (Failure "special event not found")
+        (fun () -> Specialevents.find_special_event player plst board event))
+
+(* birthday every player -5, minigame_4120 energy -15, payday (depends on
+   player's project, pay_raise, special event notfound *)
+let event_test = [
+  event_test_points "with no other players"
+    bday [bday] test_board "birthday" 0;
+  event_test_points "with one other player"
+    bday [bday; playerwenergy] test_board "birthday" 5;
+  (* sometimes says not correct *)
+  birthday_colateral_test "0 energy on other's bday"
+    playerwenergy dummy test_board ~-5;
+  event_not_found_test "skip class"
+    playerwenergy [playerwproj; playerwenergy] test_board "skip class";
+  event_test_energy "4120 minigame" playerwenergy [playerwproj; playerwenergy]
+    test_board "4120" 135;
+  (* passed after making payday the first event *)
+  event_test_points "potato farming pay day (10k)"
+    playerwproj [playerwproj; playerwenergy] test_board "pay_day" 10000;
+  event_test_salary "pay raise" playerwproj [playerwproj; playerwenergy]
+    test_board "pay_raise" 10010;
 ]
 
 let suite =
@@ -275,6 +378,7 @@ let suite =
     tile_test;
     board_test;
     player_state_test;
+    event_test;
   ]
 
 let _ = run_test_tt_main suite

@@ -200,7 +200,7 @@ let minigame_4820 player =
   print_endline ""
 
 let minigame_4120 player = 
-  print_endline "Welcome to compliers.\n";
+  print_endline "Welcome to compilers.\n";
   print_endline "Be prepared, you won't get a lot of sleep this semester.\n";
   print_endline "Some of your energy will be taken away, in anticipation of the effort that lies ahead.\n"; 
   Playerstate.chg_energy player ~-15
@@ -384,8 +384,8 @@ let pay_raise player =
     Some(name, desc, salary + 10) 
     |> Playerstate.set_project player;
     print_endline ("Thanks to all of your contributions to " ^ name ^ ", you 
-    have earned an extra " ^ (string_of_int salary) ^ " points to your salary!\n");
-    Playerstate.set_points player salary
+    have earned an extra 10 points to your salary!\n");
+    Playerstate.set_points player (salary+10)
 
 let internship player = 
   print_endline "unimplemented \n"

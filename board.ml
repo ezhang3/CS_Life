@@ -23,7 +23,8 @@ let get_mem json str =
   json |> member str
 
 (* Random compare function to use with List.sort *)
-let rand_comp x y = let randn = (Random.int 3) 
+let rand_comp x y =
+  let randn = (Random.int 3) 
   in print_endline (string_of_int randn); randn - 1
 
 (* [randomize lst] is a randomized version of [lst] *)
@@ -133,7 +134,6 @@ let assign_next_tiles stages =
 
 (** [build_stages json] builds a list of randomized stages, flattens them,
     and assigns pointers *)
-(* TODO: Implement branching paths *)
 let build_board json =
   get_mem json "stages"|> to_list |> List.map build_stage |> assign_next_tiles
 
@@ -160,7 +160,6 @@ let rec find_tiles (tile : Tile.tile) func board =
 
 (** [next_tile tile func board] searches through the board to find the
     tile that matches tile and gives a list of adjacent tiles. *)
-(* TODO: Think about how to optimize because search is O(n) *)
 let next_tiles = find_tiles
 
 let rec find_tile_by_id id (board : gameboard) = 

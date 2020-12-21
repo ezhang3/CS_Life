@@ -10,7 +10,7 @@ type effect =
   | Minigame of string 
   | Study_Partner of int 
   | Item of string
-  | Energy of int (* TODO: make energy have effect on performance *)
+  | Energy of int
 
 type tile = {
   id : tile_id;
