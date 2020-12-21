@@ -39,14 +39,14 @@ type tile = {
     [event_name], and corresponding effects [effects] *)
 val create_tile : tile_id -> string -> string -> string -> string list -> tile
 
-(** [get_tile_id t] is the [tile_id] of tile [t] *)
+(** [get_tile_id t] is the tile id of tile [t] *)
 val get_tile_id : tile -> tile_id
 
-(** [tile_color t] is the color of tile [t] *)
+(** [get_tile_color t] is the color of tile [t] *)
 val get_tile_color : tile -> color 
 
-(** [tile_event t] is the name of the event that happens upon landing on the 
-    tile [t] *)
+(** [get_tile_event_name t] is the name of the event that happens upon landing
+    on the tile [t] *)
 val get_tile_event_name : tile -> string
 
 (** [get_tile_description t] is the description of the event occuring on tile 
@@ -54,7 +54,7 @@ val get_tile_event_name : tile -> string
 val get_tile_description : tile -> string
 
 (** [get_tile_effects t] is the list of effects that landing on tile [t] will 
-    cause a person. 
+    apply to a player. 
     Lists how much the points of each component will change. *)
 val get_tile_effects : tile -> effect list
 
@@ -62,5 +62,5 @@ val get_tile_effects : tile -> effect list
 val get_effect_desc : effect -> string
 
 (** [get_effects eff] is the total number of points accumulated by 
-    effect eff *)
+    effect [eff] *)
 val get_effects : string -> effect

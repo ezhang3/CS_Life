@@ -44,12 +44,6 @@ let print_state player =
                  "\nItems: " ^ string_list "" player.items ^
                  "\nEnergy: "^string_of_int player.energy)
 
-let rec get_nth_player players n = 
-  match players with 
-  | [] -> failwith "no players"
-  | h :: t -> if n = 0 then h 
-    else get_nth_player t (n - 1)
-
 let check_valid_player player players = not (List.mem player players)
 
 let make_player_list (n : int) (start : Tile.tile) = 
@@ -101,7 +95,8 @@ let p : projects = [|
   Some ("CS 1110 Consultant", "CS 1110 REQUIRED", 90);
   Some ("Robotics Club", "Member of the robotics club", 70);
   Some ("Sorority/Fraternity", "You're apart of Greek Life!", 50);
-  Some ("Business Club", "Maybe minor in business? It's good to step outside of STEM to broaden your skills!", 60)
+  Some ("Business Club", 
+        "Maybe minor in business? It's good to step outside of STEM to broaden your skills!", 60)
 |]
 
 let three_rand_projects () = 

@@ -107,9 +107,12 @@ let tile_test = [
   tile_id_test "tile12 id" tile2 "Tile2";
   tile_id_test "proj tile" tile_proj "Make a project";
   tile_id_test "start tile" tile_start "start";
-  tile_description_test "tile1 description" tile1 "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff.";
-  tile_description_test "tile2 description" tile2 "Prelims. A time to shut yourself in your room to study and hopefully pass all your classes.";
-  tile_description_test "proj tile desc" tile_proj "You have started making your own CS project. You plan to show it off in your resume and gain some good technical experience";
+  tile_description_test "tile1 description" tile1
+    "The Career Fair. A place to stand in line, chat with recruiters, and trade resumes for free stuff.";
+  tile_description_test "tile2 description" tile2
+    "Prelims. A time to shut yourself in your room to study and hopefully pass all your classes.";
+  tile_description_test "proj tile desc" tile_proj
+    "You have started making your own CS project. You plan to show it off in your resume and gain some good technical experience";
   tile_description_test "start tile desc" tile_start "Start Tile";
   get_effects_test "gain 55 points effect" "gain 55" (Points ("Gained", 55)); 
   get_effects_test "lose 2 points effect" "lose 2" (Points ("Lost", 2));
@@ -189,14 +192,6 @@ let get_player_name_test
     (expected_output : string) : test = 
   name >:: (fun _ -> 
       assert_equal expected_output (get_name st)) 
-
-let get_nth_player_test 
-    (name: string)
-    (players: player list)
-    (n : int)
-    (expected : player) : test = 
-  name >:: (fun _ -> 
-      assert_equal expected (get_nth_player players n)) 
 
 let get_points_test 
     (name: string)
@@ -337,7 +332,6 @@ let diff_player = init_state "Jenny" (start_tile test_board)
 
 let player_state_test = [
   get_player_name_test "player name" test_player "Jason";
-  get_nth_player_test "1st player" [test_player; diff_player] 0 test_player;
   get_points_test "Just started, 0" test_player 0; 
   get_project_test "no proj yet" test_player None; 
   get_salary_test "0 salary rn" test_player 0; 
