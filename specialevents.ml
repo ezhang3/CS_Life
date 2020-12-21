@@ -325,6 +325,23 @@ let minigame_4120 player =
   effort that lies ahead.\n"; 
   Playerstate.chg_energy player ~-15
 
+let minigame_4320 player = 
+  print_endline "It's Databases Time!!! \n";
+  print_endline "What is a coding language often used in querying databases?\n";
+  print_endline "Hint: it's only three letters long\n";
+  print_string ">"; 
+  if (read_line () |> String.trim |> String.lowercase_ascii) = "sql" 
+  then begin 
+    print_endline "Very good! Here's 10 points for a reward"; 
+    Playerstate.set_points player 10
+  end 
+  else begin 
+    print_endline "This was very basic. You have a lot of learn, young one\n";
+    print_endline "We will deduct some points to encourage you to study.\n";
+    Playerstate.set_points player ~-10
+  end;
+  Playerstate.chg_energy player ~-5
+
 let minigame_4740 player = 
   print_endline "Natural Language Processing!\n";
   print_endline "Identify the verb in this sentence: \n";
@@ -339,7 +356,8 @@ let minigame_4740 player =
   else begin 
     print_endline "Oops, that's too bad for you."
   end;
-  print_endline "That's all for NLP!"
+  print_endline "That's all for NLP!"; 
+  Playerstate.chg_energy player ~-5
 
 let mini_game_networking player = 
   Playerstate.chg_energy player ~-8;
@@ -382,6 +400,27 @@ let rec minigame_debug_v1 player num =
     end
   end 
 
+and being_ta player = 
+  print_endline "You are hosting office hours for the class. \n"; 
+  print_endline "There are a lot of students waiting, waiting for your 
+      guidance in hopefully passing this class. \n"; 
+  print_endline "An hour passed where you answered lots of questions and 
+      corrected so much not great code your head hurts.\n";
+  print_endline "You feel your energy levels drop a bit \n";
+  Playerstate.chg_energy player (Random.int 5 + 1);
+  print_endline "So, was it a good experience? (Yes or No) \n"; 
+  print_string "> "; 
+  if (read_line () |> String.trim |> String.lowercase_ascii) = "yes" 
+  then begin
+    print_endline "Nice! Glad you found being a TA rewarding :) Maybe be one
+         again next semester?";
+    Playerstate.set_points player 20
+  end
+  else 
+    print_endline "Oops, sorry it wasn't that great for you. Is the pay 
+        worth it? (Probably yes)";
+  Playerstate.set_points player ~-5
+
 let minigame_ta player = 
   Playerstate.chg_energy player ~-10;
   print_endline "You were invited to become a TA. Do you accept?";
@@ -389,27 +428,7 @@ let minigame_ta player =
   match read_line () |> String.trim |> String.lowercase_ascii with 
   | "no" -> print_endline 
               "You decided not to become a TA in favor of pursuing other things \n"
-  | "yes" -> begin
-      print_endline "You are hosting office hours for the class. \n"; 
-      print_endline "There are a lot of students waiting, waiting for your 
-      guidance in hopefully passing this class. \n"; 
-      print_endline "An hour passed where you answered lots of questions and 
-      corrected so much not great code your head hurts.\n";
-      print_endline "You feel your energy levels drop a bit \n";
-      Playerstate.chg_energy player (Random.int 5 + 1);
-      print_endline "So, was it a good experience? (Yes or No) \n"; 
-      print_string "> "; 
-      if (read_line () |> String.trim |> String.lowercase_ascii) = "yes" 
-      then begin
-        print_endline "Nice! Glad you found being a TA rewarding :) Maybe be one
-         again next semester?";
-        Playerstate.set_points player 20
-      end
-      else 
-        print_endline "Oops, sorry it wasn't that great for you. Is the pay 
-        worth it? (Probably yes)";
-      Playerstate.set_points player ~-5
-    end
+  | "yes" -> being_ta player
   | _ -> print_endline 
            "You typed in something weird in response to a yes or no question\n";
     print_endline "Points are taken away for typing in something weird";
@@ -600,6 +619,7 @@ let find_special_event player players board str =
     | "4410" -> minigame_4410 player
     | "4820" -> minigame_4820 player
     | "4120" -> minigame_4120 player
+    | "4320" -> minigame_4320 player
     | "4740" -> minigame_4740 player
     | "debug1" -> minigame_debug_v1 player 1
     | "ta" -> minigame_ta player

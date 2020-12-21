@@ -745,7 +745,8 @@
           "event": "Start 4320",
           "description": "Databases time! Sounds useful enough for the future.",
           "effects": [
-            "gain 70"
+            "gain 70",
+            "minigame 4320"
           ]
         },
         {

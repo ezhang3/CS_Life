@@ -491,20 +491,26 @@ let print_job_desc player job =
       ("Unknown!\n" ^
        name ^ " could not be found after graduation. Ever since " ^ name ^ 
        " failed to find a job after graduation, nobody knows where they went. No 
-       job, no location. Nobody could get in contact with them. It's almost as 
+       job, no location. Nobody could get in contact with them. Maybe they 
+       moved off the grid to run a farm? Or joined a cult? It's almost as 
        if they just disappeared...\n")
   | Unemployed -> 
     print_endline 
       ("Unemployed!\n" ^
        name ^ " unfortunately could not find a job after graduation. And could 
-       not find a job for the rest of their life. The End.")
+       not find a job for the rest of their life. They lived in their parents'
+       basement, gaming during the night and sleeping during the day, while 
+       never venturing outside for some real human contact. That was all they 
+       would do. The End.")
   | Married -> 
     print_endline 
       ("Get Married!\n" 
        ^ name ^ " unfortunately fails to find a job after graduation. However, " 
        ^ name ^ " instead decided to get married! They were lucky enough to 
-       have found their \"meant to be\" through their undergrad. The couple 
-       live happily ever after!\n")
+       have found their \"meant to be\" through their undergrad. Being a 
+       stay-at-home spouse isn't too bad. Making lunchboxes with the help of
+       recipes online and Youtube, walking the dog twice a day. . . It was a 
+       very chill life. The couple live happily ever after!\n")
 
 (**[print_jobs [(p1, job1);...;(pn, jobn)]] prints the jobs [job1,...jobn] of 
    players [p1,...pn]*)
