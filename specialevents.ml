@@ -53,7 +53,7 @@ let rec get_study_buddy player players =
       print_endline "Who do you want to choose as a study buddy?\n
       Type in their name\n";
       print_string 
-        "They must be a valid player or type \"no\" if you don't want one";
+        "They must be a valid player or type \"no\" if you don't want one\n";
       print_string "> ";
       let answer = read_line () |> String.trim in 
       if (answer = Playerstate.get_name player) then 
@@ -70,6 +70,7 @@ let rec get_study_buddy player players =
       end
     in 
     print_endline "Would you like a study buddy? Enter [yes] or [no]\n";
+    print_string "> ";
     match read_line () |> String.trim |> String.lowercase_ascii with 
     | "yes" -> helper player players
     | "no" -> print_endline "You decided you're good on your own\n"
@@ -413,10 +414,11 @@ let rec minigame_debug_v2 player =
   print_endline "To debug, answer these questions correctly\n";
   print_endline "What is 42 / 22 / 2 / 2 ?\n";
   print_string "> ";
-  if (read_line() |> String.trim = "1/2" || read_line() |> String.trim = "0.5")
+  let frac_ans = read_line() |> String.trim in 
+  if (frac_ans = "1/2" || float_of_string frac_ans = 0.5)
   then begin print_endline "Good. You found one part of the bug\n"; end
   else begin 
-    print_endline "Yay! You found out you typed in the wrong variable\n";
+    print_endline "You typed in the wrong variable and did not see\n";
     print_endline "Lose 5 points\n";
     Playerstate.set_points player ~-5;
   end;
@@ -431,8 +433,9 @@ let rec minigame_debug_v2 player =
   end;
   print_endline "What is a programmer's least favorite animal?\n";
   print_string "> ";
-  if (read_line() |> String.trim |> String.lowercase_ascii = "a bug") ||
-     (read_line() |> String.trim |> String.lowercase_ascii = "bug")
+  let bug_ans = read_line() |> String.trim |> String.lowercase_ascii in 
+  if (bug_ans = "a bug") ||
+     (bug_ans = "bug")
   then begin print_endline "Congrats! You found the bug!"; end
   else begin 
     print_endline "Sadly, it will continue to bug you again\n"; 
@@ -467,7 +470,8 @@ and being_ta player =
 let minigame_ta player = 
   Playerstate.chg_energy player ~-10;
   print_endline "You were invited to become a TA. Do you accept?";
-  print_endline "Type [yes] or [no] > ";
+  print_endline "Type [yes] or [no]";
+  print_string "> ";
   match read_line () |> String.trim |> String.lowercase_ascii with 
   | "no" -> print_endline 
               "You decided not to become a TA in favor of pursuing other things \n"
@@ -633,13 +637,7 @@ let job_interview player =
   else bad_interview player
 
 let minigame_coffee_break player =
-  try
-    (fun () -> Playerstate.chg_energy player (Gui.coffee_break_gui ()))
-  with
-  | exn ->
-    (fun () -> print_endline
-        "You do not have a suitable graphics \
-         display connect. Please review the install.md. Skipped coffee break")
+  fun () -> Playerstate.chg_energy player (Gui.coffee_break_gui ())
 
 let minigame_party player = 
   print_endline "Stressed out by all the assignments and psets, you decide to 
