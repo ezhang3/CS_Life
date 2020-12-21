@@ -8,9 +8,11 @@ let rec find_player name = function
 
 let rec academic_integrity player players =
   if List.length players < 2 then 
-    print_endline "Sorry, there is no one to accuse of an academic integrity violation\n"
+    print_endline 
+      "Sorry, there is no one to accuse of an academic integrity violation\n"
   else 
-    print_endline "Who would you like to accuse of an academic integrity violation?\n";
+    print_endline 
+      "Who would you like to accuse of an academic integrity violation?\n";
   print_string  "> ";
   match read_line () |> String.lowercase_ascii |> String.trim with 
   | p -> 
@@ -23,7 +25,10 @@ let rec academic_integrity player players =
       Playerstate.set_points player 100
 
 let rec minigame_choose_1110_2110 player board = 
-  print_endline "\nDecide whether you would like to take CS 1110 or CS 2110 first.\nKeep in mind that once you take CS 2110, you cannot go back to take CS 1110. \nEnter [1110] or [2110]:\n";
+  print_endline 
+    "Decide whether you would like to take CS 1110 or CS 2110 first.\n
+  Keep in mind that once you take CS 2110, you cannot go back to take CS 1110.\n
+  Enter [1110] or [2110]:\n";
   print_string  "> ";
   match read_line () |> String.trim with 
   | "1110" -> 
@@ -44,12 +49,15 @@ let rec get_study_buddy player players =
   else begin 
     let rec helper pl lst = 
       let player_name_list = List.map Playerstate.get_name lst in 
-      print_endline "Who do you want to choose as a study buddy?\nType in their name\n";
-      print_string "They must be a valid player or type \"no\" if you don't want one";
+      print_endline "Who do you want to choose as a study buddy?\n
+      Type in their name\n";
+      print_string 
+        "They must be a valid player or type \"no\" if you don't want one";
       print_string "> ";
       let answer = read_line () |> String.trim in 
       if (answer = Playerstate.get_name player) then 
-        print_string "You chose to have yourself as a study buddy since you're weird"
+        print_string 
+          "You chose to have yourself as a study buddy since you're weird"
       else if List.mem answer player_name_list then begin
         Playerstate.add_study_partners pl 1;
         print_string ("Yay! " ^ answer ^ " is now your study buddy!")
@@ -97,7 +105,8 @@ and secondq_1110 input player =
 
 let minigame_1110 player = 
   Playerstate.chg_energy player ~-5;
-  print_endline "Do you like old arcade games like Invaders? \nEnter [yes] or [no]: \n"; 
+  print_endline "Do you like old arcade games like Invaders? \n
+  Enter [yes] or [no]: \n"; 
   print_string "> "; 
   firstq_1110 (read_line () |> String.trim |> String.lowercase_ascii) player;
   print_endline "Did you actually attend all the discussion sections, or were 
@@ -191,14 +200,15 @@ and secondq_2800 player =
 let minigame_2800 player players = 
   print_endline "Do you like regular expressions? Hope you do ;)\n";
   firstq_2800 player;
-  print_endline "2800 psets are such a grind >_<\nMaybe a study buddy can help?";
+  print_endline "2800 psets are such a grind >_< Maybe a study buddy can help?";
   get_study_buddy player players;
   secondq_2800 player;
   print_endline "Thanks for playing! Hope you liked 2800 ^^";
   Playerstate.chg_energy player ~-8
 
 let minigame_3110 player = 
-  print_endline "Let's see how well you do on this 3110 quiz! The more you answer correctly, the more points you will gain.\n";
+  print_endline "Let's see how well you do on this 3110 quiz! The more you 
+  answer correctly, the more points you will gain.\n";
   print_endline "1. What does the follwing expression evaluate to?\n";
   print_endline "\"let x = 1 in x + 1";
   match read_line () |> String.trim with 
@@ -256,24 +266,13 @@ let minigame_3410 player =
       "Thanks for taking 3410! I hope you've learned about how computers work";
   Playerstate.chg_energy player ~-10
 
-let rec next () iterations = 
-  print_endline "Type \"next\" to continue";
-  print_string "> ";
-  if read_line() |> String.trim |> String.lowercase_ascii = "next" || 
-     iterations > 2
-  then () 
-  else next () (iterations + 1)
-
 let story_4410 = 
   print_endline "In the beginning, there was hardware. Now the hardware was 
     formless and empty, darkness was over the surface of silicon.\n";
-  next () 0; 
   print_endline "And then the creator said “let there be operating systems,” 
   and there were OSes. The creator saw that OSes were good.\n";
-  next () 0;
   print_endline "And the creator said “let there be processes, and threads.” 
   OSes were teeming with processes and threads carrying out different tasks.\n";
-  next () 0; 
   print_endline "Then the creator said “let
    the processes and threads synchronize with each other.” For this task, the 
    creator appointed human-kind.\n";
@@ -322,18 +321,21 @@ let minigame_4820 player =
 let minigame_4120 player = 
   print_endline "Welcome to compliers.\n";
   print_endline "Be prepared, you won't get a lot of sleep this semester.\n";
-  print_endline "Some of your energy will be taken away, in anticipation of the effort that lies ahead.\n"; 
+  print_endline "Some of your energy will be taken away, in anticipation of the 
+  effort that lies ahead.\n"; 
   Playerstate.chg_energy player ~-15
 
 let mini_game_networking player = 
   Playerstate.chg_energy player ~-8;
-  print_endline "Trying to make professional connections, whether to get to know a job better or for recruiting/referrals?/n";
+  print_endline "Trying to make professional connections, whether to get to know 
+  a job better or for recruiting/referrals?/n";
   print_endline "Well here is the place to try!"; 
   print_endline "Would you like to cold email an alum?\nEnter [yes] or [no].";
   print_string "> "; 
   if (read_line () |> String.trim |> String.lowercase_ascii = "yes") 
   then begin 
-    print_endline "You cold emailed/linkedin connected with an alum.\n You had a good talk.\nIn the future, maybe you'll even get a referral from them.\n";
+    print_endline "You cold emailed/linkedin connected with an alum.\n You had a 
+    good talk.\nIn the future, maybe you'll even get a referral from them.\n";
     print_endline "You received referral (?)! Added to your items\n";
     Playerstate.add_items player "referral(?)";
   end 
@@ -369,26 +371,32 @@ let minigame_ta player =
   print_endline "You were invited to become a TA. Do you accept?";
   print_endline "Type [yes] or [no] > ";
   match read_line () |> String.trim |> String.lowercase_ascii with 
-  | "no" -> print_endline "You decided not to become a TA in favor of pursuing other things \n"
+  | "no" -> print_endline 
+              "You decided not to become a TA in favor of pursuing other things \n"
   | "yes" -> begin
       print_endline "You are hosting office hours for the class. \n"; 
-      print_endline "There are a lot of students waiting, waiting for you guidance in hopefully passing this class. \n"; 
-      print_endline "An hour passed where you answered lots of questions and corrected so much not great code your head hurts.\n";
+      print_endline "There are a lot of students waiting, waiting for your 
+      guidance in hopefully passing this class. \n"; 
+      print_endline "An hour passed where you answered lots of questions and 
+      corrected so much not great code your head hurts.\n";
       print_endline "You feel your energy levels drop a bit \n";
       Playerstate.chg_energy player (Random.int 5 + 1);
       print_endline "So, was it a good experience? (Yes or No) \n"; 
       print_string "> "; 
       if (read_line () |> String.trim |> String.lowercase_ascii) = "yes" 
       then begin
-        print_endline "Nice! Glad you found being a TA rewarding :) Maybe be one again next semester?";
+        print_endline "Nice! Glad you found being a TA rewarding :) Maybe be one
+         again next semester?";
         Playerstate.set_points player 20
       end
       else 
-        print_endline "Oops, sorry it wasn't that great for you. Is the pay worth it? (Probably yes)";
+        print_endline "Oops, sorry it wasn't that great for you. Is the pay 
+        worth it? (Probably yes)";
       Playerstate.set_points player ~-5
     end
-  | _ -> print_endline "You typed in something weird in response to a yes or no question\n";
-    print_endline "The game is taking points away for typing in something weird";
+  | _ -> print_endline 
+           "You typed in something weird in response to a yes or no question\n";
+    print_endline "Points are taken away for typing in something weird";
     Playerstate.set_points player ~-5
 
 (**[print_project_lst lst] prints the projects in [lst]*)
@@ -412,24 +420,30 @@ let prompt_project player (lst : Playerstate.project list) =
           match read_line () |> String.trim with 
           | "1" -> 
             if d1 = "CS 1110 REQUIRED" && not (cs1110) then begin
-              print_endline "\nYou have not taken CS 1110. You are not qualified for this project. Please choose again.\n";
+              print_endline "\nYou have not taken CS 1110. You are not qualified 
+              for this project. Please choose again.\n";
               helper lst end
             else begin
-              print_endline ("Congrats! Your new project is " ^ n1 ^ " with a salary of " ^ (string_of_int s1) ^ " points.\n");
+              print_endline ("Congrats! Your new project is " ^ n1 ^ " with a 
+              salary of " ^ (string_of_int s1) ^ " points.\n");
               Some (n1, d1, s1) end
           | "2" -> 
             if d2 = "CS 1110 REQUIRED" && not (cs1110) then begin
-              print_endline "\nYou have not taken CS 1110. You are not qualified for this project. Please choose again.\n";
+              print_endline "\nYou have not taken CS 1110. You are not qualified
+               for this project. Please choose again.\n";
               helper lst end
             else begin
-              print_endline ("Congrats! Your new project is " ^ n2 ^ " with a salary of " ^ (string_of_int s2) ^ " points.\n");
+              print_endline ("Congrats! Your new project is " ^ n2 ^ " with a 
+              salary of " ^ (string_of_int s2) ^ " points.\n");
               Some (n2, d2, s2) end
           | "3" -> 
             if d3 = "CS 1110 REQUIRED" && not (cs1110) then begin
-              print_endline "\nYou have not taken CS 1110. You are not qualified for this project. Please choose again.\n";
+              print_endline "\nYou have not taken CS 1110. You are not qualified 
+              for this project. Please choose again.\n";
               helper lst end
             else begin
-              print_endline ("Congrats! Your new project is " ^ n3 ^ " with a salary of " ^ (string_of_int s3) ^ " points.\n");
+              print_endline ("Congrats! Your new project is " ^ n3 ^ " with a 
+              salary of " ^ (string_of_int s3) ^ " points.\n");
               Some (n3, d3, s3) end
           | _ -> print_endline "\nInvalid input. Please retry.\n"; helper lst
         end
@@ -462,8 +476,9 @@ let change_project player =
   helper ()
 
 let rec swap_salary player players =
-  print_endline "Please type the name of the player you would like to swap salaries with:\n";
-  print_string ">";
+  print_endline 
+    "Please type the name of the player you would like to swap salaries with:";
+  print_string "\n>";
   match read_line () |> String.lowercase_ascii |> String.trim with 
   | p -> 
     match find_player p players with 
@@ -493,8 +508,10 @@ let birthday (player : Playerstate.player) players =
 let pay_day player = 
   match Playerstate.get_project player with 
   | None -> print_endline "\nSorry, you don't have a project right now\n"
-  | Some (name, desc, salary) -> print_endline ("Thanks to all of your contributions 
-   to " ^ name ^ ", you have earned " ^ (string_of_int salary) ^ " points!\n");
+  | Some (name, desc, salary) -> 
+    print_endline ("Thanks to all of your contributions to " ^ 
+                   name ^ ", you have earned " ^ (string_of_int salary) 
+                   ^ " points!\n");
     Playerstate.set_points player salary
 
 let pay_raise player = 
@@ -537,9 +554,9 @@ let minigame_coffee_break player =
   (fun () -> Playerstate.chg_energy player (Gui.coffee_break_gui ()))
 
 let minigame_party player = 
-  print_endline "Stressed out by all the assignments and psets, you decide to let 
-loose for one night.\n";
-  print_endline "So you went to your first (and only?) party here at Cornell.\n";
+  print_endline "Stressed out by all the assignments and psets, you decide to 
+  let loose for one night.\n";
+  print_endline "So you went to your first (and only?) party at Cornell.\n";
   print_endline 
     "You didn't find it too fun, so left early to wake Netflix on your bed.\n";
   print_endline "So even though you didn't party, you wake up late the next day, 
