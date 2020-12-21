@@ -6,11 +6,13 @@ let rec find_player name = function
     else find_player name t
 
 let rec academic_integrity player players =
-  if List.length players < 2 then 
+  if List.length players < 2 then begin 
     print_endline 
-      "Sorry, there is no one to accuse of an academic integrity violation\n"
+      "Sorry, there is no one to accuse of an academic integrity violation\n";
+    print_endline "Please type player's name to continue: \n"
+  end 
   else 
-    print_endline 
+    print_endline
       "Who would you like to accuse of an academic integrity violation?\n";
   print_string  "> ";
   match read_line () |> String.lowercase_ascii |> String.trim with 
