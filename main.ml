@@ -213,7 +213,13 @@ let  play_round players board =
               finish_player_round ();
               helper t board
             end
-          else begin finish_player_round (); helper t board end
+          else 
+            begin 
+              Playerstate.chg_energy p 50;
+              print_player_stats p;
+              finish_player_round (); 
+              helper t board 
+            end
         end
       end in 
   helper players board
