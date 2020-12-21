@@ -197,7 +197,8 @@
           "event": "You failed a prelim!",
           "description": "It's unfortunate, but it's happened to everyone. Maybe you can improve your study habits",
           "effects": [
-            "lose 5"
+            "lose 5",
+            "minigame academic_integrity"
           ]
         },
         {
@@ -707,7 +708,8 @@
           "event": "You bombed your first technical interview!",
           "description": "You grinded so much leetcode, but during that interview your brain just did not work. . .",
           "effects": [
-            "lose 10"
+            "lose 10",
+            "minigame change_project"
           ]
         },
         {
@@ -729,12 +731,31 @@
           ]
         },
         {
+          "id": "swap salary",
+          "color": "Blue",
+          "event": "Swapping Salaries",
+          "description": "For some reason you will be swapping salaries with someone",
+          "effects": [
+            "minigame swap_project"
+          ]
+        },
+        {
           "id": "CS 4320",
           "color": "Blue",
           "event": "Start 4320",
           "description": "Databases time! Sounds useful enough for the future.",
           "effects": [
             "gain 70"
+          ]
+        },
+        {
+          "id": "CS 4740",
+          "color": "Blue",
+          "event": "Start 4740",
+          "description": "NLP! Heard the class is badly taught at Cornell, but the subject sounds interesting. . .",
+          "effects": [
+            "gain 30",
+            "minigame 4740"
           ]
         },
         {

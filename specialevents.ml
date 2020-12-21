@@ -325,6 +325,11 @@ let minigame_4120 player =
   effort that lies ahead.\n"; 
   Playerstate.chg_energy player ~-15
 
+let minigame_4740 player = 
+  print_endline "Natural Language Processing!\n";
+  print_endline "Identify the verb in this sentence: \n";
+  print_endline "A quick brown fox jumps "
+
 let mini_game_networking player = 
   Playerstate.chg_energy player ~-8;
   print_endline "Trying to make professional connections, whether to get to know 
@@ -584,6 +589,7 @@ let find_special_event player players board str =
     | "4410" -> minigame_4410 player
     | "4820" -> minigame_4820 player
     | "4120" -> minigame_4120 player
+    | "4740" -> minigame_4740 player
     | "debug1" -> minigame_debug_v1 player 1
     | "ta" -> minigame_ta player
     | "choose_project" -> choose_project player
