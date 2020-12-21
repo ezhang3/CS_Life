@@ -268,7 +268,7 @@ let minigame_3410 player =
       "Thanks for taking 3410! I hope you've learned about how computers work";
   Playerstate.chg_energy player ~-10
 
-let story_4410 = 
+let story_4410 () = 
   print_endline "In the beginning, there was hardware. Now the hardware was 
     formless and empty, darkness was over the surface of silicon.\n";
   print_endline "And then the creator said “let there be operating systems,” 
@@ -281,7 +281,7 @@ let story_4410 =
   print_endline "But humans were fallible, and weak, and they failed to get
    synchronization correct, and fallen angel BSOD (pronounced beesod), spawn of
    Beelzebub, ruled the day with great evil.\n"; 
-  print_endline "From a handout \"12 Commandments of Synchronization\" by Emin 
+  print_endline "From a handout \"12 Commandments of Synchronization\" by Prof.
   Sirer.\n"
 
 let minigame_4410 player =
@@ -291,18 +291,23 @@ let minigame_4410 player =
   print_string "> "; 
   match read_line () |> String.trim |> String.lowercase_ascii with 
   | "no" -> print_endline "No? Meh, move along then"
-  | "yes" -> story_4410;
-    print_endline "That was long, so here's a reward: 10 points and a copy of
+  | "yes" -> 
+    begin
+      story_4410 ();
+      print_endline "That was long, so here's a reward: 10 points and a copy of
     the 12 Commandments of Synchronization"; 
-    Playerstate.set_points player 10; 
-    print_endline 
-      "You received 12 Commandments of Synchronization! Added to your items\n";
-    Playerstate.add_items player "12Commandments";
-  | _ -> print_endline 
-           "You typed in something weird in response to a yes or no question\n";
-    print_endline "You lose points for typing in something weird";
-    Playerstate.set_points player ~-5
-
+      Playerstate.set_points player 10; 
+      print_endline 
+        "You received 12 Commandments of Synchronization! Added to your items\n";
+      Playerstate.add_items player "12Commandments";
+    end
+  | _ -> 
+    begin
+      print_endline 
+        "You typed in something weird in response to a yes or no question\n";
+      print_endline "You lose points for typing in something weird";
+      Playerstate.set_points player ~-5
+    end
 let minigame_4820 player = 
   print_endline "How many hours did you spend in OH a week?\n";
   print_string "> "; 
@@ -314,7 +319,8 @@ let minigame_4820 player =
     Playerstate.chg_energy player ~-5
   end 
   else 
-    print_endline "Wow, you did all the work without have to camp OH? Nice\n";
+    print_endline 
+      "Wow, you did all the work without have to camp at OH? Nice\n";
   Playerstate.set_points player 10; 
   print_endline "Time to make homeworks and exams harder next semester. . .\n"
 
