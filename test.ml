@@ -32,7 +32,6 @@
 
 *)
 
-
 open OUnit2
 open Board
 open Playerstate
@@ -357,7 +356,6 @@ let player_state_test = [
   (* passed after making new test player*)
   get_visited_tiles_after_go_test "start and 1110/2110 waiting" test_player2 1 
     ["choose 1110 or 2110"; "start"];
-  (* some tests for go and visited tiles with branching paths *)
 
   get_energy_test "initial energy is 100" test_player2 100;
 ]

@@ -3,7 +3,6 @@ open Yojson.Basic.Util
 
 exception No_Tile of string
 
-
 (** gamenode represents a node of the gameboard *)
 type gamenode = Tile.tile * (Tile.tile list)
 
@@ -22,13 +21,12 @@ type gameboard = gamenode list
 let get_mem json str =
   json |> member str
 
-(* Random compare function to use with List.sort *)
+(** Random compare function to use with List.sort *)
 let rand_comp x y = let randn = (Random.int 3) in 
   (* print_endline (string_of_int randn);  *)
   randn - 1
 
-(* [randomize lst] is a randomized version of [lst] *)
-(* TODO: Add a field that determines whether randomized or not? *)
+(** [randomize lst] is a randomized version of [lst] *)
 let randomize rand lst = 
   let on = false in
   if not on && not (rand) then lst else List.sort rand_comp lst

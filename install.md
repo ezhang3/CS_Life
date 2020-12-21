@@ -8,3 +8,4 @@
 and make sure Xming is running. Enter 'source .bashrc' in terminal to
 connect to display port 0
 5. Play game by running "make play"
+6. Follow all the prompts the game gives you and have fun.
