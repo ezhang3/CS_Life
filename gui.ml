@@ -1,5 +1,9 @@
 open Graphics
 
+(**
+   Heavily adapted from Chapter 5 of
+   https://caml.inria.fr/pub/docs/oreilly-book/html/index.html*)
+
 (* -------------- Type declarations and record instantiation --------------- *)
 
 type button = {

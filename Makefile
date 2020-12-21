@@ -1,5 +1,5 @@
-MODULES= playerstate board authors tile specialevents
-FILES= main gui
+MODULES= playerstate board authors tile specialevents gui
+FILES= main
 OBJECTS=$(MODULES:=.cmo) $(FILES:=.cmo)
 MLS=$(MODULES:=.ml) $(FILES:=.ml)
 MLIS=$(MODULES:=.mli)
