@@ -428,6 +428,15 @@
           ]
         },
         {
+          "id": "debug",
+          "color": "Red",
+          "event": "Bug",
+          "description": "ERROR: You have a bug in your code.",
+          "effects": [
+            "minigame debug2"
+          ]
+        },
+        {
           "id": "payraise4",
           "color": "Green",
           "event": "Pay Day!",

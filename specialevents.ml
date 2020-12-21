@@ -398,7 +398,37 @@ let rec minigame_debug_v1 player num =
       Playerstate.chg_energy player ~-5;
       minigame_debug_v1 player (num+1)
     end
-  end 
+  end
+
+let rec minigame_debug_v2 player = 
+  print_endline "To debug, answer these questions correctly\n";
+  print_endline "What is 42 / 22 / 2 / 2 ?\n";
+  if (read_line() |> String.trim = "1/2" || read_line() |> String.trim = "0.5")
+  then begin print_endline "Good. You found one part of the bug\n"; end
+  else begin 
+    print_endline "You found out you typed in the wrong variable\n";
+    print_endline "Lose 5 points\n";
+    Playerstate.set_points player ~-5;
+  end;
+  print_endline "\nWhat is a ghost's favorite datatype?\n";
+  if (read_line() |> String.trim |> String.lowercase_ascii = "boolean")
+  then begin print_endline "You found out you made a type error\n" end
+  else begin print_endline "You made a type error that you didn't notice\n";
+    print_endline "Lose 5 points\n";
+    Playerstate.set_points player ~-5
+  end;
+  print_endline "What is a programmer's least favorite animal?\n";
+  if (read_line() |> String.trim |> String.lowercase_ascii = "a bug") ||
+     (read_line() |> String.trim |> String.lowercase_ascii = "bug")
+  then begin print_endline "Congrats! You found the bug!"; end
+  else begin 
+    print_endline "Sadly, it will continue to bug you again\n"; 
+    Playerstate.set_points player ~-5
+  end;
+  print_endline "After that whole ordeal, you feel like you've lost a few\n
+                years of your life. Lose 10 energy.\n";
+  Playerstate.chg_energy player ~-10
+
 
 and being_ta player = 
   print_endline "You are hosting office hours for the class. \n"; 
@@ -622,6 +652,7 @@ let find_special_event player players board str =
     | "4320" -> minigame_4320 player
     | "4740" -> minigame_4740 player
     | "debug1" -> minigame_debug_v1 player 1
+    | "debug2" -> minigame_debug_v2 player 
     | "ta" -> minigame_ta player
     | "choose_project" -> choose_project player
     | "change_project" -> change_project player
