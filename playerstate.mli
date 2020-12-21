@@ -8,13 +8,19 @@
 (** The abstract type representing the player state. *)
 type player 
 
-(** Types for fields relating to playerstate *)
+(** The abstract type representing the player name. *)
 type player_name = string
+(** The abstract type representing points. *)
 type points = int
+(** The abstract type representing the player's salary. *)
 type salary = int
+(** The abstract type representing the project's name. *)
 type project_name = string
+(** The abstract type representing a project. *)
 type project = (project_name * string * salary) option
+(** The abstract type representing projects. *)
 type projects = project array
+(** The abstract type representing study partners. *)
 type study_partners = int
 
 (** [init_state name start] is the initial state of a player with name [name] 
