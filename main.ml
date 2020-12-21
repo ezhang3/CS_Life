@@ -202,7 +202,7 @@ let  play_round players board =
           let r = roll 6 in
           if r != 0 then 
             begin
-              print_endline ("\n" ^ name ^ " rolled a " ^ string_of_int r ^ "\n");
+              print_endline ("\n" ^ name ^ " rolled a " ^ string_of_int r);
               divide ();
               (**Go to new tile and play event *)
               Playerstate.go p board r; 
@@ -350,7 +350,7 @@ let print_job_desc player job =
   match job with 
   | Jeff_Bezos -> 
     print_endline 
-      ("Literally Jeff Bezos:\n" ^  
+      ("Literally Jeff Bezos!\n" ^  
        name ^ " is too extrordinarily talented and intelligent to work for 
        another company. " ^ "So, instead of applying for a job like fellow 
        classmates, " ^ name ^ " decides to start their own humble tech company 
@@ -358,38 +358,138 @@ let print_job_desc player job =
        of Amazon and Google. Above all its competitors. " ^ name ^ " will enter 
        Forbes' list of wealthiest people alive in just 5 years after the company 
        was created. What a feat. What an individual\n")
-  | Google -> ()
-  | Microsoft -> ()
-  | Apple -> ()
-  | Facebook -> ()
-  | Intel -> ()
-  | Tesla -> ()
-  | StartUP -> ()
-  | Non_Tech -> ()
-  | Web_Dev -> ()
-  | Generic -> ()
-  | IT -> ()
-  | Overseas -> 
+  | Google -> 
     print_endline 
-      ("Overseas:\n" ^
+      ("Google!\n" ^
+       name ^ " is now a software engineer at Google! Well done! All your peers 
+       admire you for all your achievements, and you have a great group of 
+       friends supporting you even after college. The process of settling down 
+       was pretty smooth, and you even got a cute puppy that you can take to 
+       work. You can enjoy the amazing Google headquarters with free meals and 
+       a great corporate life.")
+  | Microsoft -> 
+    print_endline 
+      ("Microsoft!\n" ^
+       name ^ " is now a software engineer at Microsoft! You now have plenty of 
+       Microsoft stonks, and you're living the life making six figures a year. 
+       Luckily for you, Microsoft always provides excellent benefits and 
+       salaries. There's a great company culture, and you get the chance to 
+       work with other very talented people. While the work-life balance isn't 
+       exactly ideal, and the office politics sometimes gets under your skin, 
+       you're grateful for what you have. Life isn't too bad.")
+  | Apple -> 
+    print_endline 
+      ("Apple!\n" ^
+       name ^ " is now a software engineer at Apple! Very impressive indeed! 
+       You're making bank, except, of course, company culture isn't really the 
+       best. It's not very exciting. You're always hard at work. A little sleep 
+       deprived all the time. But now you got a cat to keep you company when 
+       you're not working. You're just living day by day keeping the doctor 
+       away. Nevertheless, the pros really outweigh the cons. You're doing 
+       great :)")
+  | Facebook -> 
+    print_endline 
+      ("Facebook!\n" ^
+       name ^ " is now a software engineer at Facebook! More specifically, 
+       you're working for Oculus! Really cool stuff. You've always been a bit 
+       of a GAMER, and now, you're developing gaming in THREE DIMENSIONS. Talk 
+       about cool! Work life is pretty decent, and you're working with a great 
+       team of people. Your boss is the man too! By boss, I mean your manager, 
+       not the reptile (I jest, I jest). Keep up the great work! Your college 
+       days really prepared you well for the real world, and you are just 
+       thriving.")
+  | Intel -> 
+    print_endline 
+      ("Intel!\n" ^
+       name ^ " is now a software engineer at Intel! The company is so big, 
+       sometimes you just feel so small and insignificant...but chin up! You're 
+       making good money! You should be proud for snagging a good position at 
+       such a big company. You've got a pretty decent work-life balance, a free 
+       gym membership, discounts at various stores, and even better, free food! 
+       Enjoy it while it lasts and keep working hard!")
+  | Tesla -> 
+    print_endline 
+      ("Intel!\n" ^
+       name ^ " is now a software engineer at Tesla! Congrats! You now work at 
+       the most memeable company ever. Elon Musk never fails does he. The man 
+       is just the source for a plethora of memes on Reddit. But who can blame 
+       the man? He's effortlessly hilarious, a genius, and one of the richest 
+       people alive. The internet just loves him. You make sure you let everyone 
+       know that you've seen the man from a distance...oh wait sorry, we were 
+       talking about you, not Elon Musk, sorry. Anyways, you've always been 
+       pretty enthusiastic about electric cars and helping to save the planet 
+       from fossil fuels. Keep at that goal! You're helping the world and the 
+       greater good little by little.")
+  | StartUP -> 
+    print_endline 
+      ("Startup!\n" ^
+       name ^ " is now a software engineer at a startup company! Your teams 
+       small, but you're all so close! The few people you work with are 
+       dependable and smart. Sure, you don't have all the benefits from a 
+       company, but you're not like the rest of the pack. You do things your 
+       own way, and at the startup, you have the freedom to express your cool 
+       ideas and not get overwhelmed by how much there is to do. Keeping it 
+       simple is the way to go.")
+  | Non_Tech -> 
+    print_endline 
+      ("Non-Tech Company!\n" ^
+       name ^ " is now a software engineer at a generic non-tech company! Your 
+       work isn't too difficult, actually not at all. You're a bit too qualified 
+       for this job, but it'll do. You're not overworked, so you spend your free 
+       time enjoying your hobbies and spending times with friends and family 
+       and your pet turtle. You might be a bit of an average Joe, but you're 
+       happy, and that's all that matters.")
+  | Web_Dev -> 
+    print_endline 
+      ("You're in WebDev!\n" ^
+       name ^ " is now a web developer! Nothing too exciting. Nothing to brag 
+       about. But why would you want to brag? Work is just part of your life. 
+       When you're not working, you're pretty adventurous so you take vacations 
+       to go hiking and camping and exploring new places. Life is more than work 
+       and how much money you make, and you take that motto very seriously. You 
+       truly are living your best life. You're happy and free. Way to go :)")
+  | Generic -> 
+    print_endline 
+      ("Something Random and Generic!\n" ^
+       name ^ " now does random computer stuff at some random company nobody has 
+       heard of. Days go by and they always seem to just blend together. You 
+       haven't seemed to have broken routine in over five years. Word of advice, 
+       try something new! Life is more than just working until you retire. 
+       Enjoy yourself while you're still young. Once time passes, you'll never 
+       get it back.")
+  | IT -> 
+    print_endline 
+      ("IT!\n" ^
+       name ^ " is now in IT! You dress like the classic white dude in IT, but 
+       who cares! You may be a bit generic, but you've got your quirks. You even 
+       wear a cute bowtie with your polo shirt! Prove to those who look down on 
+       you that you're way more than average! Show them what you've got! I 
+       promise you, if you work hard, you'll be able to find what really makes 
+       you stand out. This is just a stepping stone for you!")
+  | Overseas ->
+    print_endline 
+      ("Overseas!\n" ^
        name ^ " is somewhere overseas (was it Germany? Sweden? Japan?) Last 
        time anyone heard, " ^ name ^ " is chilling in an ok swe position, 
-       enjoying the expat life and better health care.")
+       enjoying the expat life and better health care. You don't really keep in 
+       contact with people from college, but you're now learning a new language 
+       and learning more about other cultures outside of the American bubble! 
+       Good for you! ")
   | Unknown -> 
     print_endline 
-      ("Unknown:\n" ^
+      ("Unknown!\n" ^
        name ^ " could not be found after graduation. Ever since " ^ name ^ 
        " failed to find a job after graduation, nobody knows where they went. No 
        job, no location. Nobody could get in contact with them. It's almost as 
        if they just disappeared...\n")
   | Unemployed -> 
     print_endline 
-      ("Unemployed:\n" ^
+      ("Unemployed!\n" ^
        name ^ " unfortunately could not find a job after graduation. And could 
        not find a job for the rest of their life. The End.")
   | Married -> 
     print_endline 
-      ("Get Married!:\n" 
+      ("Get Married!\n" 
        ^ name ^ " unfortunately fails to find a job after graduation. However, " 
        ^ name ^ " instead decided to get married! They were lucky enough to 
        have found their \"meant to be\" through their undergrad. The couple 
