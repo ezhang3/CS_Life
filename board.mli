@@ -8,8 +8,11 @@ type gameboard
 exception No_Tile of string
 
 (** [create_board x] is a board created from a valid json [x], which
-    consists of nonempty stages and tiles, randomized *)
-(* TODO: How to use json*)
+    consists of nonempty stages and tiles which will be randomized.
+    A valid json consists of a list of stages.
+    Stages have an id and a next field (which goes to the next sequence).
+    Each stage has a list of tiles which have an id, color, event,
+    description, and effect.  *)
 val create_board : Yojson.Basic.t -> bool -> gameboard
 
 (** [start_tile board] is the first tile of the board.
@@ -23,7 +26,6 @@ val end_tile : gameboard -> tile
 (** [next_tile tile func board] is the list of adjacent tiles to [tile]
     [func tile1 tile2] is a function used to compare tiles.
     Raises: No_Tile if [tile] is not in [board] *)
-(* TODO: think about rep invariant and abstraction function*)
 val next_tiles : tile -> (tile-> tile -> bool) -> gameboard -> tile list
 
 (** [find_tile_by_id id board] is the tile in [board] with id [id]. *)

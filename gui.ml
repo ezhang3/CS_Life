@@ -3,13 +3,22 @@ open Graphics
 (* -------------- Type declarations and record instantiation --------------- *)
 
 type button = {
-  x : int; y : int; w : int; h : int; label : string;
-  l_color : color; l_size : int; b_color : color
+  x : int; y : int;
+  w : int; h : int;
+  label : string;
+  l_color : color; l_size : int;
+  b_color : color
 }
-let b_fill = {x= 100; y= 70; w= 40; h= 20; label= "Fill";
-              l_color= black; l_size = 5; b_color = rgb 200 200 200}
-let b_done = {x= 100; y= 50; w= 40; h= 20; label= "Done";
-              l_color= black; l_size = 5; b_color = rgb 200 200 200}
+let b_fill = {x= 100; y= 70;
+              w= 40; h= 20;
+              label= "Fill";
+              l_color= black; l_size = 5;
+              b_color = rgb 200 200 200}
+let b_done = {x= 100; y= 50;
+              w= 40; h= 20;
+              label= "Done";
+              l_color= black; l_size = 5;
+              b_color = rgb 200 200 200}
 let b_list = [b_fill; b_done]
 
 (** maxx : maximum width of the canvas
@@ -19,17 +28,20 @@ let b_list = [b_fill; b_done]
     bc, fc, pc: background, foreground, current point color
     buttons : list of all the buttons in the minigame
     coffee : the height of the coffee *)
-type state = {maxx:int; maxy:int; mutable x : int; mutable y : int;
+type state = {maxx : int; maxy : int;
+              mutable x : int; mutable y : int;
               scale:int;
               bc : color; fc: color; pc : color;
               textsize : int;
               buttons : button list;
               mutable coffee : int}
 
-let coffee_ist = {maxx=150; maxy=100; x=60; y=60; 
-                  scale=4; bc= rgb 200 200 200;
+let coffee_ist = {maxx = 150; maxy = 100;
+                  x = 60; y = 60; 
+                  scale = 4;
+                  bc = rgb 200 200 200; fc = black; pc = red;
                   textsize = 15;
-                  fc= black; pc= red; buttons = b_list;
+                  buttons = b_list;
                   coffee = 1}
 
 (* -------------------- Initialization procedure -------------------- *)
@@ -75,9 +87,10 @@ let coffee_init s () =
 
 (* -------------------- User interaction loop -------------------- *)
 
-let rec brange s x y (lst : button list) = match lst with
+let rec brange s x y (lst : button list) =
+  match lst with
   | [] -> None
-  | {x = x0; y = y0; w = w; h = h; label= label} :: t ->
+  | {x = x0; y = y0; w = w; h = h; label = label} :: t ->
     if mem (x, y) (x0*s.scale, y0*s.scale, w*s.scale, h*s.scale)
     then Some label else brange s x y t
 

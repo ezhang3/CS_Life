@@ -156,7 +156,6 @@ let rec find_tiles (tile : Tile.tile) func board =
 
 (** [next_tile tile func board] searches through the board to find the
     tile that matches tile and gives a list of adjacent tiles. *)
-(* TODO: Think about how to optimize because search is O(n) *)
 let next_tiles = find_tiles
 
 let rec find_tile_by_id id (board : gameboard) = 
