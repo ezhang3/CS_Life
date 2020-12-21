@@ -521,12 +521,12 @@
       ],
       "tiles": [
         {
-          "id": "Start CS 3410",
-          "color": "Blue",
-          "event": "Start 3410",
-          "description": "You're not really sure why you have to take a class on hardware if you're planning on just coding for a job. But hopefully it won't be too bad. . .",
+          "id": "debug2 2",
+          "color": "Red",
+          "event": "Bug",
+          "description": "ERROR: You have a bug in your code.",
           "effects": [
-            "gain 10"
+            "minigame debug2"
           ]
         }
       ]
