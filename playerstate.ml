@@ -104,7 +104,7 @@ let three_rand_projects () =
   let rec helper acc count = 
     if count = 3 then acc 
     else
-      let i = ref (Random.int 10) in
+      let i = ref (Random.int 12) in
       while List.mem p.(!i) acc || p.(!i) = None do 
         i := Random.int 10
       done;
@@ -113,7 +113,7 @@ let three_rand_projects () =
 
 let rand_project () = 
   Random.self_init ();
-  let i = ref (Random.int 10) in
+  let i = ref (Random.int 12) in
   while p.(!i) = None do 
     i := Random.int 10
   done;
