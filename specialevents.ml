@@ -328,7 +328,18 @@ let minigame_4120 player =
 let minigame_4740 player = 
   print_endline "Natural Language Processing!\n";
   print_endline "Identify the verb in this sentence: \n";
-  print_endline "A quick brown fox jumps "
+  print_endline "A quick red fox jumped over a lazy brown dog\n";
+  print_string ">";
+  if read_line () |> String.trim |> String.lowercase_ascii = "jumped" 
+  || read_line () |> String.trim |> String.lowercase_ascii = "jump" 
+  then begin 
+    print_endline "Good job! You know what a verb is!\n";
+    Playerstate.set_points player 10
+  end 
+  else begin 
+    print_endline "Oops, that's too bad for you."
+  end;
+  print_endline "That's all for NLP!"
 
 let mini_game_networking player = 
   Playerstate.chg_energy player ~-8;

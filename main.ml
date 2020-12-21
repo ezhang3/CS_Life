@@ -12,7 +12,7 @@ let divide () = print_endline "\n***********************************************
 
 type job = Jeff_Bezos | Google | Microsoft | Apple | Facebook | Intel | Tesla 
          | StartUP | Non_Tech | Web_Dev | Generic | IT 
-         | Unknown | Unemployed | Married | Overseas
+         | Unknown | Unemployed | Married | Overseas | Grad_School
 
 let rec next () iterations = 
   print_endline "\nType \"next\" to continue";
@@ -297,7 +297,7 @@ let random_best_job p =
 (**[random_medium_job p] is a random medium job *)
 let random_medium_job p = 
   Random.self_init ();
-  let n = roll 12 in
+  let n = roll 13 in
   match n with 
   | 1 -> StartUP
   | 2 -> Non_Tech
@@ -311,6 +311,7 @@ let random_medium_job p =
   | 10 -> Intel 
   | 11 -> Tesla 
   | 12 -> Overseas
+  | 13 -> Grad_School
   | _ -> failwith "not reached"
 
 (**[random_bad_job p] is a random bad job *)
@@ -475,6 +476,16 @@ let print_job_desc player job =
        contact with people from college, but you're now learning a new language 
        and learning more about other cultures outside of the American bubble! 
        Good for you! ")
+  | Grad_School -> 
+    print_endline 
+      ("Grad School!\n" ^
+       name ^ "is in grad school for CS, planning on pouring seven (7!) years of
+       blood, sweat, and tears (and a load of debt) into your thesis. You are 
+       probably extra smart, pursuing a research route into fields your swe 
+       friends only vaguely know about, or just gave up on functioning in the 
+       real world, getting a job and all that, and decided that academia would 
+       be a suitable hiding spot for you. Either way, you're on your way onto
+       getting a PhD! ")
   | Unknown -> 
     print_endline 
       ("Unknown!\n" ^
