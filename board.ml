@@ -45,16 +45,10 @@ let first_of_list = function
 (** [build_tile json] creates an individual tile as specified by
     json information *)
 let build_tile json = 
-  print_endline "Building tile...";
-  print_endline "Getting id...";
   let id = get_mem json "id" |> to_string in
-  print_endline "Getting color...";
   let color = get_mem json "color" |> to_string in
-  print_endline "Getting event...";
   let event_name = get_mem json "event" |> to_string in
-  print_endline "Getting description...";
   let description = get_mem json "description" |> to_string in
-  print_endline "Getting effects...";
   let effects = get_mem json "effects" |> to_list |> List.map to_string in
   create_tile id color event_name description effects
 
