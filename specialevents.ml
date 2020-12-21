@@ -1,4 +1,3 @@
-
 let rec find_player name = function 
   | [] -> None
   | p :: t -> 
@@ -282,7 +281,6 @@ let story_4410 =
   print_endline "From a handout \"12 Commandments of Synchronization\" by Emin 
   Sirer.\n"
 
-
 let minigame_4410 player =
   Playerstate.chg_energy player ~-10;
   print_endline "Do you want to hear a story?\n";
@@ -321,6 +319,8 @@ let minigame_4820 player =
 let minigame_4120 player = 
   print_endline "Welcome to compliers.\n";
   print_endline "Be prepared, you won't get a lot of sleep this semester.\n";
+  print_endline "If you can get through it without contemplated working at 
+  a corn farm, you should be good.";
   print_endline "Some of your energy will be taken away, in anticipation of the 
   effort that lies ahead.\n"; 
   Playerstate.chg_energy player ~-15
@@ -403,9 +403,12 @@ let minigame_ta player =
 let print_project_lst (lst : Playerstate.project list) = 
   match lst with 
   | Some (n1, d1, s1) :: Some (n2, d2, s2) :: Some (n3, d3, s3) :: t -> 
-    print_endline ("1. Name: " ^ n1 ^ "\n   Description: " ^ d1 ^ "\n   Salary: " ^ (string_of_int s1) ^ "\n");
-    print_endline ("2. Name: " ^ n2 ^ "\n   Description: " ^ d2 ^ "\n   Salary: " ^ (string_of_int s2) ^ "\n");
-    print_endline ("3. Name: " ^ n3 ^ "\n   Description: " ^ d3 ^ "\n   Salary: " ^ (string_of_int s3) ^ "\n")
+    print_endline ("1. Name: " ^ n1 ^ "\n   Description: " ^ d1 ^ 
+                   "\n   Salary: " ^ (string_of_int s1) ^ "\n");
+    print_endline ("2. Name: " ^ n2 ^ "\n   Description: " ^ d2 ^ 
+                   "\n   Salary: " ^ (string_of_int s2) ^ "\n");
+    print_endline ("3. Name: " ^ n3 ^ "\n   Description: " ^ d3 ^ 
+                   "\n   Salary: " ^ (string_of_int s3) ^ "\n")
   | _ -> failwith "invalid list of projects"
 
 (**[prompt_project player lst] prompts the [player] to choose a project out of 
@@ -414,7 +417,8 @@ let prompt_project player (lst : Playerstate.project list) =
   let cs1110 = Playerstate.get_visited_tiles player |> List.mem "1110" in
   let rec helper = function 
     | Some (n1, d1, s1) :: Some (n2, d2, s2) :: Some (n3, d3, s3) :: t -> begin
-        print_endline "Please type the number of the project you would like: \n";
+        print_endline 
+          "Please type the number of the project you would like: \n";
         print_string "> ";
         begin
           match read_line () |> String.trim with 
