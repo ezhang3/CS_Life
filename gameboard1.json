@@ -427,6 +427,15 @@
           ]
         },
         {
+          "id": "debug",
+          "color": "Red",
+          "event": "Bug",
+          "description": "ERROR: You have a bug in your code.",
+          "effects": [
+            "minigame debug2"
+          ]
+        },
+        {
           "id": "BTRY 3080",
           "color": "Blue",
           "event": "Start Stats",
