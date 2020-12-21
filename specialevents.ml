@@ -428,7 +428,7 @@ let rec minigame_debug_v2 player =
     Playerstate.set_points player ~-5
   end;
   print_endline "After that whole ordeal, you feel like you've lost a few\n
-                years of your life. Lose 10 energy.\n";
+  years of your life. Lose 10 energy.\n";
   Playerstate.chg_energy player ~-10
 
 
