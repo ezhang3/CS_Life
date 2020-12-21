@@ -1,6 +1,6 @@
 (* write the hours you've worked next to your name *)
 let allison = 27
-let enyu = 21
+let enyu = 25
 let iris = 26
 let janice = 33
 
