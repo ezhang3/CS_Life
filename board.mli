@@ -1,3 +1,10 @@
+(** 
+   Representation of the board. 
+
+   This module represents the board during the game.
+*) 
+
+
 open Tile 
 open Yojson.Basic.Util
 

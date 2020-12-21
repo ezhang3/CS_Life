@@ -32,33 +32,10 @@
 
 *)
 
-
 open OUnit2
 open Board
 open Playerstate
 open Tile
-(**---------TEST PLAN--------------- 
-   what you tested, anything you omitted testing, and why you believe 
-   that your test suite demonstrates the correctness of your system.
-
-   -1: The test plan does not explain which parts of the system were 
-   automatically tested by OUnit vs. manually tested.
-   -1: The test plan does not explain what modules were tested by OUnit 
-   and how test cases were developed (black box, glass box, randomized, etc.).
-   -1: The test plan does not provide an argument for why the testing 
-   approach demonstrates the correctness of the system.
-
-   All functions documented in the mli files of modules tile, board, and 
-   playerstate are tested here using OUnit, with the exception of print_state 
-   and make_player_list from playerstate.mli . Those two and some more 
-   complicated cases of functions, such as branching paths for go, were tested 
-   manually as well, since they often required input from the terminal.
-
-   How test cases developed (Black box, glass box, etc) 
-
-   Why does testing approach demonstrate correctness of system?
-
-   -------------------------------------*)
 
 (** [pp_string s] pretty-prints string [s]. *)
 let pp_string s = "\"" ^ s ^ "\""
@@ -379,7 +356,6 @@ let player_state_test = [
   (* passed after making new test player*)
   get_visited_tiles_after_go_test "start and 1110/2110 waiting" test_player2 1 
     ["choose 1110 or 2110"; "start"];
-  (* some tests for go and visited tiles with branching paths *)
 
   get_energy_test "initial energy is 100" test_player2 100;
 ]
@@ -441,15 +417,6 @@ let event_test = [
     playerwproj [playerwproj; playerwenergy] test_board "pay_day" 10000;
   event_test_salary "pay raise" playerwproj [playerwproj; playerwenergy]
     test_board "pay_raise" 10010;
-  (* get_visited_tiles_after_go_test "start and 1110/2110 waiting" test_player 1 
-     ["choose 1110 or 2110"; "start"]; *)
-
-  (* get_current_tile_test "on start" diff_player "start"; *)
-  (* go_test "go test 1 move" diff_player go_board 1 "1110"; *)
-  (* go_test "go test 2 move" diff_player go_board 2 "Start 2110";
-     go_test "go test 7 move" diff_player go_board 7 "CS 3410"; *)
-  (* get_visited_tiles_after_go_test "start and 1110/2110 waiting" diff_player 2 
-     ["1110 waiting spot"; "choose 1110 or 2110"; "start"]; *)
 ]
 
 let suite =
