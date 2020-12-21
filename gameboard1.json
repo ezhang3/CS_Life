@@ -173,9 +173,9 @@
           ]
         },
         {
-          "id": "coffee break",
+          "id": "coffee break 1",
           "color": "Green",
-          "event": "Coffee break.",
+          "event": "Coffee break",
           "description": "Time for a quick break.",
           "effects": [
             "minigame coffee_break"
@@ -258,9 +258,9 @@
           ]
         },
         {
-          "id": "coffee break",
+          "id": "coffee break 2",
           "color": "Green",
-          "event": "Coffee break.",
+          "event": "Coffee break",
           "description": "Time for a quick break.",
           "effects": [
             "minigame coffee_break"

@@ -71,6 +71,8 @@ let rec make_buttons s lst =
 
 let coffee_init s () = 
   open_graph "";
+  clear_graph ();
+  s.coffee <- 0;
   resize_window (s.scale*s.maxx) (s.scale*s.maxy);
   set_color s.bc;
   fill_rect 0 0 (s.scale*s.maxx+1) (s.scale*s.maxy+1);

@@ -102,7 +102,7 @@ let instructions () =
 *)
 let rec roll n = 
   Random.self_init ();
-  let custom_roll = 0 in
+  let custom_roll = 1 in
   print_endline "\n\nEnter:\n
   | \"roll\" to roll the dice
   | \"skip\" to skip your turn and earn back 50 energy
