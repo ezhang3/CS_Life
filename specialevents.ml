@@ -281,7 +281,7 @@ let story_4410 =
   print_endline "But humans were fallible, and weak, and they failed to get
    synchronization correct, and fallen angel BSOD (pronounced beesod), spawn of
    Beelzebub, ruled the day with great evil.\n"; 
-  print_endline "From a handout \"12 Commandments of Synchronization\" by Emin 
+  print_endline "From a handout \"12 Commandments of Synchronization\" by Prof.
   Sirer.\n"
 
 let minigame_4410 player =
