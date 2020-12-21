@@ -633,13 +633,7 @@ let job_interview player =
   else bad_interview player
 
 let minigame_coffee_break player =
-  try
-    (fun () -> Playerstate.chg_energy player (Gui.coffee_break_gui ()))
-  with
-  | exn ->
-    (fun () -> print_endline
-        "You do not have a suitable graphics \
-         display connect. Please review the install.md. Skipped coffee break")
+  fun () -> Playerstate.chg_energy player (Gui.coffee_break_gui ())
 
 let minigame_party player = 
   print_endline "Stressed out by all the assignments and psets, you decide to 

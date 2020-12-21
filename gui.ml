@@ -164,7 +164,10 @@ let gui f_init f_loop f_close =
 let coffee_break st = gui (coffee_init st) (loop 0 st) coffee_close
 
 let coffee_break_gui () =
-  coffee_break coffee_ist
+  try coffee_break coffee_ist with 
+  | exn -> print_endline
+             "You do not have a suitable graphics display connect. Please 
+             review the install.md. Skipped coffee break"; 0
 
 (*let points = coffee_break_gui ()*)
 
