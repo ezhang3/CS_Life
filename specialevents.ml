@@ -6,11 +6,13 @@ let rec find_player name = function
     else find_player name t
 
 let rec academic_integrity player players =
-  if List.length players < 2 then 
+  if List.length players < 2 then begin 
     print_endline 
-      "Sorry, there is no one to accuse of an academic integrity violation\n"
+      "Sorry, there is no one to accuse of an academic integrity violation\n";
+    print_endline "Please type player's name to continue: \n"
+  end 
   else 
-    print_endline 
+    print_endline
       "Who would you like to accuse of an academic integrity violation?\n";
   print_string  "> ";
   match read_line () |> String.lowercase_ascii |> String.trim with 
@@ -209,7 +211,8 @@ let minigame_3110 player =
   print_endline "Let's see how well you do on this 3110 quiz! The more you 
   answer correctly, the more points you will gain.\n";
   print_endline "1. What does the follwing expression evaluate to?\n";
-  print_endline "\"let x = 1 in x + 1";
+  print_endline "\"let x = 1 in x + 1\"";
+  print_string "> ";
   match read_line () |> String.trim with 
   | "2" -> print_endline "Correct!";
     print_endline "Thanks for playing! I hope you liked 3110 ^^"
@@ -254,7 +257,7 @@ let minigame_3410 player =
   firstq_3410 player score; 
   secondq_3410 player score;
   if !score = 2 then begin 
-    print_endline "Great job! You did well, here's a little momento for you.\n";
+    print_endline "Great job! You did well, here's a little memento for you.\n";
     print_endline "You received MIPS processor! Added to your items\n";
     Playerstate.add_items player "MIPS_processor";
     print_endline 
@@ -319,7 +322,7 @@ let minigame_4820 player =
 let minigame_4120 player = 
   print_endline "Welcome to compilers.\n";
   print_endline "Be prepared, you won't get a lot of sleep this semester.\n";
-  print_endline "If you can get through it without contemplated working at 
+  print_endline "If you can get through it without contemplating working at 
   a corn farm, you should be good.";
   print_endline "Some of your energy will be taken away, in anticipation of the 
   effort that lies ahead.\n"; 
@@ -403,21 +406,25 @@ let rec minigame_debug_v1 player num =
 let rec minigame_debug_v2 player = 
   print_endline "To debug, answer these questions correctly\n";
   print_endline "What is 42 / 22 / 2 / 2 ?\n";
+  print_string "> ";
   if (read_line() |> String.trim = "1/2" || read_line() |> String.trim = "0.5")
   then begin print_endline "Good. You found one part of the bug\n"; end
   else begin 
-    print_endline "You found out you typed in the wrong variable\n";
+    print_endline "Yay! You found out you typed in the wrong variable\n";
     print_endline "Lose 5 points\n";
     Playerstate.set_points player ~-5;
   end;
   print_endline "\nWhat is a ghost's favorite datatype?\n";
-  if (read_line() |> String.trim |> String.lowercase_ascii = "boolean")
-  then begin print_endline "You found out you made a type error\n" end
+  print_string "> ";
+  if (read_line() |> String.trim |> String.lowercase_ascii = "boolean") ||
+     (read_line() |> String.trim |> String.lowercase_ascii = "bool")
+  then begin print_endline "Nice job! You found out you made a type error\n" end
   else begin print_endline "You made a type error that you didn't notice\n";
     print_endline "Lose 5 points\n";
     Playerstate.set_points player ~-5
   end;
   print_endline "What is a programmer's least favorite animal?\n";
+  print_string "> ";
   if (read_line() |> String.trim |> String.lowercase_ascii = "a bug") ||
      (read_line() |> String.trim |> String.lowercase_ascii = "bug")
   then begin print_endline "Congrats! You found the bug!"; end
@@ -426,7 +433,7 @@ let rec minigame_debug_v2 player =
     Playerstate.set_points player ~-5
   end;
   print_endline "After that whole ordeal, you feel like you've lost a few\n
-                years of your life. Lose 10 energy.\n";
+  years of your life. Lose 10 energy.\n";
   Playerstate.chg_energy player ~-10
 
 
@@ -633,7 +640,7 @@ let minigame_party player =
   let loose for one night.\n";
   print_endline "So you went to your first (and only?) party at Cornell.\n";
   print_endline 
-    "You didn't find it too fun, so left early to wake Netflix on your bed.\n";
+    "You didn't find it too fun, so left early to watch Netflix on your bed.\n";
   print_endline "So even though you didn't party, you wake up late the next day, 
 exhausted, with no motivation to finish the work you put off.\n";
   Playerstate.chg_energy player ~-5
