@@ -2,15 +2,21 @@
 (** Test Plan:
     Modules tested with OUnit:
     These tests where developed with a combination of black box and glass box
-    testing.
-    Tile - using tile info getter functions
-    Board - using board functions
-    Playerstate - by modifying player state and checking with getters
-    Specialevents - Tested the events that changed player state and didn't
-    involve much user input.
+    testing, but mostly glass box testing to ensure that cases with different
+    outputs worked as intended. For manual testing, we tested random
+    values and made sure nothing broke.
+    Tile - used tile info getter functions to test that tiles were being
+    created correctly.
+    Board - tested board functions to make sure they were returning the
+    correct outputs.
+    Playerstate - Testing functions that modified player state and
+    checking with getters.
+    Specialevents - Tested that events which changed player state did change
+    state correctly.
 
     Tested manually
-    Specialevents - the events that involved complex user input.
+    Specialevents - The events that involved complex user input which couldn't
+    easily be handled with OUnit tests.
     GUI - the GUI is difficult to test with OUnit, since the outputs are
     shown on a new window and don't necessarily return a value. We verified
     that our code works by testing manually. For example, making sure the
@@ -23,7 +29,6 @@
     By testing each function under different cases, and thanks to functional
     programming paradigms like pattern matching, we are able to show our system
     has a high degree of correctness.
-    Running Bisect, we have achieved _ code coverage.
 
 *)
 
@@ -352,7 +357,7 @@ let player_state_test = [
   get_visited_tiles_after_go_test "start and 1110/2110 waiting" test_player2 1 
     ["choose 1110 or 2110"; "start"];
 
-  get_energy_test "initial energy is 100" test_player 100;
+  get_energy_test "initial energy is 100" test_player2 100;
 ]
 
 let iris = init_state "Iris" (start_tile test_board)
