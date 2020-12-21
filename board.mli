@@ -12,7 +12,7 @@ exception No_Tile of string
     A valid json consists of a list of stages.
     Stages have an id and a next field (which goes to the next sequence).
     Each stage has a list of tiles which have an id, color, event,
-    description, and effect.  *)
+    description, and effect.*)
 val create_board : Yojson.Basic.t -> bool -> gameboard
 
 (** [start_tile board] is the first tile of the board.
