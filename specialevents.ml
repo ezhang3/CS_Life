@@ -6,11 +6,13 @@ let rec find_player name = function
     else find_player name t
 
 let rec academic_integrity player players =
-  if List.length players < 2 then 
+  if List.length players < 2 then begin 
     print_endline 
-      "Sorry, there is no one to accuse of an academic integrity violation\n"
+      "Sorry, there is no one to accuse of an academic integrity violation\n";
+    print_endline "Please type player's name to continue: \n"
+  end 
   else 
-    print_endline 
+    print_endline
       "Who would you like to accuse of an academic integrity violation?\n";
   print_string  "> ";
   match read_line () |> String.lowercase_ascii |> String.trim with 
@@ -426,7 +428,7 @@ let rec minigame_debug_v2 player =
     Playerstate.set_points player ~-5
   end;
   print_endline "After that whole ordeal, you feel like you've lost a few\n
-                years of your life. Lose 10 energy.\n";
+  years of your life. Lose 10 energy.\n";
   Playerstate.chg_energy player ~-10
 
 
@@ -620,14 +622,20 @@ let job_interview player =
   else bad_interview player
 
 let minigame_coffee_break player =
-  (fun () -> Playerstate.chg_energy player (Gui.coffee_break_gui ()))
+  try
+    (fun () -> Playerstate.chg_energy player (Gui.coffee_break_gui ()))
+  with
+  | exn ->
+    (fun () -> print_endline
+        "You do not have a suitable graphics \
+         display connect. Please review the install.md. Skipped coffee break")
 
 let minigame_party player = 
   print_endline "Stressed out by all the assignments and psets, you decide to 
   let loose for one night.\n";
   print_endline "So you went to your first (and only?) party at Cornell.\n";
   print_endline 
-    "You didn't find it too fun, so left early to wake Netflix on your bed.\n";
+    "You didn't find it too fun, so left early to watch Netflix on your bed.\n";
   print_endline "So even though you didn't party, you wake up late the next day, 
 exhausted, with no motivation to finish the work you put off.\n";
   Playerstate.chg_energy player ~-5
